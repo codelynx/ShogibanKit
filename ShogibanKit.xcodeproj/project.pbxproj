@@ -1,0 +1,335 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CC2ABF4E1CD9DBCC00296806 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC2ABF4D1CD9DBCC00296806 /* Assets.xcassets */; };
+		CC2ABF511CD9DBCC00296806 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC2ABF4F1CD9DBCC00296806 /* Main.storyboard */; };
+		CC2E1DB61CDFBD5B006151CA /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = CC2E1DB51CDFBD5B006151CA /* Fonts */; };
+		CC2E1DBB1CE03ECE006151CA /* ShogibanKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DB91CE03ECE006151CA /* ShogibanKit.swift */; };
+		CC2E1DBC1CE03ECE006151CA /* String+lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DBA1CE03ECE006151CA /* String+lines.swift */; };
+		CC2E1DC21CE03F5C006151CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DBE1CE03F5C006151CA /* AppDelegate.swift */; };
+		CC2E1DC31CE03F5C006151CA /* ExperimentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DBF1CE03F5C006151CA /* ExperimentViewController.swift */; };
+		CC2E1DC41CE03F5C006151CA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DC01CE03F5C006151CA /* MainViewController.swift */; };
+		CC2E1DC51CE03F5C006151CA /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DC11CE03F5C006151CA /* MenuTableViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		CC2ABF461CD9DBCC00296806 /* ShogibanKit_OSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShogibanKit_OSX.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC2ABF4D1CD9DBCC00296806 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CC2ABF501CD9DBCC00296806 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CC2ABF521CD9DBCC00296806 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CC2E1DB51CDFBD5B006151CA /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
+		CC2E1DB91CE03ECE006151CA /* ShogibanKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShogibanKit.swift; sourceTree = "<group>"; };
+		CC2E1DBA1CE03ECE006151CA /* String+lines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+lines.swift"; sourceTree = "<group>"; };
+		CC2E1DBE1CE03F5C006151CA /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CC2E1DBF1CE03F5C006151CA /* ExperimentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentViewController.swift; sourceTree = "<group>"; };
+		CC2E1DC01CE03F5C006151CA /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		CC2E1DC11CE03F5C006151CA /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CC2ABF431CD9DBCC00296806 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CC2ABF3B1CD9DBAA00296806 = {
+			isa = PBXGroup;
+			children = (
+				CC2ABF481CD9DBCC00296806 /* ShogibanKitTester */,
+				CC2ABF471CD9DBCC00296806 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CC2ABF471CD9DBCC00296806 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CC2ABF461CD9DBCC00296806 /* ShogibanKit_OSX.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CC2ABF481CD9DBCC00296806 /* ShogibanKitTester */ = {
+			isa = PBXGroup;
+			children = (
+				CC2E1DB71CE03ECE006151CA /* ShogibanKit */,
+				CC2E1DB21CDFBC09006151CA /* Resources */,
+				CC2E1DBD1CE03F5C006151CA /* Sources */,
+				CC2ABF4D1CD9DBCC00296806 /* Assets.xcassets */,
+				CC2ABF4F1CD9DBCC00296806 /* Main.storyboard */,
+				CC2ABF521CD9DBCC00296806 /* Info.plist */,
+			);
+			path = ShogibanKitTester;
+			sourceTree = "<group>";
+		};
+		CC2E1DB21CDFBC09006151CA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CC2E1DB51CDFBD5B006151CA /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		CC2E1DB71CE03ECE006151CA /* ShogibanKit */ = {
+			isa = PBXGroup;
+			children = (
+				CC2E1DB81CE03ECE006151CA /* Sources */,
+			);
+			path = ShogibanKit;
+			sourceTree = SOURCE_ROOT;
+		};
+		CC2E1DB81CE03ECE006151CA /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				CC2E1DB91CE03ECE006151CA /* ShogibanKit.swift */,
+				CC2E1DBA1CE03ECE006151CA /* String+lines.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		CC2E1DBD1CE03F5C006151CA /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				CC2E1DBE1CE03F5C006151CA /* AppDelegate.swift */,
+				CC2E1DBF1CE03F5C006151CA /* ExperimentViewController.swift */,
+				CC2E1DC01CE03F5C006151CA /* MainViewController.swift */,
+				CC2E1DC11CE03F5C006151CA /* MenuTableViewController.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CC2ABF451CD9DBCC00296806 /* ShogibanKitTester_OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC2ABF531CD9DBCC00296806 /* Build configuration list for PBXNativeTarget "ShogibanKitTester_OSX" */;
+			buildPhases = (
+				CC2ABF421CD9DBCC00296806 /* Sources */,
+				CC2ABF431CD9DBCC00296806 /* Frameworks */,
+				CC2ABF441CD9DBCC00296806 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShogibanKitTester_OSX;
+			productName = Kiban_OSX;
+			productReference = CC2ABF461CD9DBCC00296806 /* ShogibanKit_OSX.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CC2ABF3C1CD9DBAA00296806 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Kaz Yoshikawa";
+				TargetAttributes = {
+					CC2ABF451CD9DBCC00296806 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = CC2ABF3F1CD9DBAA00296806 /* Build configuration list for PBXProject "ShogibanKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CC2ABF3B1CD9DBAA00296806;
+			productRefGroup = CC2ABF471CD9DBCC00296806 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CC2ABF451CD9DBCC00296806 /* ShogibanKitTester_OSX */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CC2ABF441CD9DBCC00296806 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC2E1DB61CDFBD5B006151CA /* Fonts in Resources */,
+				CC2ABF4E1CD9DBCC00296806 /* Assets.xcassets in Resources */,
+				CC2ABF511CD9DBCC00296806 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CC2ABF421CD9DBCC00296806 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC2E1DC31CE03F5C006151CA /* ExperimentViewController.swift in Sources */,
+				CC2E1DC51CE03F5C006151CA /* MenuTableViewController.swift in Sources */,
+				CC2E1DBC1CE03ECE006151CA /* String+lines.swift in Sources */,
+				CC2E1DC21CE03F5C006151CA /* AppDelegate.swift in Sources */,
+				CC2E1DC41CE03F5C006151CA /* MainViewController.swift in Sources */,
+				CC2E1DBB1CE03ECE006151CA /* ShogibanKit.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		CC2ABF4F1CD9DBCC00296806 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CC2ABF501CD9DBCC00296806 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CC2ABF401CD9DBAA00296806 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		CC2ABF411CD9DBAA00296806 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		CC2ABF541CD9DBCC00296806 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/ShogibanKitTester/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.Kiban-OSX";
+				PRODUCT_NAME = ShogibanKit_OSX;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CC2ABF551CD9DBCC00296806 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/ShogibanKitTester/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.Kiban-OSX";
+				PRODUCT_NAME = ShogibanKit_OSX;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CC2ABF3F1CD9DBAA00296806 /* Build configuration list for PBXProject "ShogibanKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC2ABF401CD9DBAA00296806 /* Debug */,
+				CC2ABF411CD9DBAA00296806 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC2ABF531CD9DBCC00296806 /* Build configuration list for PBXNativeTarget "ShogibanKitTester_OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC2ABF541CD9DBCC00296806 /* Debug */,
+				CC2ABF551CD9DBCC00296806 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CC2ABF3C1CD9DBAA00296806 /* Project object */;
+}
