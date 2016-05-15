@@ -1074,6 +1074,20 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 		return 指手列
 	}
 
+	public func 指定駒を打つことが可能な位置列(先後: 先手後手型, _ 駒種: 駒種型) -> [位置型] {
+		var 位置列 = [位置型]()
+		for 位置 in self.全位置() {
+			if 指定位置へ打つ事は可能か(先後: 先後, 指定位置: 位置, 駒種: 駒種) {
+				位置列.append(位置)
+			}
+		}
+		return 位置列
+	}
+
+	public func 指定駒を打つことが可能な指手列(先後: 先手後手型, _ 駒種: 駒種型) -> [指手型] {
+		return self.指定駒を打つことが可能な位置列(先後, 駒種).map { 指手型.打(先後: 先後, 位置: $0, 駒種: 駒種) }
+	}
+
 	// in order to avoid huge number of linear search, build a lookup dictionary from square to position
 	public func 駒から升への辞書() -> [升型: [位置型]] {
 		var 辞書 = [升型: [位置型]]()
@@ -1199,14 +1213,18 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 			switch 駒種.駒面 {
 			case .歩:
 				// TODO: 打ち歩詰め
-				return 指定位置に歩を打つ事は可能か(手番: 先後, 位置: 指定位置) // 二歩・打ち歩詰めの確認
+				if self[指定位置] == .空 {
+					return 指定位置に歩を打つ事は可能か(手番: 先後, 位置: 指定位置) // 二歩・打ち歩詰めの確認
+				}
 			default: return true
 			}
 		}
-		else { return false }
+		return false
 	}
 	
 	public func 指定位置に歩を打つ事は可能か(手番 手番: 先手後手型, 位置: 位置型) -> Bool {
+		assert(self[位置] == .空)
+
 		// 二歩のチェック
 		let 筋 = 位置.筋
 		for 段 in 段型.全段 {
