@@ -452,7 +452,7 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 		case 角: return []
 		case 飛: return []
 		case 王, 馬, 竜: return [(-1, -1), (0, -1), (1, -1),  (-1, 0), (1, 0),  (-1, 1), (0, 1), (1, 1)]
-		case 金, と, 杏, 圭, 全: return [(-1, -1), (0, -1), (1, -1),  (-1, 0), (1, 0),  (0, 1)]
+		case 金, と, 杏, 圭, 全: return [(-1, y), (0, y), (1, y),  (-1, 0), (1, 0),  (0, -y)]
 		}
 	}
 
