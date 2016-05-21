@@ -1218,14 +1218,16 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 	}
 	
 	public func 指定位置へ打つ事は可能か(先後 先後: 先手後手型, 指定位置: 位置型, 駒種: 駒種型) -> Bool {
-		if 駒種.指定段に打つ事は可能か(先後: 先後, 段: 指定位置.段) {
-			switch 駒種.駒面 {
-			case .歩:
-				// TODO: 打ち歩詰め
-				if self[指定位置] == .空 {
-					return 指定位置に歩を打つ事は可能か(手番: 先後, 位置: 指定位置) // 二歩・打ち歩詰めの確認
+		if self[指定位置] == .空 {
+			if 駒種.指定段に打つ事は可能か(先後: 先後, 段: 指定位置.段) {
+				switch 駒種.駒面 {
+				case .歩:
+					// TODO: 打ち歩詰め
+					if self[指定位置] == .空 {
+						return 指定位置に歩を打つ事は可能か(手番: 先後, 位置: 指定位置) // 二歩・打ち歩詰めの確認
+					}
+				default: return true
 				}
-			default: return true
 			}
 		}
 		return false
