@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "9EEFF582DD0B4743215440D534C53ECA6B8E6ED7",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "9EEFF582DD0B4743215440D534C53ECA6B8E6ED7" : 0,
+    "51EBB4D9063752A22D3C3C14EB20BD798AB3EA63" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "AF67D84A-9B96-4816-8FE9-F3D8F89CBBED",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "9EEFF582DD0B4743215440D534C53ECA6B8E6ED7" : "ShogibanKit\/",
+    "51EBB4D9063752A22D3C3C14EB20BD798AB3EA63" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ShogibanKit",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ShogibanKit.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:kyoshikawa\/shogiclub.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "51EBB4D9063752A22D3C3C14EB20BD798AB3EA63"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/codelynx\/ShogibanKit",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9EEFF582DD0B4743215440D534C53ECA6B8E6ED7"
+    }
+  ]
+}

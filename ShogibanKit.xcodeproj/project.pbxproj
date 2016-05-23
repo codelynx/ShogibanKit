@@ -19,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CC240ABE1CF368A3000CA82E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		CC2ABF461CD9DBCC00296806 /* ShogibanKit_OSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShogibanKit_OSX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2ABF4D1CD9DBCC00296806 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CC2ABF501CD9DBCC00296806 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -62,6 +63,7 @@
 		CC2ABF481CD9DBCC00296806 /* ShogibanKitTester */ = {
 			isa = PBXGroup;
 			children = (
+				CC240ABE1CF368A3000CA82E /* README.md */,
 				CC2E1DB71CE03ECE006151CA /* ShogibanKit */,
 				CC2E1DB21CDFBC09006151CA /* Resources */,
 				CC2E1DBD1CE03F5C006151CA /* Sources */,

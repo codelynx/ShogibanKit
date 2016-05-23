@@ -32,7 +32,7 @@ class MenuTableViewController: NSViewController, NSTableViewDataSource, NSTableV
 
 	let ランダム対戦1: (() -> String) = {
 		var string = ""
-		var 局面 = 局面型(string: 手合割型.平手初期盤面, 手番: .先手)
+		var 局面: 局面型! = 手合割型.平手.初期局面
 		print("\(局面)")
 		while let 当該局面 = 局面 {
 			let 王手列 = 局面!.王手列(当該局面.手番.敵方)

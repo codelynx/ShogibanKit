@@ -1,6 +1,6 @@
 # ShogibanKit Framework
 
-Shogi, or Japanese Chess, is beased on very complex rules, and it is hard to implement all basic rules.  This ShogibanKit aims to implement such complex algorism to find valid move or action, or to find out whether it is checkmate or not.  I also would like to state that ShogiKit does not provide:
+Shogi, or Japanese Chess, is beased on very complex rules, and it is hard to implement all basic rules.  This ShogibanKit aims to implement such complex algorism to find valid move or action, or to find out whether it is checkmate or not.  I also would like to state that ShogibanKit does not provide:
 
 - Any Graphical User Interface
 - Any Atificial Intelligence
@@ -77,7 +77,7 @@ enum 先手後手型 {
 ```
 
 
-## Describing Pices
+## Describing Pieces
 
 `駒型` and `駒面型` describe the pieces.  `駒型` does not have state of front and back, on the other hand `駒面型` cares about the state of front and back, or promoted or not. 
 
@@ -95,7 +95,7 @@ enum 駒面型 {
 }
 ```
 
-## Describing Captured Pices
+## Describing Captured Pieces
 
 `持駒型` describe the state of captured pices. It knows which `駒型` is captured and it's number.  By the way, even though promoted pices are captured, they cannot be used as state of promoted so are managed as `駒型`.
 
@@ -148,7 +148,17 @@ let 再現局面 = 局面(stringRepresentaion, 手番: 手番)
 ```
 
 <pre>
-後手持駒:桂|▽香|▲龍|　　|　　|　　|　　|　　|　　|▽香||　　|　　|▲金|　　|▲龍|　　|　　|　　|　　||▽歩|▲全|　　|　　|▽金|　　|▽歩|▽桂|▽歩||　　|▽歩|　　|　　|▽王|　　|▽銀|　　|　　||　　|　　|　　|▲金|▲角|　　|　　|　　|　　||　　|　　|▽香|▲歩|▲歩|▲銀|▲桂|　　|　　||▲歩|▲歩|　　|　　|　　|▲歩|▲銀|　　|▲歩||　　|　　|　　|▲金|　　|　　|　　|▲歩|　　||▲香|　　|　　|▲玉|　　|　　|　　|▽馬|　　|先手持駒:桂,歩7
+後手持駒:桂
+|▽香|▲龍|　　|　　|　　|　　|　　|　　|▽香|
+|　　|　　|▲金|　　|▲龍|　　|　　|　　|　　|
+|▽歩|▲全|　　|　　|▽金|　　|▽歩|▽桂|▽歩|
+|　　|▽歩|　　|　　|▽王|　　|▽銀|　　|　　|
+|　　|　　|　　|▲金|▲角|　　|　　|　　|　　|
+|　　|　　|▽香|▲歩|▲歩|▲銀|▲桂|　　|　　|
+|▲歩|▲歩|　　|　　|　　|▲歩|▲銀|　　|▲歩|
+|　　|　　|　　|▲金|　　|　　|　　|▲歩|　　|
+|▲香|　　|　　|▲玉|　　|　　|　　|▽馬|　　|
+先手持駒:桂,歩7
 </pre>
 
 
@@ -309,11 +319,24 @@ class MenuTableViewController: NSViewController {
 }
 ```
 
+## Some Tips
+
+In ShoogibanKit, textual expression for position can be used, and also, positions also can be printed on debug console in textual expression.  If you simply use Menlo, or Hiragino, it would not be a good experiences for programmers after all. 
+
+<img width="370" src="https://qiita-image-store.s3.amazonaws.com/0/65634/67f9459e-ba78-ab25-e72d-f0a5f1507f08.png"></img>
+
+I recommend Source Han Code JP font from Adobe.  It is free to use.  By using this font, Shogi's textual expression will be look like in source code and in debugger log.
+
+<img width="340" src="https://qiita-image-store.s3.amazonaws.com/0/65634/6e1a6e89-041a-b6cd-133a-90c0859fb1f5.png"></img>
+
+You can get the font from following URLs and try.
+https://github.com/adobe-fonts/source-han-code-jp
+
 
 ## TO DO's
 
 * Test for Check mate
-* 打ち歩詰め and other sepcial cases
+* 打ち歩詰め and other special cases
 * 千日手 and other rules
 * 局面 compaction to save and load
 * UnitTest - removed because it crashes (not sure may be Xcode issue)
