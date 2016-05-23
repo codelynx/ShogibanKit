@@ -238,17 +238,6 @@ public enum 位置型 : Int8, Equatable, CustomStringConvertible { // Hashable
 		else { return nil }
 	}
 
-/*
-	init?(筋: Int, 段: Int) {
-		if 0...8 ~= 筋 && 0...8 ~= 段 {
-			self = 位置型(rawValue: Int8(筋 * 総段数 + 段))!
-		}
-		else {
-			return nil
-		}
-	}
-*/
-
 	public init?(string: String) {
 		if let position = 位置型.記号表[string] {
 			self = position
@@ -411,7 +400,8 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 	]
 
 	static let 補助記号表: [String: 駒面型] = [
-		"王": .玉, "龍": .竜
+		"王": .玉,
+		"龍": .竜
 	]
 
 	public init?(string: String) {
@@ -882,10 +872,16 @@ public enum 升型 : Int8, CustomStringConvertible {
 // MARK: - 手合割型
 
 public enum 手合割型 {
-	case 平手 //, 香落ち, 角落ち, 飛車落ち, 飛香落ち, 二枚落ち, 四枚落ち, 六枚落ち
+	case 平手
+	case 香落ち
+	case 角落ち
+	case 飛車落ち
+	case 飛香落ち
+	case 二枚落ち
+	case 四枚落ち
+	case 六枚落ち
 
-
-	public static let 平手初期盤面: String =
+	private static let 平手初期盤面: String =
 			"▽持駒:なし\r" +
 			"|▽香|▽桂|▽銀|▽金|▽王|▽金|▽銀|▽桂|▽香|\r" +
 			"|　　|▽飛|　　|　　|　　|　　|　　|▽角|　　|\r" +
@@ -897,11 +893,34 @@ public enum 手合割型 {
 			"|　　|▲角|　　|　　|　　|　　|　　|▲飛|　　|\r" +
 			"|▲香|▲桂|▲銀|▲金|▲王|▲金|▲銀|▲桂|▲香|\r" +
 			"▲持駒:なし\r"
+
+	private func 駒落位置列() -> [位置型] {
+		switch self {
+		case 平手: return []
+		case 香落ち: return [.９九]
+		case 角落ち: return [.８八]
+		case 飛車落ち: return [.２八]
+		case 飛香落ち: return [.２八, .９九]
+		case 二枚落ち: return [.２八, .８八]
+		case 四枚落ち: return [.２八, .８八, .９九, .１九]
+		case 六枚落ち: return [.２八, .８八, .９九, .１九, .２九, .８九]
+		}
+	}
+
+	var 初期局面: 局面型 {
+		let 局面 = 局面型(string: 手合割型.平手初期盤面, 手番: .先手)!
+		for 位置 in 駒落位置列() {
+			局面[位置] = .空
+		}
+		return 局面
+	}
+
 }
 
 // MARK: - 終局区分型
 
 public enum 終局理由型: CustomStringConvertible {
+
 	case 投了
 	case 詰み
 	case 反則
@@ -910,47 +929,51 @@ public enum 終局理由型: CustomStringConvertible {
 	case 千日手
 	case 引き分け
 
+	private static let 記号表 : [String: 終局理由型] = [
+		"投了": .投了, "詰み": .詰み, "反則": .反則, "玉取り": .玉取り, "持将棋": .持将棋, "千日手": .千日手, "引き分け": .引き分け
+	]
+
 	public var description: String {
-		switch self {
-		case .投了: return "投了"
-		case .詰み: return "詰み"
-		case .反則: return "反則"
-		case .玉取り: return "玉取り"
-		case .持将棋: return "持将棋"
-		case .千日手: return "千日手"
-		case .引き分け: return "引き分け"
+		for (key, value) in 終局理由型.記号表 {
+			if self == value {
+				return key
+			}
 		}
+		fatalError()
 	}
 	
 	init?(string: String) {
-		switch string {
-		case "投了": self = 終局理由型.投了
-		case "詰み": self = 終局理由型.詰み
-		case "反則": self = 終局理由型.反則
-		case "玉取り": self = 終局理由型.玉取り
-		case "持将棋": self = 終局理由型.持将棋
-		case "千日手": self = 終局理由型.千日手
-		case "引き分け": self = 終局理由型.引き分け
-		default: return nil
+		for (key, value) in 終局理由型.記号表 {
+			if key == string {
+				self = value
+				return
+			}
 		}
+		return nil
 	}
 }
 
 // MARK: - 指手型
 
 public enum 指手型: CustomStringConvertible {
+
 	case 動(先後: 先手後手型, 移動前の位置: 位置型, 移動後の位置: 位置型, 移動後の駒面: 駒面型)
 	case 打(先後: 先手後手型, 位置:位置型, 駒種:駒種型)
-	case 終(終局理由: 終局理由型, 勝者: 先手後手型?)
+	case 終(終局理由: 終局理由型?, 勝者: 先手後手型?)
 
 	public var description: String {
 		switch self {
 		case .動(let 先後, let 移動前の位置, let 移動後の位置, let 移動後の駒面):
-			return "\(先後)\(移動前の位置)->\(移動後の位置)\(移動後の駒面)"
+			return "\(先後)\(移動後の位置)\(移動後の駒面)(\(移動前の位置))"
 		case .打(let 先後, let 位置, let 駒種):
 			return "\(先後)\(位置)\(駒種)打"
 		case .終(let 終局理由, let 勝者):
-			return "終局: \(終局理由)" + (勝者 != nil ? "\(勝者)の勝ち" : "なし")
+			if let 勝者 = 勝者 {
+				return "まで\(勝者)の勝ち(\(終局理由))"
+			}
+			else {
+				return "まで勝負つかず(\(終局理由))"
+			}
 		}
 	}
 }
@@ -969,6 +992,7 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 	private var _勝者: 先手後手型? = nil
 	var 勝者: 先手後手型? { return _勝者 }
 	var 終局: Bool { return _勝者 != nil }
+	var 手数: Int?
 
 	public init() {
 		全升 = [升型](count: 総升数, repeatedValue: 升型.空)
@@ -976,16 +1000,18 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 		手番 = .先手
 	}
 
-	public init(手番: 先手後手型, 全升: [升型], 持駒: [先手後手型: 持駒型]) {
+	public init(手番: 先手後手型, 全升: [升型], 持駒: [先手後手型: 持駒型], 手数: Int? = nil) {
 		self.全升 = 全升
 		self.持駒辞書 = 持駒
 		self.手番 = 手番
+		self.手数 = 手数
 	}
 
-	public init?(string: String, 手番: 先手後手型) {
+	public init?(string: String, 手番: 先手後手型, 手数: Int? = nil) {
 		全升 = [升型](count: 総升数, repeatedValue: 升型.空)
 		持駒辞書 = [.先手: 持駒型(), .後手: 持駒型()]
 		self.手番 = 手番
+		self.手数 = 手数
 
 		var lines = string.lines()
 		if lines.count >= (9 + 2) {
@@ -1178,8 +1204,14 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 	}
 
 	public func 指手を実行(指手: 指手型) -> 局面型? {
+		print(指手)
+	
 		let 局面 = 局面型(局面: self)
 		局面.前の局面 = self
+		if let 手数 = self.手数 {
+			局面.手数 = 手数 + 1
+		}
+		
 		switch 指手 {
 		case .動(let 先手後手, let 移動前の位置, let 移動後の位置, let 移動後の駒面):
 			let 移動前のマス = self[移動前の位置]
