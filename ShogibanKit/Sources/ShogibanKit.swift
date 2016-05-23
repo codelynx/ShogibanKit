@@ -55,6 +55,11 @@ class KibanScanner : NSObject {
 				return value
 			}
 		}
+		for (key, value) in 駒面型.補助記号表 {
+			if scanner.scanString(key, intoString: nil) {
+				return value
+			}
+		}
 		return nil
 	}
 
@@ -314,10 +319,10 @@ public func == (lhs: 位置型, rhs: 位置型) -> Bool {
 // MARK: - 駒種型
 
 public enum 駒種型 : Int8, CustomStringConvertible {
-	case 歩, 香, 桂, 銀, 金, 角, 飛, 王
+	case 歩, 香, 桂, 銀, 金, 角, 飛, 玉
 
 	private static let 記号表: [String: 駒種型] = [
-		"王": .王, "飛": .飛, "角": .角, "金": .金, "銀": .銀, "桂": .桂, "香": .香, "歩": .歩,
+		"王": .玉, "飛": .飛, "角": .角, "金": .金, "銀": .銀, "桂": .桂, "香": .香, "歩": .歩,
 	]
 
 	public init?(string: String) {
@@ -347,14 +352,14 @@ public enum 駒種型 : Int8, CustomStringConvertible {
 		case 金: return .金
 		case 角: return .角
 		case 飛: return .飛
-		case 王: return .王
+		case 玉: return .玉
 		}
 	}
 
 	public var 成る事が可能な駒か: Bool {
 		switch self {
 		case 歩, 香, 桂, 銀, 角, 飛: return true
-		case 金, 王: return false
+		case 金, 玉: return false
 		}
 	}
 
@@ -363,7 +368,7 @@ public enum 駒種型 : Int8, CustomStringConvertible {
 		case 歩: return 18
 		case 香, 桂, 銀, 金: return 4
 		case 角, 飛: return 2
-		case 王: return 2
+		case 玉: return 2
 		}
 	}
 
@@ -385,7 +390,7 @@ public enum 駒種型 : Int8, CustomStringConvertible {
 // MARK: - 駒面型
 
 public enum 駒面型 : Int8, CustomStringConvertible {
-	case 歩, 香, 桂, 銀, 金, 角, 飛, 王
+	case 歩, 香, 桂, 銀, 金, 角, 飛, 玉
 	case と, 杏, 圭, 全, 馬, 竜
 
 	static let 記号表: [String: 駒面型] = [
@@ -396,17 +401,24 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 		"金": .金,
 		"角": .角,
 		"飛": .飛,
-		"王": .王, "玉": .王,
+		"玉": .玉,
 		"と": .と,
 		"杏": .杏,
 		"圭": .圭,
 		"全": .全,
 		"馬": .馬,
-		"竜": .竜, "龍": .竜
+		"竜": .竜,
+	]
+
+	static let 補助記号表: [String: 駒面型] = [
+		"王": .玉, "龍": .竜
 	]
 
 	public init?(string: String) {
 		if let 駒面 = 駒面型.記号表[string] {
+			self = 駒面
+		}
+		else if let 駒面 = 駒面型.補助記号表[string] {
 			self = 駒面
 		}
 		else {
@@ -423,12 +435,17 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 		case 金: return .金
 		case 角, 馬: return .角
 		case 飛, 竜: return .飛
-		case 王: return .王
+		case 玉: return .玉
 		}
 	}
 
 	public var string: String {
 		for (key, value) in 駒面型.記号表 {
+			if self == value {
+				return key
+			}
+		}
+		for (key, value) in 駒面型.補助記号表 {
 			if self == value {
 				return key
 			}
@@ -451,7 +468,7 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 		case 銀: return [(-1, y), (0, y), (1, y),  (-1, -y), (1, -y)]
 		case 角: return []
 		case 飛: return []
-		case 王, 馬, 竜: return [(-1, -1), (0, -1), (1, -1),  (-1, 0), (1, 0),  (-1, 1), (0, 1), (1, 1)]
+		case 玉, 馬, 竜: return [(-1, -1), (0, -1), (1, -1),  (-1, 0), (1, 0),  (-1, 1), (0, 1), (1, 1)]
 		case 金, と, 杏, 圭, 全: return [(-1, y), (0, y), (1, y),  (-1, 0), (1, 0),  (0, -y)]
 		}
 	}
@@ -476,7 +493,7 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 		case 銀: return 全
 		case 角: return 馬
 		case 飛: return 竜
-		case 金, 王: fatalError("should have checked")
+		case 金, 玉: fatalError("should have checked")
 		case と, 杏, 圭, 全, 馬, 竜: return self
 		}
 	}
@@ -484,7 +501,7 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 	public var 成る事は可能か: Bool {
 		switch self {
 		case 歩, 香, 桂, 銀, 角, 飛: return true
-		case 金, 王, と, 杏, 圭, 全, 馬, 竜: return false
+		case 金, 玉, と, 杏, 圭, 全, 馬, 竜: return false
 		}
 	}
 
@@ -625,7 +642,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		case .金: self.金 += 1; assert(self.金 <= 4)
 		case .角: self.角 += 1; assert(self.角 <= 2)
 		case .飛: self.飛 += 1; assert(self.飛 <= 2)
-		case .王: break /* aah! nice try! */
+		case .玉: break /* aah! nice try! */
 		}
 	}
 
@@ -638,7 +655,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		case .金: self.金 -= 1; assert(self.金 >= 0)
 		case .角: self.角 -= 1; assert(self.角 >= 0)
 		case .飛: self.飛 -= 1; assert(self.飛 >= 0)
-		case .王: break /* aah! nice try! */
+		case .玉: break /* aah! nice try! */
 		}
 	}
 
@@ -749,7 +766,7 @@ public enum 升型 : Int8, CustomStringConvertible {
 	case 先歩, 先香, 先桂, 先銀, 先金, 先角, 先飛, 先玉
 	case 先と, 先杏, 先圭, 先全, 先馬, 先竜
 
-	case 後歩, 後香, 後桂, 後銀, 後金, 後角, 後飛, 後王
+	case 後歩, 後香, 後桂, 後銀, 後金, 後角, 後飛, 後玉
 	case 後と, 後杏, 後圭, 後全, 後馬, 後竜
 
 	static let max = 29
@@ -763,7 +780,7 @@ public enum 升型 : Int8, CustomStringConvertible {
 		case (.先手, .金): self = .先金
 		case (.先手, .角): self = .先角
 		case (.先手, .飛): self = .先飛
-		case (.先手, .王): self = .先玉
+		case (.先手, .玉): self = .先玉
 		case (.先手, .と): self = .先と
 		case (.先手, .杏): self = .先杏
 		case (.先手, .圭): self = .先圭
@@ -778,7 +795,7 @@ public enum 升型 : Int8, CustomStringConvertible {
 		case (.後手, .金): self = .後金
 		case (.後手, .角): self = .後角
 		case (.後手, .飛): self = .後飛
-		case (.後手, .王): self = .後王
+		case (.後手, .玉): self = .後玉
 		case (.後手, .と): self = .後と
 		case (.後手, .杏): self = .後杏
 		case (.後手, .圭): self = .後圭
@@ -796,7 +813,7 @@ public enum 升型 : Int8, CustomStringConvertible {
 		switch self {
 		case 空: return nil
 		case 先歩, 先香, 先桂, 先銀, 先金, 先角, 先飛, 先玉, 先と, 先杏, 先圭, 先全, 先馬, 先竜: return .先手
-		case 後歩, 後香, 後桂, 後銀, 後金, 後角, 後飛, 後王, 後と, 後杏, 後圭, 後全, 後馬, 後竜: return .後手
+		case 後歩, 後香, 後桂, 後銀, 後金, 後角, 後飛, 後玉, 後と, 後杏, 後圭, 後全, 後馬, 後竜: return .後手
 		}
 	}
 
@@ -809,7 +826,7 @@ public enum 升型 : Int8, CustomStringConvertible {
 		case 先金, 後金: return .金
 		case 先角, 後角: return .角
 		case 先飛, 後飛: return .飛
-		case 先玉, 後王: return .王
+		case 先玉, 後玉: return .玉
 
 		case 先と, 後と: return .と
 		case 先杏, 後杏: return .杏
@@ -826,15 +843,25 @@ public enum 升型 : Int8, CustomStringConvertible {
 
 	private static let 記号表 : [String: 升型] = [
 		"　　": .空,
-		"▲歩": .先歩, "▲香": .先香, "▲桂": .先桂, "▲銀": .先銀, "▲金": .先金, "▲角": .先角, "▲飛": .先飛, "▲玉": .先玉,
+
+		"▲歩": .先歩, "▲香": .先香, "▲桂": .先桂, "▲銀": .先銀, "▲金": .先金, "▲角": .先角, "▲飛": .先飛, "▲≈": .先玉,
 		"▲と": .先と, "▲杏": .先杏, "▲圭": .先圭, "▲全": .先全, "▲馬": .先馬, "▲竜": .先竜,
-		"▽歩": .後歩, "▽香": .後香, "▽桂": .後桂, "▽銀": .後銀, "▽金": .後金, "▽角": .後角, "▽飛": .後飛, "▽王": .後王,
+
+		"▽歩": .後歩, "▽香": .後香, "▽桂": .後桂, "▽銀": .後銀, "▽金": .後金, "▽角": .後角, "▽飛": .後飛, "▽王": .後玉,
 		"▽と": .後と, "▽杏": .後杏, "▽圭": .後圭, "▽全": .後全, "▽馬": .後馬, "▽竜": .後竜,
-		"▲王": .先玉, "▲龍": .先竜, "▽龍": .後竜,
+	]
+
+	private static let 補助記号表 : [String: 升型] = [
+		"▲王": .先玉, "▽玉": .後玉, "▲龍": .先竜, "▽龍": .後竜,
 	]
 	
 	public var string: String {
 		for (key, value) in 升型.記号表 {
+			if self == value {
+				return key
+			}
+		}
+		for (key, value) in 升型.補助記号表 {
 			if self == value {
 				return key
 			}
@@ -1161,7 +1188,7 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 				if let 移動後の駒面 = 移動後のマス.駒面, 移動後のマスの駒の先手後手 = 移動後のマス.先後 {
 					// 相手の駒を取る
 					assert(移動後のマスの駒の先手後手 == 先手後手.敵方)
-					if 移動後の駒面.駒種 == .王 { // 相手の王を取る
+					if 移動後の駒面.駒種 == .玉 { // 相手の玉を取る
 						return nil
 					}
 					局面.持駒辞書[先手後手]!.駒を加える(移動後の駒面.駒種)
@@ -1335,9 +1362,9 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 
 	public func 王手列(手番: 先手後手型) -> [指手型] {
 		let 辞書 = 駒から升への辞書()
-		let 王 = 升型(先後: 手番, 駒面: .王)
+		let 玉 = 升型(先後: 手番, 駒面: .玉)
 		var 指手列 = [指手型]()
-		if let 王の位置 = 辞書[王]?.first {
+		if let 王の位置 = 辞書[玉]?.first {
 			let 敵方 = 手番.敵方
 			for 敵駒の位置 in 指定位置へ移動可能な全ての駒の位置列(王の位置, 敵方) {
 				if let 駒面 = self[敵駒の位置].駒面 { // 王手
@@ -1355,7 +1382,7 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 		for 王手 in 王手列(手番) {
 			if case .動(let 先後, let 移動前の位置, let 移動後の位置, let 移動後の駒面) = 王手 {
 				assert(先後 == 敵方)
-				assert(self[移動後の位置].駒面 == .王)
+				assert(self[移動後の位置].駒面 == .玉)
 				
 				// 王手をかけている敵駒を取る事ができるか？
 				for 指手 in 指定位置へ移動可能な全ての駒を移動させる指手(移動前の位置, 手番) {
