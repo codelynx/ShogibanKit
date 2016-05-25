@@ -16,6 +16,7 @@
 		CC2E1DC31CE03F5C006151CA /* ExperimentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DBF1CE03F5C006151CA /* ExperimentViewController.swift */; };
 		CC2E1DC41CE03F5C006151CA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DC01CE03F5C006151CA /* MainViewController.swift */; };
 		CC2E1DC51CE03F5C006151CA /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DC11CE03F5C006151CA /* MenuTableViewController.swift */; };
+		CC6A46EC1CF48ABC00849313 /* ShogibanKit+image.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC6A46EB1CF48ABC00849313 /* ShogibanKit+image.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		CC2E1DBF1CE03F5C006151CA /* ExperimentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentViewController.swift; sourceTree = "<group>"; };
 		CC2E1DC01CE03F5C006151CA /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		CC2E1DC11CE03F5C006151CA /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
+		CC6A46EB1CF48ABC00849313 /* ShogibanKit+image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ShogibanKit+image.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				CC2E1DB91CE03ECE006151CA /* ShogibanKit.swift */,
+				CC6A46EB1CF48ABC00849313 /* ShogibanKit+image.swift */,
 				CC2E1DBA1CE03ECE006151CA /* String+lines.swift */,
 			);
 			path = Sources;
@@ -186,6 +189,7 @@
 				CC2E1DBC1CE03ECE006151CA /* String+lines.swift in Sources */,
 				CC2E1DC21CE03F5C006151CA /* AppDelegate.swift in Sources */,
 				CC2E1DC41CE03F5C006151CA /* MainViewController.swift in Sources */,
+				CC6A46EC1CF48ABC00849313 /* ShogibanKit+image.swift in Sources */,
 				CC2E1DBB1CE03ECE006151CA /* ShogibanKit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
