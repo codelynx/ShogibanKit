@@ -324,12 +324,7 @@ public enum 駒種型 : Int8, CustomStringConvertible {
 	}
 
 	public var description: String {
-		for (key, value) in 駒種型.記号表 {
-			if value == self {
-				return key
-			}
-		}
-		return "huh?"
+		return string
 	}
 	
 	public var 駒面: 駒面型 {
@@ -373,6 +368,14 @@ public enum 駒種型 : Int8, CustomStringConvertible {
 		}
 	}
 
+	public var string: String {
+		for (key, value) in 駒種型.記号表 {
+			if value == self {
+				return key
+			}
+		}
+		fatalError()
+	}
 }
 
 
@@ -510,22 +513,24 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 
 public struct 持駒型: Equatable, CustomStringConvertible {
 	// can be dictionary but this saves some memoery foot print
-	var 歩, 香, 桂, 銀, 金, 角, 飛: Int8
+	var 歩, 香, 桂, 銀, 金, 角, 飛, 玉: Int8
 	
-	public init(歩: Int8, 香: Int8, 桂: Int8, 銀: Int8, 金: Int8, 角: Int8, 飛: Int8) {
+	public init(歩: Int8, 香: Int8, 桂: Int8, 銀: Int8, 金: Int8, 角: Int8, 飛: Int8, 玉: Int8 = 0) {
 		self.歩 = 歩 ; self.香 = 香 ; self.桂 = 桂 ;
 		self.銀 = 銀 ; self.金 = 金
 		self.角 = 角 ; self.飛 = 飛
+		self.玉 = 玉
 	}
 
-	public init(歩: Int, 香: Int, 桂: Int, 銀: Int, 金: Int, 角: Int, 飛: Int) {
+	public init(歩: Int, 香: Int, 桂: Int, 銀: Int, 金: Int, 角: Int, 飛: Int, 玉: Int8 = 0) {
 		self.歩 = Int8(歩) ; self.香 = Int8(香); self.桂 = Int8(桂)
 		self.銀 = Int8(銀) ; self.金 = Int8(金)
 		self.角 = Int8(角) ; self.飛 = Int8(飛)
+		self.玉 = Int8(玉)
 	}
 
 	public init() {
-		self.init(歩: 0, 香: 0, 桂: 0, 銀: 0, 金: 0, 角: 0, 飛: 0)
+		self.init(歩: 0, 香: 0, 桂: 0, 銀: 0, 金: 0, 角: 0, 飛: 0, 玉: 0)
 	}
 
 	public init(string: String) {
@@ -548,12 +553,12 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 	}
 
 	static let 記号表: [String: 駒種型] = [
-		"飛": .飛, "角": .角, "金": .金, "銀": .銀, "桂": .桂, "香": .香, "歩": .歩
+		"玉": .玉, "飛": .飛, "角": .角, "金": .金, "銀": .銀, "桂": .桂, "香": .香, "歩": .歩
 	]
 
 	public var dictionaryRepresentation: [String: Int8] {
 		return [
-			"飛": self.飛, "角": self.角, "金": self.金, "銀": self.銀, "桂": self.桂, "香": self.香, "歩": self.歩
+			"玉": self.玉, "飛": self.飛, "角": self.角, "金": self.金, "銀": self.銀, "桂": self.桂, "香": self.香, "歩": self.歩
 		]
 	}
 
@@ -572,9 +577,12 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		}
 
 		var strings = [String]()
-		for (key, value) in self.dictionaryRepresentation {
-			if let string = symbolWithCount(key, count: value) {
-				strings.append(string)
+		let 持駒情報 = [(玉, 駒種型.玉), (飛, 駒種型.飛), (角, 駒種型.角), (金, 駒種型.金), (銀, 駒種型.銀), (桂, 駒種型.桂), (香, 駒種型.香), (歩, 駒種型.歩)]
+		for (駒数, 駒) in 持駒情報 {
+			if 駒数 > 0 {
+				if let string = symbolWithCount(駒.string, count: 駒数) {
+					strings.append(string)
+				}
 			}
 		}
 
@@ -602,7 +610,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 			case .金: return Int(金)
 			case .角: return Int(角)
 			case .飛: return Int(飛)
-			default: return 0
+			case .玉: return Int(玉)
 			}
 		}
 		set {
@@ -614,7 +622,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 			case .金: 金 = Int8(newValue)
 			case .角: 角 = Int8(newValue)
 			case .飛: 飛 = Int8(newValue)
-			default: break
+			case .玉: 玉 = Int8(newValue)
 			}
 		}
 	}
@@ -632,7 +640,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		case .金: self.金 += 1; assert(self.金 <= 4)
 		case .角: self.角 += 1; assert(self.角 <= 2)
 		case .飛: self.飛 += 1; assert(self.飛 <= 2)
-		case .玉: break /* aah! nice try! */
+		case .玉: self.玉 += 1
 		}
 	}
 
@@ -645,13 +653,14 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		case .金: self.金 -= 1; assert(self.金 >= 0)
 		case .角: self.角 -= 1; assert(self.角 >= 0)
 		case .飛: self.飛 -= 1; assert(self.飛 >= 0)
-		case .玉: break /* aah! nice try! */
+		case .玉: self.玉 -= 1
 		}
 	}
 
 	public var integerValue: UInt32 {
 		var value: UInt64 = 0
-		value += UInt64(飛)
+		value += UInt64(玉)
+		value *= UInt64(駒種型.飛.駒数+1) ; value += UInt64(飛)
 		value *= UInt64(駒種型.角.駒数+1) ; value += UInt64(角)
 		value *= UInt64(駒種型.金.駒数+1) ; value += UInt64(金)
 		value *= UInt64(駒種型.銀.駒数+1) ; value += UInt64(銀)
@@ -670,11 +679,12 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		銀 = Int8(value % UInt64(駒種型.銀.駒数+1)) ; value /= UInt64(駒種型.銀.駒数+1)
 		金 = Int8(value % UInt64(駒種型.金.駒数+1)) ; value /= UInt64(駒種型.金.駒数+1)
 		角 = Int8(value % UInt64(駒種型.角.駒数+1)) ; value /= UInt64(駒種型.角.駒数+1)
-		飛 = Int8(value % UInt64(駒種型.飛.駒数+1))
+		飛 = Int8(value % UInt64(駒種型.飛.駒数+1)) ; value /= UInt64(駒種型.飛.駒数+1)
+		玉 = Int8(value % UInt64(駒種型.玉.駒数+1))
 	}
 
 	public func 全持駒() -> [駒種型] {
-		let 持駒情報 = [(歩, 駒種型.歩), (香, 駒種型.香), (桂, 駒種型.桂), (銀, 駒種型.銀), (金, 駒種型.金), (角, 駒種型.角), (飛, 駒種型.飛)]
+		let 持駒情報 = [(歩, 駒種型.歩), (香, 駒種型.香), (桂, 駒種型.桂), (銀, 駒種型.銀), (金, 駒種型.金), (角, 駒種型.角), (飛, 駒種型.飛), (玉, 駒種型.玉)]
 		var 持駒 = [駒種型]()
 		for (駒数, 駒) in 持駒情報 {
 			持駒 += Array<駒種型>(count: Int(駒数), repeatedValue: 駒)
@@ -683,7 +693,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 	}
 
 	public func 持駒種類列() -> [駒種型] {
-		let 持駒情報 = [(飛, 駒種型.飛), (角, 駒種型.角), (金, 駒種型.金), (銀, 駒種型.銀), (桂, 駒種型.桂), (香, 駒種型.香), (歩, 駒種型.歩)]
+		let 持駒情報 = [(玉, 駒種型.玉), (飛, 駒種型.飛), (角, 駒種型.角), (金, 駒種型.金), (銀, 駒種型.銀), (桂, 駒種型.桂), (香, 駒種型.香), (歩, 駒種型.歩)]
 		var 駒列 = [駒種型]()
 		for (駒数, 駒) in 持駒情報 {
 			if 駒数 > 0 { 駒列.append(駒) }
@@ -694,7 +704,8 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 }
 
 public func == (lhs: 持駒型, rhs: 持駒型) -> Bool {
-	return lhs.歩 == rhs.歩 && lhs.香 == rhs.香 && lhs.桂 == rhs.桂 && lhs.銀 == rhs.銀 && lhs.金 == rhs.金 && lhs.角 == rhs.角 && lhs.飛 == rhs.飛
+	return	lhs.歩 == rhs.歩 && lhs.香 == rhs.香 && lhs.桂 == rhs.桂 && lhs.銀 == rhs.銀 && lhs.金 == rhs.金 &&
+			lhs.角 == rhs.角 && lhs.飛 == rhs.飛 && lhs.玉 == rhs.玉
 }
 
 // MARK: - 先手後手型
@@ -977,6 +988,10 @@ public enum 指手型: CustomStringConvertible {
 		}
 	}
 }
+
+// MARK: - 双方持駒型
+
+typealias 持駒辞書型 = [先手後手型: 持駒型]
 
 // MARK: - 局面型
 
