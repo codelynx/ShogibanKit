@@ -314,6 +314,8 @@ public enum 駒種型 : Int8, CustomStringConvertible {
 		"王": .玉, "飛": .飛, "角": .角, "金": .金, "銀": .銀, "桂": .桂, "香": .香, "歩": .歩,
 	]
 
+	static var 全駒種: [駒種型] = [歩, 香, 桂, 銀, 金, 角, 飛, 玉]
+
 	public init?(string: String) {
 		if let piece = 駒種型.記号表[string] {
 			self = piece
@@ -418,6 +420,8 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 			return nil
 		}
 	}
+
+	static var 全駒面: [駒面型] = [歩, 香, 桂, 銀, 金, 角, 飛, 玉, と, 杏, 圭, 全, 馬, 竜]
 	
 	public var 駒種: 駒種型 {
 		switch self {
@@ -1101,6 +1105,11 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 			string += "先手" + captured.string + "\r"
 		}
 		return string
+	}
+
+	public subscript(先後: 先手後手型) -> 持駒型 {
+		get { return 持駒辞書[先後]! }
+		set { 持駒辞書[先後] = newValue }
 	}
 
 	public func 持駒(先後: 先手後手型) -> 持駒型 {
