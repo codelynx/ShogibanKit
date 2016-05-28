@@ -635,7 +635,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		return self.string
 	}
 
-	mutating func 駒を加える(駒: 駒種型) {
+	mutating func 加駒(駒: 駒種型) {
 		switch (駒) {
 		case .歩: self.歩 += 1; assert(self.歩 <= 18)
 		case .香: self.香 += 1; assert(self.香 <= 4)
@@ -648,7 +648,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		}
 	}
 
-	mutating func 駒を減らす(駒: 駒種型) {
+	mutating func 減駒(駒: 駒種型) {
 		switch (駒) {
 		case .歩: self.歩 -= 1; assert(self.歩 >= 0)
 		case .香: self.香 -= 1; assert(self.香 >= 0)
@@ -1247,7 +1247,7 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 					if 移動後の駒面.駒種 == .玉 { // 相手の玉を取る
 						return nil
 					}
-					局面.持駒辞書[先手後手]!.駒を加える(移動後の駒面.駒種)
+					局面.持駒辞書[先手後手]!.加駒(移動後の駒面.駒種)
 				}
 				局面[移動前の位置] = .空
 				局面[移動後の位置] = 升型(先後: 先手後手, 駒面: 移動後の駒面)
@@ -1258,7 +1258,7 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 			assert(self[位置] == .空)
 			assert(先後 == self.手番)
 			局面[位置] = 升型(先後: 先後, 駒面: 駒種.駒面)
-			局面.持駒辞書[先後]!.駒を減らす(駒種)
+			局面.持駒辞書[先後]!.減駒(駒種)
 			break
 		default:
 			break
