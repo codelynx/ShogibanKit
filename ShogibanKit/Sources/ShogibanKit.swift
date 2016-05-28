@@ -314,7 +314,8 @@ public enum 駒種型 : Int8, CustomStringConvertible {
 		"王": .玉, "飛": .飛, "角": .角, "金": .金, "銀": .銀, "桂": .桂, "香": .香, "歩": .歩,
 	]
 
-	static var 全駒種: [駒種型] = [歩, 香, 桂, 銀, 金, 角, 飛, 玉]
+//	static var 全駒種: [駒種型] = [歩, 香, 桂, 銀, 金, 角, 飛, 玉]
+	static var 全駒種: [駒種型] = [玉, 飛, 角, 金, 銀, 桂, 香, 歩]
 
 	public init?(string: String) {
 		if let piece = 駒種型.記号表[string] {
@@ -515,7 +516,7 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 
 // MARK: - 持駒型
 
-public struct 持駒型: Equatable, CustomStringConvertible {
+public class 持駒型: Equatable, CustomStringConvertible {
 	// can be dictionary but this saves some memoery foot print
 	var 歩, 香, 桂, 銀, 金, 角, 飛, 玉: Int8
 	
@@ -533,11 +534,11 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		self.玉 = Int8(玉)
 	}
 
-	public init() {
+	public convenience init() {
 		self.init(歩: 0, 香: 0, 桂: 0, 銀: 0, 金: 0, 角: 0, 飛: 0, 玉: 0)
 	}
 
-	public init(string: String) {
+	public convenience init(string: String) {
 		self.init()
 
 		// "飛角金2桂歩4", "角,銀3,香,歩", "なし"
@@ -635,7 +636,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		return self.string
 	}
 
-	mutating func 加駒(駒: 駒種型) {
+	func 加駒(駒: 駒種型) {
 		switch (駒) {
 		case .歩: self.歩 += 1; assert(self.歩 <= 18)
 		case .香: self.香 += 1; assert(self.香 <= 4)
@@ -648,7 +649,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		}
 	}
 
-	mutating func 減駒(駒: 駒種型) {
+	func 減駒(駒: 駒種型) {
 		switch (駒) {
 		case .歩: self.歩 -= 1; assert(self.歩 >= 0)
 		case .香: self.香 -= 1; assert(self.香 >= 0)
