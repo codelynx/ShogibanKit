@@ -314,7 +314,6 @@ public enum 駒種型 : Int8, CustomStringConvertible {
 		"王": .玉, "飛": .飛, "角": .角, "金": .金, "銀": .銀, "桂": .桂, "香": .香, "歩": .歩,
 	]
 
-//	static var 全駒種: [駒種型] = [歩, 香, 桂, 銀, 金, 角, 飛, 玉]
 	static var 全駒種: [駒種型] = [玉, 飛, 角, 金, 銀, 桂, 香, 歩]
 
 	public init?(string: String) {
@@ -343,10 +342,29 @@ public enum 駒種型 : Int8, CustomStringConvertible {
 		}
 	}
 
-	public var 成る事が可能な駒か: Bool {
+	public var 成駒面: 駒面型? {
 		switch self {
-		case 歩, 香, 桂, 銀, 角, 飛: return true
-		case 金, 玉: return false
+		case 歩: return .と
+		case 香: return .杏
+		case 桂: return .圭
+		case 銀: return .全
+		case 金: return nil
+		case 角: return .馬
+		case 飛: return .竜
+		case 玉: return nil
+		}
+	}
+
+	public var 駒面列: [駒面型] {
+		switch self {
+		case 歩: return [.歩, .と]
+		case 香: return [.香, .杏]
+		case 桂: return [.桂, .圭]
+		case 銀: return [.銀, .全]
+		case 金: return [.金]
+		case 角: return [.角, .馬]
+		case 飛: return [.飛, .竜]
+		case 玉: return [.玉]
 		}
 	}
 
