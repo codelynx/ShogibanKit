@@ -539,7 +539,7 @@ public class 持駒型: Equatable, CustomStringConvertible {
 	var 歩, 香, 桂, 銀, 金, 角, 飛, 玉: Int8
 	
 	public init(歩: Int8, 香: Int8, 桂: Int8, 銀: Int8, 金: Int8, 角: Int8, 飛: Int8, 玉: Int8 = 0) {
-		self.歩 = 歩 ; self.香 = 香 ; self.桂 = 桂 ;
+		self.歩 = 歩 ; self.香 = 香 ; self.桂 = 桂
 		self.銀 = 銀 ; self.金 = 金
 		self.角 = 角 ; self.飛 = 飛
 		self.玉 = 玉
@@ -550,6 +550,13 @@ public class 持駒型: Equatable, CustomStringConvertible {
 		self.銀 = Int8(銀) ; self.金 = Int8(金)
 		self.角 = Int8(角) ; self.飛 = Int8(飛)
 		self.玉 = Int8(玉)
+	}
+
+	public init(持駒: 持駒型) {
+		self.歩 = 持駒.歩 ; self.香 = 持駒.香 ; self.桂 = 持駒.桂
+		self.銀 = 持駒.銀 ; self.金 = 持駒.金
+		self.角 = 持駒.角 ; self.飛 = 持駒.飛
+		self.玉 = 持駒.玉
 	}
 
 	public convenience init() {
@@ -1039,8 +1046,10 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 	}
 
 	public init(手番: 先手後手型, 全升: [升型], 持駒: [先手後手型: 持駒型], 手数: Int? = nil) {
+		let 先手持駒 = 持駒[.先手]!
+		let 後手持駒 = 持駒[.後手]!
+		self.持駒辞書 = [.先手: 持駒型(持駒: 先手持駒), .後手: 持駒型(持駒: 後手持駒)]
 		self.全升 = 全升
-		self.持駒辞書 = 持駒
 		self.手番 = 手番
 		self.手数 = 手数
 	}
@@ -1074,8 +1083,10 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 	}
 
 	public init(局面: 局面型) {
+		let 先手持駒 = 局面.持駒辞書[.先手]!
+		let 後手持駒 = 局面.持駒辞書[.後手]!
+		self.持駒辞書 = [.先手: 持駒型(持駒: 先手持駒), .後手: 持駒型(持駒: 後手持駒)]
 		self.全升 = 局面.全升
-		self.持駒辞書 = 局面.持駒辞書
 		self.手番 = 局面.手番.敵方
 		self._勝者 = 局面._勝者
 	}
