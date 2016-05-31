@@ -534,7 +534,7 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 
 // MARK: - 持駒型
 
-public class 持駒型: Equatable, CustomStringConvertible {
+public struct 持駒型: Equatable, CustomStringConvertible {
 	// can be dictionary but this saves some memoery foot print
 	var 歩, 香, 桂, 銀, 金, 角, 飛, 玉: Int8
 	
@@ -559,11 +559,11 @@ public class 持駒型: Equatable, CustomStringConvertible {
 		self.玉 = 持駒.玉
 	}
 
-	public convenience init() {
+	public init() {
 		self.init(歩: 0, 香: 0, 桂: 0, 銀: 0, 金: 0, 角: 0, 飛: 0, 玉: 0)
 	}
 
-	public convenience init(string: String) {
+	public init(string: String) {
 		self.init()
 
 		// "飛角金2桂歩4", "角,銀3,香,歩", "なし"
@@ -661,7 +661,7 @@ public class 持駒型: Equatable, CustomStringConvertible {
 		return self.string
 	}
 
-	func 加駒(駒: 駒種型) {
+	mutating func 駒を加える(駒: 駒種型) {
 		switch (駒) {
 		case .歩: self.歩 += 1; assert(self.歩 <= 18)
 		case .香: self.香 += 1; assert(self.香 <= 4)
@@ -674,7 +674,7 @@ public class 持駒型: Equatable, CustomStringConvertible {
 		}
 	}
 
-	func 減駒(駒: 駒種型) {
+	mutating func 駒を減らす(駒: 駒種型) {
 		switch (駒) {
 		case .歩: self.歩 -= 1; assert(self.歩 >= 0)
 		case .香: self.香 -= 1; assert(self.香 >= 0)
@@ -1145,6 +1145,14 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 	public func 持駒(先後: 先手後手型) -> 持駒型 {
 		return 持駒辞書[先後]!
 	}
+	
+	public func 持駒に加える(先後: 先手後手型, _ 駒種: 駒種型) {
+		持駒辞書[先後]?.駒を加える(駒種)
+	}
+
+	public func 持駒を減らす(先後: 先手後手型, _ 駒種: 駒種型) {
+		持駒辞書[先後]?.駒を減らす(駒種)
+	}
 
 	public func 指定位置の駒の移動可能位置列(指定位置: 位置型) -> [位置型] {
 		let 指定筋 = 指定位置.筋
@@ -1260,10 +1268,10 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 	public func 指手を実行(指手: 指手型) -> 局面型? {
 		print(指手)
 	
-		let 局面 = 局面型(局面: self)
-		局面.前の局面 = self
+		let 次局面 = 局面型(局面: self)
+		次局面.前の局面 = self
 		if let 手数 = self.手数 {
-			局面.手数 = 手数 + 1
+			次局面.手数 = 手数 + 1
 		}
 		
 		switch 指手 {
@@ -1275,25 +1283,27 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 					// 相手の駒を取る
 					assert(移動後のマスの駒の先手後手 == 先手後手.敵方)
 					if 移動後の駒面.駒種 == .玉 { // 相手の玉を取る
-						return nil
+						次局面._勝者 = self.手番
 					}
-					局面.持駒辞書[先手後手]!.加駒(移動後の駒面.駒種)
+					else {
+						次局面.持駒に加える(先手後手, 移動後の駒面.駒種)
+					}
 				}
-				局面[移動前の位置] = .空
-				局面[移動後の位置] = 升型(先後: 先手後手, 駒面: 移動後の駒面)
+				次局面[移動前の位置] = .空
+				次局面[移動後の位置] = 升型(先後: 先手後手, 駒面: 移動後の駒面)
 			}
 			else { /*論理エラー*/ }
 			break
 		case .打(let 先後, let 位置, let 駒種):
 			assert(self[位置] == .空)
 			assert(先後 == self.手番)
-			局面[位置] = 升型(先後: 先後, 駒面: 駒種.駒面)
-			局面.持駒辞書[先後]!.減駒(駒種)
+			次局面[位置] = 升型(先後: 先後, 駒面: 駒種.駒面)
+			次局面.持駒を減らす(先後, 駒種)
 			break
 		default:
 			break
 		}
-		return 局面
+		return 次局面
 	}
 
 
@@ -1374,7 +1384,6 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 			if 駒種.指定段に打つ事は可能か(先後: 先後, 段: 指定位置.段) {
 				switch 駒種.駒面 {
 				case .歩:
-					// TODO: 打ち歩詰め
 					if self[指定位置] == .空 {
 						return 指定位置に歩を打つ事は可能か(手番: 先後, 位置: 指定位置) // 二歩・打ち歩詰めの確認
 					}
