@@ -1036,7 +1036,9 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 
 	private var _勝者: 先手後手型? = nil
 	var 勝者: 先手後手型? { return _勝者 }
-	var 終局: Bool { return _勝者 != nil }
+	var 終局: Bool {
+		return _勝者 != nil || self.詰みか
+	}
 	var 手数: Int?
 
 	public init() {
@@ -1265,7 +1267,7 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 		return 位置列
 	}
 
-	public func 指手を実行(指手: 指手型) -> 局面型? {
+	public func 指手を実行(指手: 指手型) -> 局面型 {
 		print(指手)
 	
 		let 次局面 = 局面型(局面: self)
@@ -1409,7 +1411,7 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 
 		// 打ち歩詰め
 		let 指手 = 指手型.打(先後: 手番, 位置: 位置, 駒種: .歩)
-		if !self.指手を実行(指手)!.詰みか() { return false }
+		if !self.指手を実行(指手).詰みか { return false }
 		
 		return true
 	}
@@ -1471,31 +1473,35 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 		return 指手列
 	}
 
-	public func 詰みか() -> Bool {
+	public lazy var 詰みか: Bool = {
 		// 手番の王は詰みか？
+		let 手番 = self.手番
 		let 敵方 = self.手番.敵方
-		for 王手 in 王手列(手番) {
+		let 王手列 = self.王手列(手番)
+		for 王手 in 王手列 {
 			if case .動(let 先後, let 移動前の位置, let 移動後の位置, let 移動後の駒面) = 王手 {
 				assert(先後 == 敵方)
 				assert(self[移動後の位置].駒面 == .玉)
 				
 				// 王手をかけている敵駒を取る事ができるか？
-				for 指手 in 指定位置へ移動可能な全ての駒を移動させる指手(移動前の位置, 手番) {
-					if let 次局面 = self.指手を実行(指手) where 次局面.王手列(手番).count == 0 {
+				for 指手 in self.指定位置へ移動可能な全ての駒を移動させる指手(移動前の位置, 手番) {
+					if self.指手を実行(指手).王手列(手番).count == 0 {
 						return false // 一つでも回避できれば詰みではない
 					}
 				}
 
 				// 王の逃げ道はあるか
-				for 指手 in 指定位置の駒の移動可能指手列(移動後の位置) {
-					if let 次局面 = 指手を実行(指手) where 次局面.王手列(手番).count == 0 {
+				for 指手 in self.指定位置の駒の移動可能指手列(移動後の位置) {
+					if self.指手を実行(指手).王手列(手番).count == 0 {
 						return false // 一つでも回避できれば詰みではない
 					}
 				}
+				self._勝者 = 敵方
+				return true
 			}
 		}
-		return true
-	}
+		return false
+	}()
 
 	public func 全位置() -> [位置型] {
 		// 玉の周りや、角、飛など優先順位に応じて、探索する順序を決めるベキ？
