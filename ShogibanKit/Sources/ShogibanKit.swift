@@ -1411,7 +1411,9 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 
 		// 打ち歩詰め
 		let 指手 = 指手型.打(先後: 手番, 位置: 位置, 駒種: .歩)
-		if !self.指手を実行(指手).詰みか { return false }
+		if self.指手を実行(指手).詰みか {
+			return false
+		}
 		
 		return true
 	}
