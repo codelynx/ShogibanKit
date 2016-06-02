@@ -3,6 +3,7 @@
 //  ZKit
 //
 //  Copyright (c) 2015 Kaz Yoshikawa.
+//
 //	This software may be modified and distributed under the terms of the MIT license.
 //
 

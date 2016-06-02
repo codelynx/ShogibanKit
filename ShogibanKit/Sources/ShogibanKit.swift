@@ -11,74 +11,6 @@
 import Foundation
 
 
-
-class KibanScanner : NSObject {
-
-	var scanner: NSScanner
-
-	init(string: String) {
-		scanner = NSScanner(string: string)
-		scanner.charactersToBeSkipped = NSCharacterSet.whitespaceCharacterSet()
-	}
-	
-	func scan先手後手() -> 先手後手型? {
-		for (key, value) in 先手後手型.記号表 {
-			var string: NSString? = nil
-			if scanner.scanString(key, intoString: &string) {
-				return value
-			}
-		}
-		return nil
-	}
-
-	func scan持駒() -> 持駒型? {
-		var captured = 持駒型()
-		let _ = self.scan先手後手()
-		scanner.scanString("持駒:", intoString: nil)
-		if !scanner.scanString("なし", intoString: nil) {
-			for (key, value) in 駒種型.記号表 {
-				var string: NSString? = nil
-				var count: Int = 1
-				if scanner.scanString(key, intoString: &string) {
-					scanner.scanInteger(&count)
-					captured[value] = count
-					scanner.scanString(",", intoString: nil)
-				}
-			}
-		}
-		return captured
-	}
-
-	func scan駒面() -> 駒面型? {
-		for (key, value) in 駒面型.記号表 {
-			if scanner.scanString(key, intoString: nil) {
-				return value
-			}
-		}
-		for (key, value) in 駒面型.補助記号表 {
-			if scanner.scanString(key, intoString: nil) {
-				return value
-			}
-		}
-		return nil
-	}
-
-	func scanSquare() -> 升型? {
-		//var string: NSString? = nil
-		if let 先手後手 = scan先手後手(), 駒面 = scan駒面() {
-			return 升型(先後: 先手後手, 駒面: 駒面)
-		}
-		/* - following code somehow not working "　" zenkaku-space
-		else if scanner.scanCharactersFromSet(NSCharacterSet(charactersInString: "　"), intoString: nil) {
-			return Square()
-		} */
-		else {
-			return 升型()
-		}
-	}
-	
-}
-
 let 総升数 = 81
 let 総筋数 = 9
 let 総段数 = 9
@@ -133,6 +65,18 @@ public func - (lhs: 筋型, rhs: Int) -> 筋型? {
 	return 筋型(rawValue: lhs.rawValue - rhs)
 }
 
+extension NSScanner {
+	public func scan筋() -> 筋型? {
+		for (記号, 筋) in 筋型.記号表 {
+			if let _ = self.scanString(記号) {
+				return 筋
+			}
+		}
+		return nil
+	}
+}
+
+
 // MARK: - 段型
 
 public enum 段型 : Int8, CustomStringConvertible { // top -> bottom
@@ -185,6 +129,17 @@ public func + (lhs: 段型, rhs: Int) -> 段型? {
 
 public func - (lhs: 段型, rhs: Int) -> 段型? {
 	return 段型(rawValue: lhs.rawValue - rhs)
+}
+
+extension NSScanner {
+	public func scan段() -> 段型? {
+		for (記号, 段) in 段型.記号表 {
+			if let _ = self.scanString(記号) {
+				return 段
+			}
+		}
+		return nil
+	}
 }
 
 
@@ -304,6 +259,15 @@ public func == (lhs: 位置型, rhs: 位置型) -> Bool {
 	return lhs.rawValue == rhs.rawValue
 }
 
+extension NSScanner {
+	public func scan位置() -> 位置型? {
+		if let 筋 = self.scan筋(), let 段 = self.scan段() {
+			return 位置型(筋: 筋, 段: 段)
+		}
+		return nil
+	}
+}
+
 
 // MARK: - 駒種型
 
@@ -396,6 +360,17 @@ public enum 駒種型 : Int8, CustomStringConvertible {
 			}
 		}
 		fatalError()
+	}
+}
+
+extension NSScanner {
+	public func scan駒種() -> 駒種型? {
+		for (記号, 駒種) in 駒種型.記号表 {
+			if let _ = self.scanString(記号) {
+				return 駒種
+			}
+		}
+		return nil
 	}
 }
 
@@ -528,8 +503,20 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 		}
 	}
 
-	
 }
+
+extension NSScanner {
+	public func scan駒面() -> 駒面型? {
+		for (記号, 駒面) in 駒面型.記号表 {
+			if let _ = self.scanString(記号) {
+				return 駒面
+			}
+		}
+		return nil
+	}
+}
+
+
 
 
 // MARK: - 持駒型
@@ -567,19 +554,16 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		self.init()
 
 		// "飛角金2桂歩4", "角,銀3,香,歩", "なし"
-		let scanner = KibanScanner(string: string)
+		let scanner = NSScanner(string: string)
 		scanner.scan先手後手()
-		scanner.scanner.scanString("持駒:", intoString: nil)
+		let _ = scanner.scanString("持駒:")
 		for (key, value) in 持駒型.記号表 {
-			var string: NSString? = nil
-			var count: Int = 1
-			if scanner.scanner.scanString(key, intoString: &string) {
-				scanner.scanner.scanInteger(&count)
+			if let _ = scanner.scanString(key) {
+				let count = scanner.scanInt() ?? 1
 				self[value] = count
-				scanner.scanner.scanString(",", intoString: nil)
+				let _ = scanner.scanString(",")
 			}
 		}
-		print("\(self.dictionaryRepresentation)")
 	}
 
 	static let 記号表: [String: 駒種型] = [
@@ -738,6 +722,7 @@ public func == (lhs: 持駒型, rhs: 持駒型) -> Bool {
 			lhs.角 == rhs.角 && lhs.飛 == rhs.飛 && lhs.玉 == rhs.玉
 }
 
+
 // MARK: - 先手後手型
 
 public enum 先手後手型 : Int8, CustomStringConvertible {
@@ -789,6 +774,17 @@ public enum 先手後手型 : Int8, CustomStringConvertible {
 		return 升型(先後: self, 駒面: 駒面)
 	}
 	
+}
+
+extension NSScanner {
+	public func scan先手後手() -> 先手後手型? {
+		for (記号, 先後) in 先手後手型.記号表 {
+			if let _ = self.scanString(記号) {
+				return 先後
+			}
+		}
+		return nil
+	}
 }
 
 
@@ -913,6 +909,34 @@ public enum 升型 : Int8, CustomStringConvertible {
 	}
 }
 
+extension NSScanner {
+
+	public func scan升() -> 升型? {
+		let location = self.scanLocation
+		if let 先後 = scan先手後手(), let 駒面 = scan駒面() {
+			return 升型(先後: 先後, 駒面: 駒面)
+		}
+		
+		self.scanLocation = location
+		for (記号, 升) in 升型.記号表 {
+			if let _ = self.scanString(記号) {
+				return 升
+			}
+		}
+
+		self.scanLocation = location
+		for (記号, 升) in 升型.補助記号表 {
+			if let _ = self.scanString(記号) {
+				return 升
+			}
+		}
+
+		self.scanLocation = location
+		return 升型.空
+	}
+}
+
+
 // MARK: - 手合割型
 
 public enum 手合割型 {
@@ -927,7 +951,7 @@ public enum 手合割型 {
 
 	private static let 平手初期盤面: String =
 			"▽持駒:なし\r" +
-			"|▽香|▽桂|▽銀|▽金|▽王|▽金|▽銀|▽桂|▽香|\r" +
+			"|▽香|▽桂|▽銀|▽金|▽玉|▽金|▽銀|▽桂|▽香|\r" +
 			"|　　|▽飛|　　|　　|　　|　　|　　|▽角|　　|\r" +
 			"|▽歩|▽歩|▽歩|▽歩|▽歩|▽歩|▽歩|▽歩|▽歩|\r" +
 			"|　　|　　|　　|　　|　　|　　|　　|　　|　　|\r" +
@@ -935,7 +959,7 @@ public enum 手合割型 {
 			"|　　|　　|　　|　　|　　|　　|　　|　　|　　|\r" +
 			"|▲歩|▲歩|▲歩|▲歩|▲歩|▲歩|▲歩|▲歩|▲歩|\r" +
 			"|　　|▲角|　　|　　|　　|　　|　　|▲飛|　　|\r" +
-			"|▲香|▲桂|▲銀|▲金|▲王|▲金|▲銀|▲桂|▲香|\r" +
+			"|▲香|▲桂|▲銀|▲金|▲玉|▲金|▲銀|▲桂|▲香|\r" +
 			"▲持駒:なし\r"
 
 	private func 駒落位置列() -> [位置型] {
@@ -951,7 +975,7 @@ public enum 手合割型 {
 		}
 	}
 
-	var 初期局面: 局面型 {
+	public var 初期局面: 局面型 {
 		let 局面 = 局面型(string: 手合割型.平手初期盤面, 手番: .先手)!
 		for 位置 in 駒落位置列() {
 			局面[位置] = .空
@@ -972,9 +996,10 @@ public enum 終局理由型: CustomStringConvertible {
 	case 持将棋
 	case 千日手
 	case 引き分け
+	case その他
 
 	private static let 記号表 : [String: 終局理由型] = [
-		"投了": .投了, "詰み": .詰み, "反則": .反則, "玉取り": .玉取り, "持将棋": .持将棋, "千日手": .千日手, "引き分け": .引き分け
+		"投了": .投了, "詰み": .詰み, "反則": .反則, "玉取り": .玉取り, "持将棋": .持将棋, "千日手": .千日手, "引き分け": .引き分け, "その他": .その他
 	]
 
 	public var description: String {
@@ -997,13 +1022,27 @@ public enum 終局理由型: CustomStringConvertible {
 	}
 }
 
+extension NSScanner {
+
+	public func scan終局理由() -> 終局理由型? {
+		for (記号, 終局理由) in 終局理由型.記号表 {
+			if let _ = self.scanString(記号) {
+				return 終局理由
+			}
+		}
+		return nil
+	}
+
+}
+
+
 // MARK: - 指手型
 
 public enum 指手型: CustomStringConvertible {
 
 	case 動(先後: 先手後手型, 移動前の位置: 位置型, 移動後の位置: 位置型, 移動後の駒面: 駒面型)
 	case 打(先後: 先手後手型, 位置:位置型, 駒種:駒種型)
-	case 終(終局理由: 終局理由型?, 勝者: 先手後手型?)
+	case 終(終局理由: 終局理由型, 勝者: 先手後手型?)
 
 	public var description: String {
 		switch self {
@@ -1013,14 +1052,50 @@ public enum 指手型: CustomStringConvertible {
 			return "\(先後.string)\(位置)\(駒種)打"
 		case .終(let 終局理由, let 勝者):
 			if let 勝者 = 勝者 {
-				return "まで\(勝者)の勝ち(\(終局理由))"
+				return "まで\(勝者)の勝ち((\(終局理由)))"
 			}
 			else {
 				return "まで勝負つかず(\(終局理由))"
 			}
 		}
 	}
+
 }
+
+extension NSScanner {
+
+	public func scan指手() -> 指手型? {
+		let location = self.scanLocation
+		if let 先後 = self.scan先手後手(), let 後位置 = self.scan位置(), let 駒面 = scan駒面(),
+		   let _ = scanString("("), let 前位置 = self.scan位置(), let _ = scanString(")") {
+			return 指手型.動(先後: 先後, 移動前の位置: 前位置, 移動後の位置: 後位置, 移動後の駒面: 駒面)
+		}
+
+		self.scanLocation = location
+		if let 先後 = self.scan先手後手(), let 後位置 = self.scan位置(), let 駒種 = scan駒種(), let _ = scanString("打") {
+			return 指手型.打(先後: 先後, 位置: 後位置, 駒種: 駒種)
+		}
+
+		self.scanLocation = location
+		if let _ = self.scanString("まで") {
+
+			let location = self.scanLocation // [2]
+			if let 先後 = scan先手後手(), let _ = scanString("の勝ち"),
+			   let _ = scanString("("), let 終局理由 = scan終局理由(), let _ = scanString(")") {
+				return 指手型.終(終局理由: 終局理由, 勝者: 先後)
+			}
+
+			self.scanLocation = location // [2]
+			if let _ = scanString("勝負つかず("), let 終局理由 = scan終局理由(), let _ = scanString(")") {
+				return 指手型.終(終局理由: 終局理由, 勝者: nil)
+			}
+		}
+
+		self.scanLocation = location
+		return nil
+	}
+}
+
 
 // MARK: - 双方持駒型
 
@@ -1070,13 +1145,12 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 			持駒辞書[.後手] = 持駒型(string: lines[0])
 			for rowIndex in 段型.全段 {
 				let line = lines[rowIndex.index + 1]
-				print("\(line)")
-				let scanner = KibanScanner(string: line)
-				scanner.scanner.scanString("|", intoString: nil)
+				let scanner = NSScanner(string: line)
+				let _ = scanner.scanString("|")
 				for columnIndex in 筋型.全筋.reverse() {
-					if let square = scanner.scanSquare() {
+					if let square = scanner.scan升() {
 						self[columnIndex, rowIndex] = square
-						scanner.scanner.scanString("|", intoString: nil)
+						let _ = scanner.scanString("|")
 					}
 				}
 			}
