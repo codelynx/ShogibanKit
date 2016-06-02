@@ -772,7 +772,10 @@ public enum 先手後手型 : Int8, CustomStringConvertible {
 	}
 
 	public var description: String {
-		return self.string
+		switch self {
+		case .先手: return "先手"
+		case .後手: return "後手"
+		}
 	}
 
 	public var 敵方: 先手後手型 {
@@ -1005,9 +1008,9 @@ public enum 指手型: CustomStringConvertible {
 	public var description: String {
 		switch self {
 		case .動(let 先後, let 移動前の位置, let 移動後の位置, let 移動後の駒面):
-			return "\(先後)\(移動後の位置)\(移動後の駒面)(\(移動前の位置))"
+			return "\(先後.string)\(移動後の位置)\(移動後の駒面)(\(移動前の位置))"
 		case .打(let 先後, let 位置, let 駒種):
-			return "\(先後)\(位置)\(駒種)打"
+			return "\(先後.string)\(位置)\(駒種)打"
 		case .終(let 終局理由, let 勝者):
 			if let 勝者 = 勝者 {
 				return "まで\(勝者)の勝ち(\(終局理由))"
