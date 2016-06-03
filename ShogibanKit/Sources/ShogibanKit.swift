@@ -2,11 +2,28 @@
 //  ShogibanKit.swift
 //  ShogibanKit
 //
-//	Copyright (c) 2016 Kaz Yoshikawa
+//	The MIT License (MIT)
 //
-//	This software may be modified and distributed under the terms
-//	of the MIT license.  See the LICENSE file for details.
+//	Copyright (c) 2016 Electricwoods LLC, Kaz Yoshikawa.
 //
+//	Permission is hereby granted, free of charge, to any person obtaining a copy 
+//	of this software and associated documentation files (the "Software"), to deal 
+//	in the Software without restriction, including without limitation the rights 
+//	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+//	copies of the Software, and to permit persons to whom the Software is 
+//	furnished to do so, subject to the following conditions:
+//
+//	The above copyright notice and this permission notice shall be included in 
+//	all copies or substantial portions of the Software.
+//
+//	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+//	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+//	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+//	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
+//	WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//	THE SOFTWARE.
+
 
 import Foundation
 
@@ -186,11 +203,8 @@ public enum 位置型 : Int8, Equatable, CustomStringConvertible { // Hashable
 	static let max: Int8 = 位置型.９九.rawValue + 1
 	
 
-	public init?(筋: 筋型?, 段: 段型?) {
-		if let 筋 = 筋, let 段 = 段 {
-			self = 位置型(rawValue: 筋.rawValue * Int8(総段数) + 段.rawValue)!
-		}
-		else { return nil }
+	public init(筋: 筋型, 段: 段型) {
+		self = 位置型(rawValue: 筋.rawValue * Int8(総段数) + 段.rawValue)!
 	}
 
 	public init?(string: String) {
@@ -332,7 +346,7 @@ public enum 駒種型 : Int8, CustomStringConvertible {
 		}
 	}
 
-	public var 駒数: UInt8 {
+	public var 駒数: Int {
 		switch self {
 		case 歩: return 18
 		case 香, 桂, 銀, 金: return 4
@@ -645,7 +659,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		return self.string
 	}
 
-	mutating func 駒を加える(駒: 駒種型) {
+	public mutating func 駒を加える(駒: 駒種型) {
 		switch (駒) {
 		case .歩: self.歩 += 1; assert(self.歩 <= 18)
 		case .香: self.香 += 1; assert(self.香 <= 4)
@@ -658,7 +672,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		}
 	}
 
-	mutating func 駒を減らす(駒: 駒種型) {
+	public mutating func 駒を減らす(駒: 駒種型) {
 		switch (駒) {
 		case .歩: self.歩 -= 1; assert(self.歩 >= 0)
 		case .香: self.香 -= 1; assert(self.香 >= 0)
@@ -671,17 +685,18 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		}
 	}
 
+	public static let bitLength = 17
+
 	public var integerValue: UInt32 {
 		var value: UInt64 = 0
-		value += UInt64(玉)
-		value *= UInt64(駒種型.飛.駒数+1) ; value += UInt64(飛)
+		value += UInt64(飛)
 		value *= UInt64(駒種型.角.駒数+1) ; value += UInt64(角)
 		value *= UInt64(駒種型.金.駒数+1) ; value += UInt64(金)
 		value *= UInt64(駒種型.銀.駒数+1) ; value += UInt64(銀)
 		value *= UInt64(駒種型.桂.駒数+1) ; value += UInt64(桂)
 		value *= UInt64(駒種型.香.駒数+1) ; value += UInt64(香)
 		value *= UInt64(駒種型.歩.駒数+1) ; value += UInt64(歩)
-		assert(value <= 0x1_a17b)
+		assert(value < 0x1_a17b) // 17-bit
 		return UInt32(value)
 	}
 
@@ -693,8 +708,8 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		銀 = Int8(value % UInt64(駒種型.銀.駒数+1)) ; value /= UInt64(駒種型.銀.駒数+1)
 		金 = Int8(value % UInt64(駒種型.金.駒数+1)) ; value /= UInt64(駒種型.金.駒数+1)
 		角 = Int8(value % UInt64(駒種型.角.駒数+1)) ; value /= UInt64(駒種型.角.駒数+1)
-		飛 = Int8(value % UInt64(駒種型.飛.駒数+1)) ; value /= UInt64(駒種型.飛.駒数+1)
-		玉 = Int8(value % UInt64(駒種型.玉.駒数+1))
+		飛 = Int8(value % UInt64(駒種型.飛.駒数+1))
+		玉 = Int8(0)
 	}
 
 	public func 全持駒() -> [駒種型] {
@@ -1108,6 +1123,7 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 	var score: Int = 0
 	weak var 前の局面: 局面型?
 
+	var 手合: 手合割型
 	var 全升: [升型]
 	var 持駒辞書: [先手後手型: 持駒型]
 	var 手番: 先手後手型
@@ -1123,24 +1139,27 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 		全升 = [升型](count: 総升数, repeatedValue: 升型.空)
 		持駒辞書 = [.先手: 持駒型(), .後手: 持駒型()]
 		手番 = .先手
+		手合 = .平手
 	}
 
-	public init(手番: 先手後手型, 全升: [升型], 持駒: [先手後手型: 持駒型], 手数: Int? = nil) {
+	public init(手番: 先手後手型, 全升: [升型], 持駒: [先手後手型: 持駒型], 手合: 手合割型 = .平手, 手数: Int? = nil) {
 		let 先手持駒 = 持駒[.先手]!
 		let 後手持駒 = 持駒[.後手]!
 		self.持駒辞書 = [.先手: 持駒型(持駒: 先手持駒), .後手: 持駒型(持駒: 後手持駒)]
 		self.全升 = 全升
 		self.手番 = 手番
 		self.手数 = 手数
+		self.手合 = 手合
 	}
 
-	public init?(string: String, 手番: 先手後手型, 手数: Int? = nil) {
+	public init?(string: String, 手番: 先手後手型, 手合: 手合割型 = .平手, 手数: Int? = nil) {
 		全升 = [升型](count: 総升数, repeatedValue: 升型.空)
 		持駒辞書 = [.先手: 持駒型(), .後手: 持駒型()]
 		self.手番 = 手番
 		self.手数 = 手数
+		self.手合 = 手合
 
-		var lines = string.lines()
+		var lines = string.lines
 		if lines.count >= (9 + 2) {
 			持駒辞書[.後手] = 持駒型(string: lines[0])
 			for rowIndex in 段型.全段 {
@@ -1168,19 +1187,17 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 		self.全升 = 局面.全升
 		self.手番 = 局面.手番.敵方
 		self._勝者 = 局面._勝者
+		self.手合 = 局面.手合
 	}
 
-	public subscript(筋: 筋型, 段: 段型) -> 升型? {
+	public subscript(筋: 筋型, 段: 段型) -> 升型 {
 		get {
-			if let 位置 = 位置型(筋: 筋, 段: 段) {
-				return 全升[Int(位置.rawValue)]
-			}
-			return nil
+			let 位置 = 位置型(筋: 筋, 段: 段)
+			return 全升[Int(位置.rawValue)]
 		}
 		set {
-			if let 位置 = 位置型(筋: 筋, 段: 段) {
-				全升[Int(位置.rawValue)] = newValue!
-			}
+			let 位置 = 位置型(筋: 筋, 段: 段)
+			全升[Int(位置.rawValue)] = newValue
 		}
 	}
 	
@@ -1202,10 +1219,9 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 			string += "|"
 
 			for columnIndex in 筋型.全筋.reverse() {
-				if let 升 = self[columnIndex, rowIndex] {
-					string += 升.string
-					string += "|"
-				}
+				let 升 = self[columnIndex, rowIndex]
+				string += 升.string
+				string += "|"
 			}
 
 			string += "\r"
@@ -1239,22 +1255,25 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 	
 		var 位置列 = [位置型]()
 		
-		if let 升 = self[指定筋, 指定段], 先後 = 升.先後, 駒面 = 升.駒面 {
+		let 升 = self[指定筋, 指定段]
+		if let 先後 = 升.先後, 駒面 = 升.駒面 {
 			let 敵方 = 先後.敵方
 
 			// find movable positions for single step like 歩, 桂, 金, ...
 			for (dx, dy) in 駒面.移動可能なオフセット(駒面: 駒面, 先後: 先後) {
 				let (x, y) = (指定筋 + dx, 指定段 + dy)
-				if let 位置 = 位置型(筋: 指定筋 + dx, 段: 指定段 + dy) {
+				if let 筋 = 指定筋 + dx, let 段 = 指定段 + dy {
+					let 位置 = 位置型(筋: 筋, 段: 段)
 					let 対象升 = self[位置]
 					if let どちらの駒 = 対象升.先後 where どちらの駒 == 先後 {
 					}
-					else if let 位置 = 位置型(筋: x, 段: y) {
+					else if let 筋 = x, let 段 = y {
+						let 位置 = 位置型(筋: 筋, 段: 段)
 						位置列.append(位置)
 					}
-					else if let position = 位置型(筋: x, 段: y) {
-						位置列.append(position)
-					}
+//					else if let position = 位置型(筋: x, 段: y) {
+//						位置列.append(position)
+//					}
 				}
 			}
 
@@ -1265,21 +1284,18 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 				var (x, y) = (指定筋 + vx, 指定段 + vy)
 				
 				while let 筋 = x, let 段 = y {
-					if let 対象升 = self[筋, 段] {
-						if 対象升.先後 == 先後 {
-							break // 自駒に当たった場合
-						}
-						else if 対象升.先後 == 敵方 {
-							if let 位置 = 位置型(筋: 筋, 段: 段) {
-								位置列.append(位置)
-								break
-							}
-						}
-						else {
-							if let 位置 = 位置型(筋: 筋, 段: 段) {
-								位置列.append(位置)
-							}
-						}
+					let 対象升 = self[筋, 段]
+					if 対象升.先後 == 先後 {
+						break // 自駒に当たった場合
+					}
+					else if 対象升.先後 == 敵方 {
+						let 位置 = 位置型(筋: 筋, 段: 段)
+						位置列.append(位置)
+						break
+					}
+					else {
+						let 位置 = 位置型(筋: 筋, 段: 段)
+						位置列.append(位置)
 					}
 				
 					(x, y) = (筋 + vx, 段 + vy)
@@ -1389,9 +1405,8 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 	public func 全位置で実行(closure: (位置型) -> ()) {
 		for 筋 in 筋型.全筋 {
 			for 段 in 段型.全段 {
-				if let position = 位置型(筋: 筋, 段: 段) {
-					closure(position)
-				}
+				let 位置 = 位置型(筋: 筋, 段: 段)
+				closure(位置)
 			}
 		}
 	}
@@ -1479,7 +1494,8 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 		// 二歩のチェック
 		let 筋 = 位置.筋
 		for 段 in 段型.全段 {
-			if let 升 = self[筋, 段], let 駒面 = 升.駒面, let 先後 = 升.先後 {
+			let 升 = self[筋, 段]
+			if let 駒面 = 升.駒面, let 先後 = 升.先後 {
 				if 駒面 == .歩 && 手番 == 先後 {
 					return false
 				}
@@ -1591,27 +1607,154 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 		return 局面Generator()
 	}
 
+	private static let encodeTable: [駒面型: String] = [
+		.歩: "10",
+		.香: "1100",
+		.桂: "11100",
+		.銀: "11110",
+		.金: "1101",
+		.角: "111110",
+		.飛: "111011",
+		.玉: "111010",
+		.と: "11111110",
+		.杏: "1111111111",
+		.圭: "111111110",
+		.全: "1111111110",
+		.馬: "11111100",
+		.竜: "11111101"
+		// .空: "0"
+	]
+
+	private static var decodeTable: [String: 駒面型] = [
+		"10": .歩,
+		"1100": .香,
+		"11100": .桂,
+		"11110": .銀,
+		"1101": .金,
+		"111110": .角,
+		"111011": .飛,
+		"111010": .玉,
+		"11111110": .と,
+		"1111111111": .杏,
+		"111111110": .圭,
+		"1111111110": .全,
+		"11111100": .馬,
+		"11111101": .竜
+		// "0": .空
+	]
+
+
+
 	public func data() -> NSData {
-		//var stream = NSOutputStream.outputStreamToMemory()
-		let data = NSMutableData()
-		for row in 段型.全段 {
-			var value: UInt64 = 0
-			for col in 筋型.全筋 {
-				let square = self[col, row]
-				value = value * UInt64(升型.max) + UInt64(square!.rawValue)
-			}
-			assert(value < 0x100_0000)
-			for _ in 1...6 { // max 6 bytes
-				var hex = UInt8(value % 0x100)
-				data.appendBytes(&hex, length: 1)
-				value /= 0x100
+	
+		var bitString = ""
+
+		// 手合
+		switch 手合 {
+		case .平手: bitString += "0"
+		default: fatalError("Not implemented")
+		}
+
+		// 手番
+		switch 手番 {
+		case .先手: bitString += "0"
+		case .後手: bitString += "1"
+		}
+
+		// 盤面を符号化
+		for 段 in 段型.全段 {
+			for 筋 in 筋型.全筋 {
+				let 升 = self[筋, 段]
+				if let 先後 = 升.先後, let 駒面 = 升.駒面 {
+					bitString += 局面型.encodeTable[駒面]!
+					bitString += (先後 == .先手) ? "0" : "1"
+				}
+				else {
+					bitString += "0" // .空
+				}
 			}
 		}
-		var 先手持駒: UInt32 = CFSwapInt32HostToBig(持駒辞書[.先手]!.integerValue)
-		var 後手持駒: UInt32 = CFSwapInt32HostToBig(持駒辞書[.後手]!.integerValue)
-		data.appendBytes(&先手持駒, length: sizeof(UInt32))
-		data.appendBytes(&後手持駒, length: sizeof(UInt32))
-		return data
+		
+		// 持駒
+		let 先手持駒Value = self.持駒(.先手).integerValue // 17 bit
+		let 後手持駒Value = self.持駒(.後手).integerValue // 17 bit
+		let integerLength = sizeof(先手持駒Value.dynamicType)
+		assert(sizeof(先手持駒Value.dynamicType) == 4)
+		let bitRange = NSMakeRange(integerLength * 8 - 持駒型.bitLength, 持駒型.bitLength)
+		bitString += 先手持駒Value.binaryString.substringWithRange(bitRange)
+		bitString += 後手持駒Value.binaryString.substringWithRange(bitRange)
+		
+		return NSData(binaryString: bitString)
+	}
+
+	public convenience init?(data: NSData) {
+		let bitString = data.binaryString
+		let scanner = NSScanner(string: bitString)
+
+		// 手合
+		let 手合: 手合割型
+		if let _ = scanner.scanString("0") {
+			手合 = .平手
+		}
+		else { fatalError("Not implemented: \(#file.lastPathComponent)[\(#line)]") }
+
+		// 手番
+		let 手番: 先手後手型 = scanner.scan(["0": 先手後手型.先手, "1": 先手後手型.後手])!
+		
+		// 盤面
+		var 全升 = [升型](count: 総升数, repeatedValue: 升型.空)
+		for 段 in 段型.全段 {
+			for 筋 in 筋型.全筋 {
+				let 位置 = 位置型(筋: 筋, 段: 段)
+				let 升: 升型
+				if let value = scanner.scan(["0": 升型.空]) {
+					全升[Int(位置型(筋: 筋, 段: 段).rawValue)] = value
+				}
+				else if let 駒面 = scanner.scan(局面型.decodeTable) {
+					let 先後 = scanner.scan(["0": 先手後手型.先手, "1": 先手後手型.後手])!
+					升 = 升型(先後: 先後, 駒面: 駒面)
+					全升[Int(位置型(筋: 筋, 段: 段).rawValue)] = 升
+				}
+				else { fatalError("Unexpected: \(#file.lastPathComponent)[\(#line)]") }
+			}
+		}
+		assert(全升.count == 総升数)
+
+		// 先手持駒
+		var 先手持駒BitString = ""
+		for _ in 0 ..< 持駒型.bitLength {
+			if let ch = scanner.scan(["0": "0", "1": "1"]) {
+				先手持駒BitString += ch
+				print("\(先手持駒BitString)")
+			}
+		}
+		先手持駒BitString = String(count: 32 - 持駒型.bitLength, repeatedValue: Character("0")) + 先手持駒BitString
+		print("\(先手持駒BitString)")
+		assert(先手持駒BitString.characters.count == 32)
+		print("\(#line)")
+		let 先手持駒BitValue = UInt32(binaryString: 先手持駒BitString)!
+		print("\(先手持駒BitValue)")
+		let 先手持駒 = 持駒型(integerValue: 先手持駒BitValue)
+		print("\(先手持駒)")
+
+		// 後手持駒
+		var 後手持駒BitString = ""
+		for _ in 0 ..< 持駒型.bitLength {
+			if let ch = scanner.scan(["0": "0", "1": "1"]) {
+				後手持駒BitString += ch
+			}
+		}
+		後手持駒BitString = String(count: 32 - 持駒型.bitLength, repeatedValue: Character("0")) + 後手持駒BitString
+		print("\(後手持駒BitString)")
+//		assert(後手持駒BitString.characters.count == 32)
+		let 後手持駒BitValue = UInt32(binaryString: 後手持駒BitString)!
+		print("\(後手持駒BitValue)")
+		let 後手持駒 = 持駒型(integerValue: 後手持駒BitValue)
+		print("\(後手持駒)")
+		
+		let 持駒辞書: [先手後手型: 持駒型] = [.先手: 先手持駒, .後手: 後手持駒]
+		
+		self.init(手番: 手番, 全升: 全升, 持駒: 持駒辞書, 手合: 手合, 手数: nil)
 	}
 
 }
