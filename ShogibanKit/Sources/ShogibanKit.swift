@@ -1093,7 +1093,7 @@ public enum 指手型: CustomStringConvertible {
 	case 打(先後: 先手後手型, 位置:位置型, 駒種:駒種型)
 	case 終(終局理由: 終局理由型, 勝者: 先手後手型?)
 
-	public var description: String {
+	public var string: String {
 		switch self {
 		case .動(let 先後, let 移動前の位置, let 移動後の位置, let 移動後の駒面):
 			return "\(先後.string)\(移動後の位置)\(移動後の駒面)(\(移動前の位置))"
@@ -1107,6 +1107,10 @@ public enum 指手型: CustomStringConvertible {
 				return "まで勝負つかず(\(終局理由))"
 			}
 		}
+	}
+
+	public var description: String {
+		return self.string
 	}
 
 }
@@ -1851,24 +1855,36 @@ public func == (lhs: 局面型, rhs: 局面型) -> Bool {
 
 public class 対局型 {
 
-	let 手合割: 手合割型
+	public var date: NSDate?
+	public var 先手: String?
+	public var 後手: String?
+
+	public let 手合割: 手合割型
 	private var _指手列 = [指手型]()
+	private var _開始局面: 局面型
 	private var _局面: 局面型
 
-	var 指手列: [指手型] { return _指手列 }
-	var 局面: 局面型 { return _局面 }
+	public var 指手列: [指手型] { return _指手列 }
+	public var 局面: 局面型 { return _局面 }
 
 	public init(手合割: 手合割型) {
 		self.手合割 = 手合割
-		_局面 = 手合割.初期局面
+		self._開始局面 = 手合割.初期局面
+		self._局面 = _開始局面
 	}
 	
-	func 指手を実行(指手: 指手型) throws {
+	public func 指手を実行(指手: 指手型) throws {
 		let 次局面 = try _局面.指手を実行(指手)
 		_指手列.append(指手)
 		_局面 = 次局面
 	}
 	
+	public func 一手前の局面に戻す() {
+		if let 一手前の局面 = _局面.前の局面 {
+			_局面 = 一手前の局面
+			_指手列.removeLast()
+		}
+	}
 	
 }
 
