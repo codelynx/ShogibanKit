@@ -32,10 +32,11 @@ let 総升数 = 81
 let 総筋数 = 9
 let 総段数 = 9
 
-private func reportError(message: String, _ file: String = #file, _ line: Int = #line) {
-	print("[ShogibanKit] \(message). \(file.lastPathComponent):\(line)")
-}
 
+enum ShogibanKitError: ErrorType {
+	case 指手実行不可
+	case 指手反則手
+}
 
 
 // MARK: - 筋型 （スジ）
@@ -295,14 +296,19 @@ public enum 駒種型 : Int8, CustomStringConvertible {
 	case 歩, 香, 桂, 銀, 金, 角, 飛, 玉
 
 	private static let 記号表: [String: 駒種型] = [
-		"王": .玉, "飛": .飛, "角": .角, "金": .金, "銀": .銀, "桂": .桂, "香": .香, "歩": .歩,
+		"玉": .玉, "飛": .飛, "角": .角, "金": .金, "銀": .銀, "桂": .桂, "香": .香, "歩": .歩,
 	]
 
 	static var 全駒種: [駒種型] = [玉, 飛, 角, 金, 銀, 桂, 香, 歩]
 
+	public static let 漢数字表: [Int8: String] = [
+		1: "一", 2: "二", 3: "三", 4: "四", 5: "五", 6: "六", 7: "七", 8: "八", 9: "九", 10: "十",
+		11: "十一", 12: "十二", 13: "十三", 14: "十四", 15: "十五", 16: "十六", 17: "十七", 18: "十八" // 歩の最大まで
+	]
+
 	public init?(string: String) {
-		if let piece = 駒種型.記号表[string] {
-			self = piece
+		if let 駒種 = 駒種型.記号表[string] {
+			self = 駒種
 		}
 		else {
 			return nil
@@ -384,6 +390,7 @@ public enum 駒種型 : Int8, CustomStringConvertible {
 }
 
 extension NSScanner {
+
 	public func scan駒種() -> 駒種型? {
 		for (記号, 駒種) in 駒種型.記号表 {
 			if let _ = self.scanString(記号) {
@@ -392,6 +399,7 @@ extension NSScanner {
 		}
 		return nil
 	}
+
 }
 
 
@@ -577,12 +585,10 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		let scanner = NSScanner(string: string)
 		scanner.scan先手後手()
 		let _ = scanner.scanString("持駒:")
-		for (key, value) in 持駒型.記号表 {
-			if let _ = scanner.scanString(key) {
-				let count = scanner.scanInt() ?? 1
-				self[value] = count
-				let _ = scanner.scanString(",")
-			}
+		while let 駒種 = scanner.scan(持駒型.記号表) {
+			let 駒数 = scanner.scanInt() ?? 1
+			self[駒種] = 駒数
+			let _ = scanner.scanString(",")
 		}
 	}
 
@@ -597,37 +603,35 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 	}
 
 	public var string: String {
-
-		func symbolWithCount(symbol: String, count: Int8) -> String? {
-			if count > 0 {
-				var string = ""
-				string += symbol
-				if count > 1 {
-					string += "\(count)"
-				}
-				return string
-			}
-			return nil
-		}
-
-		var strings = [String]()
-		let 持駒情報 = [(玉, 駒種型.玉), (飛, 駒種型.飛), (角, 駒種型.角), (金, 駒種型.金), (銀, 駒種型.銀), (桂, 駒種型.桂), (香, 駒種型.香), (歩, 駒種型.歩)]
-		for (駒数, 駒) in 持駒情報 {
-			if 駒数 > 0 {
-				if let string = symbolWithCount(駒.string, count: 駒数) {
-					strings.append(string)
-				}
-			}
-		}
-
 		var string = ""
-		if strings.count > 0 {
-			string += (strings as NSArray).componentsJoinedByString(",")
+		let 持駒情報 = [(玉, 駒種型.玉), (飛, 駒種型.飛), (角, 駒種型.角), (金, 駒種型.金), (銀, 駒種型.銀), (桂, 駒種型.桂), (香, 駒種型.香), (歩, 駒種型.歩)]
+		for (駒数, 駒種) in 持駒情報 {
+			if 駒数 > 0 {
+				string += 駒種.string
+				if 駒数 > 1 {
+					string += "\(駒数)"
+				}
+			}
 		}
-		else {
-			string += "なし"
+		return string == "" ? "なし" : string
+	}
+
+	public var description: String {
+		return "持駒: " + self.string
+	}
+
+	public var 漢数字表記: String {
+		var string = ""
+		let 持駒情報 = [(玉, 駒種型.玉), (飛, 駒種型.飛), (角, 駒種型.角), (金, 駒種型.金), (銀, 駒種型.銀), (桂, 駒種型.桂), (香, 駒種型.香), (歩, 駒種型.歩)]
+		for (駒数, 駒種) in 持駒情報 {
+			if 駒数 > 0 {
+				string += 駒種.string
+				if 駒数 > 1 {
+					string += 駒種型.漢数字表[駒数]!
+				}
+			}
 		}
-		return string
+		return string == "" ? "なし" : string
 	}
 
 	public func string(player: 先手後手型) -> String {
@@ -659,10 +663,6 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 			case .玉: 玉 = Int8(newValue)
 			}
 		}
-	}
-
-	public var description: String {
-		return self.string
 	}
 
 	public mutating func 駒を加える(駒: 駒種型) {
@@ -737,6 +737,27 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 	}
 
 }
+
+extension NSScanner {
+
+	public func scan持駒() -> 持駒型? {
+		var 持駒 = 持駒型()
+		for 駒種 in 駒種型.全駒種 {
+			if let 駒種記号 = self.scanString(駒種.string) {
+				var 駒数 = 1
+				if let number = self.scanInt() {
+					駒数 = number
+				}
+				let 駒種 = 駒種型(string: 駒種記号)!
+				持駒[駒種] = 駒数
+			}
+			self.scanString(",")
+		}
+		return 持駒
+	}
+
+}
+
 
 public func == (lhs: 持駒型, rhs: 持駒型) -> Bool {
 	return	lhs.歩 == rhs.歩 && lhs.香 == rhs.香 && lhs.桂 == rhs.桂 && lhs.銀 == rhs.銀 && lhs.金 == rhs.金 &&
@@ -1011,16 +1032,23 @@ public enum 手合割型 {
 public enum 終局理由型: CustomStringConvertible {
 
 	case 投了
-	case 詰み
-	case 反則
-	case 玉取り
-	case 持将棋
+	case 中断
 	case 千日手
+	case 時間切れ
+	case 反則負け
+	case 持将棋
+	case 入玉勝利
+	case 入玉引分
+	case 待った
+	case 詰み
 	case 引き分け
+	case 失玉
 	case その他
 
 	private static let 記号表 : [String: 終局理由型] = [
-		"投了": .投了, "詰み": .詰み, "反則": .反則, "玉取り": .玉取り, "持将棋": .持将棋, "千日手": .千日手, "引き分け": .引き分け, "その他": .その他
+		"投了": .投了, "中断": .中断, "千日手": .千日手, "時間切れ": .時間切れ, "反則負け": .反則負け, "持将棋": .持将棋,
+		"入玉勝利": .入玉勝利, "入玉引分": .入玉引分, "待った": .待った, "詰み": .詰み, "引き分け": 引き分け,
+		"失玉": .失玉, "その他": .その他
 	]
 
 	public var description: String {
@@ -1128,18 +1156,21 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 
 	var score: Int = 0
 	weak var 前の局面: 局面型?
+	var 直前の指手: 指手型?
 
-	var 手合: 手合割型
-	var 全升: [升型]
-	var 持駒辞書: [先手後手型: 持駒型]
-	var 手番: 先手後手型
+	public var 手合: 手合割型
+	private var 全升: [升型]
+	private var 持駒辞書: [先手後手型: 持駒型]
+	public var 手番: 先手後手型
+
+	private var _終局理由: 終局理由型?
+	var 終局: Bool {
+		return _終局理由 != nil || self.詰みか
+	}
 
 	private var _勝者: 先手後手型? = nil
-	var 勝者: 先手後手型? { return _勝者 }
-	var 終局: Bool {
-		return _勝者 != nil || self.詰みか
-	}
-	var 手数: Int?
+	public var 勝者: 先手後手型? { return _勝者 }
+	public var 手数: Int?
 
 	public init() {
 		全升 = [升型](count: 総升数, repeatedValue: 升型.空)
@@ -1215,7 +1246,29 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 			全升[Int(位置.rawValue)] = newValue
 		}
 	}
-	
+
+	public var string: String {
+		var string = String()
+		if let captured = 持駒辞書[.後手] {
+			string += "後手: " + captured.string + "\r"
+		}
+		for rowIndex in 段型.全段 {
+			string += "|"
+
+			for columnIndex in 筋型.全筋.reverse() {
+				let 升 = self[columnIndex, rowIndex]
+				string += 升.string
+				string += "|"
+			}
+
+			string += "\r"
+		}
+		if let captured = 持駒辞書[.先手] {
+			string += "先手: " + captured.string + "\r"
+		}
+		return string
+	}
+
 	public var description: String {
 		var string = String()
 		if let captured = 持駒辞書[.後手] {
@@ -1366,11 +1419,12 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 		return 位置列
 	}
 
-	public func 指手を実行(指手: 指手型) -> 局面型 {
+	public func 指手を実行(指手: 指手型) throws -> 局面型  {
 		print(指手)
 	
 		let 次局面 = 局面型(局面: self)
 		次局面.前の局面 = self
+		次局面.直前の指手 = 指手
 		if let 手数 = self.手数 {
 			次局面.手数 = 手数 + 1
 		}
@@ -1393,7 +1447,7 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 				次局面[移動前の位置] = .空
 				次局面[移動後の位置] = 升型(先後: 先手後手, 駒面: 移動後の駒面)
 			}
-			else { /*論理エラー*/ }
+			else { throw ShogibanKitError.指手実行不可 }
 			break
 		case .打(let 先後, let 位置, let 駒種):
 			assert(self[位置] == .空)
@@ -1485,7 +1539,12 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 				switch 駒種.駒面 {
 				case .歩:
 					if self[指定位置] == .空 {
-						return 指定位置に歩を打つ事は可能か(手番: 先後, 位置: 指定位置) // 二歩・打ち歩詰めの確認
+						do {
+							return try 指定位置に歩を打つ事は可能か(手番: 先後, 位置: 指定位置) // 二歩・打ち歩詰めの確認
+						}
+						catch {
+							return false
+						}
 					}
 				default: return true
 				}
@@ -1494,7 +1553,7 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 		return false
 	}
 	
-	public func 指定位置に歩を打つ事は可能か(手番 手番: 先手後手型, 位置: 位置型) -> Bool {
+	public func 指定位置に歩を打つ事は可能か(手番 手番: 先手後手型, 位置: 位置型) throws -> Bool {
 		assert(self[位置] == .空)
 
 		// 二歩のチェック
@@ -1510,7 +1569,7 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 
 		// 打ち歩詰め
 		let 指手 = 指手型.打(先後: 手番, 位置: 位置, 駒種: .歩)
-		if self.指手を実行(指手).詰みか {
+		if try self.指手を実行(指手).詰みか {
 			return false
 		}
 		
@@ -1586,14 +1645,14 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 				
 				// 王手をかけている敵駒を取る事ができるか？
 				for 指手 in self.指定位置へ移動可能な全ての駒を移動させる指手(移動前の位置, 手番) {
-					if self.指手を実行(指手).王手列(手番).count == 0 {
+					if try! self.指手を実行(指手).王手列(手番).count == 0 {
 						return false // 一つでも回避できれば詰みではない
 					}
 				}
 
 				// 王の逃げ道はあるか
 				for 指手 in self.指定位置の駒の移動可能指手列(移動後の位置) {
-					if self.指手を実行(指手).王手列(手番).count == 0 {
+					if try! self.指手を実行(指手).王手列(手番).count == 0 {
 						return false // 一つでも回避できれば詰みではない
 					}
 				}
@@ -1787,12 +1846,37 @@ public func == (lhs: 局面型, rhs: 局面型) -> Bool {
 			lhs.持駒辞書[.後手]! == rhs.持駒辞書[.後手]!
 }
 
-/*
-class 対局型 {
-	var 手合割: 手合割型 = .平手
-	var 指手列 = [指手型]()
-	init(手合割: 手合割型) {
+
+// MARK: -
+
+public class 対局型 {
+
+	let 手合割: 手合割型
+	private var _指手列 = [指手型]()
+	private var _局面: 局面型
+
+	var 指手列: [指手型] { return _指手列 }
+	var 局面: 局面型 { return _局面 }
+
+	public init(手合割: 手合割型) {
 		self.手合割 = 手合割
+		_局面 = 手合割.初期局面
 	}
+	
+	func 指手を実行(指手: 指手型) throws {
+		let 次局面 = try _局面.指手を実行(指手)
+		_指手列.append(指手)
+		_局面 = 次局面
+	}
+	
+	
 }
-*/
+
+
+// MARK: -
+
+private func reportError(message: String, _ file: String = #file, _ line: Int = #line) {
+	print("[ShogibanKit] \(message). \(file.lastPathComponent):\(line)")
+}
+
+

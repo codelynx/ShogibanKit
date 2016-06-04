@@ -48,23 +48,20 @@ extension 局面型 {
 		CGContextSetStrokeColorWithColor(context, XColor.blackColor().CGColor)
 		for col in 0...9 {
 			let x = floor(left + cellWidth * CGFloat(col))
-			print("x: \(col) -> \(x)")
 			CGContextMoveToPoint(context, x, top)
 			CGContextAddLineToPoint(context, x, bottom)
 			CGContextStrokePath(context)
 		}
 		for row in 0...9 {
 			let y = floor(bottom + cellHeight * CGFloat(row))
-			print("y: \(row) -> \(y)")
 			CGContextMoveToPoint(context, left, y)
 			CGContextAddLineToPoint(context, right, y)
 			CGContextStrokePath(context)
 		}
 		
 		let fontSize = floor(min(cellHeight, cellWidth) * 0.85)
-		let font = CTFontCreateWithName("HiraKakuProN-W3", fontSize, nil)
-		let descent = CTFontGetDescent(font)
-		//let leading = CTFontGetLeading(font)
+		let font1 = CTFontCreateWithName("HiraKakuProN-W3", fontSize, nil)
+		let font2 = CTFontCreateWithName("HiraKakuProN-W6", fontSize, nil)
 		let vectors: [先手後手型: CGFloat] = [.先手: 1, .後手: -1]
 
 		for 段 in 段型.全段 {
@@ -73,12 +70,17 @@ extension 局面型 {
 				let y = floor(top - (cellHeight * CGFloat(8 - 段.rawValue)))
 //				let rect = CGRectMake(x, y, floor(cellWidth), floor(cellHeight))
 				let 位置 = 位置型(筋: 筋, 段: 段)
-				print("\(位置)")
 				let 升 = self[位置]
 				if let 駒面 = 升.駒面, let 先後 = 升.先後 {
 					let string = 駒面.string
 					let characters = [UniChar](string.utf16)
 					var glyphs = [CGGlyph](count: characters.count, repeatedValue: 0)
+					let font: CTFont
+					switch 直前の指手 {
+					case .動(_, _, let 移動後の位置, _)? where 移動後の位置 == 位置: font = font2
+					case .打(_, let 打位置, _)? where 打位置 == 位置: font = font2
+					default: font = font1
+					}
 					let result = CTFontGetGlyphsForCharacters(font, characters, &glyphs, characters.count)
 					assert(result)
 					let descent = CTFontGetDescent(font)
@@ -104,8 +106,7 @@ extension 局面型 {
 			}
 		}
 
-		let fontSize2 = floor(min(cellHeight, cellWidth) * 0.85)
-		let font2 = CTFontCreateWithName("HiraKakuProN-W3", fontSize2, nil)
+		let descent = CTFontGetDescent(font1)
 
 		for 先後 in [先手後手型.先手, .後手] {
 			CGContextSaveGState(context)
@@ -116,8 +117,8 @@ extension 局面型 {
 			case .後手: 記号 = "☖"
 			}
 
-			let attributes = [NSFontAttributeName: font2]
-			let attributedString = NSAttributedString(string: 記号 + 持駒.string, attributes: attributes)
+			let attributes = [NSFontAttributeName: font1]
+			let attributedString = NSAttributedString(string: 記号 + 持駒.漢数字表記, attributes: attributes)
 			let line = CTLineCreateWithAttributedString(attributedString)
 			CGContextSetTextMatrix(context, CGAffineTransformMakeScale(1, -1))
 			CGContextTranslateCTM(context, cellWidth, cellHeight * 11)
