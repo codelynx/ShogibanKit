@@ -19,10 +19,6 @@ typealias XColor = UIColor
 typealias XImage = UIImage
 #endif
 
-private func DegreesToRadians(value: CGFloat) -> CGFloat {
-	return value * CGFloat(M_PI) / 180.0
-}
-
 extension 局面型 {
 
 	func imageForSize(size: CGSize) -> CGImage {
@@ -71,12 +67,12 @@ extension 局面型 {
 		//let leading = CTFontGetLeading(font)
 		let vectors: [先手後手型: CGFloat] = [.先手: 1, .後手: -1]
 
-		for 段 in 0...8 {
-			for 筋 in 0...8 {
-				let x = floor(right - (cellWidth * CGFloat(筋 + 1)))
-				let y = floor(top - (cellHeight * CGFloat(8 - 段)))
+		for 段 in 段型.全段 {
+			for 筋 in 筋型.全筋 {
+				let x = floor(right - (cellWidth * CGFloat(筋.rawValue + 1)))
+				let y = floor(top - (cellHeight * CGFloat(8 - 段.rawValue)))
 //				let rect = CGRectMake(x, y, floor(cellWidth), floor(cellHeight))
-				let 位置 = 位置型(筋: 筋型(筋), 段: 段型(段))!
+				let 位置 = 位置型(筋: 筋, 段: 段)
 				print("\(位置)")
 				let 升 = self[位置]
 				if let 駒面 = 升.駒面, let 先後 = 升.先後 {

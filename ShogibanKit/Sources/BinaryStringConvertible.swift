@@ -65,6 +65,7 @@ extension BinaryStringConvertible {
 			}
 			if bitCount >= bitLength {
 				self = value
+				return
 			}
 		}
 		return nil

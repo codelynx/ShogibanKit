@@ -32,6 +32,12 @@ let 総升数 = 81
 let 総筋数 = 9
 let 総段数 = 9
 
+private func reportError(message: String, _ file: String = #file, _ line: Int = #line) {
+	print("[ShogibanKit] \(message). \(file.lastPathComponent):\(line)")
+}
+
+
+
 // MARK: - 筋型 （スジ）
 
 public enum 筋型 : Int8, CustomStringConvertible { // right <- left
@@ -614,7 +620,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 			}
 		}
 
-		var string = "持駒:"
+		var string = ""
 		if strings.count > 0 {
 			string += (strings as NSArray).componentsJoinedByString(",")
 		}
@@ -1645,7 +1651,7 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 
 
 
-	public func data() -> NSData {
+	public var data: NSData {
 	
 		var bitString = ""
 
@@ -1687,9 +1693,14 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 		return NSData(binaryString: bitString)
 	}
 
+	public var base64EncodedString: String {
+		return self.data.base64EncodedStringWithOptions([])
+	}
+
 	public convenience init?(data: NSData) {
 		let bitString = data.binaryString
 		let scanner = NSScanner(string: bitString)
+		let failedToDecode = "Failed to decode."
 
 		// 手合
 		let 手合: 手合割型
@@ -1699,7 +1710,7 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 		else { fatalError("Not implemented: \(#file.lastPathComponent)[\(#line)]") }
 
 		// 手番
-		let 手番: 先手後手型 = scanner.scan(["0": 先手後手型.先手, "1": 先手後手型.後手])!
+		guard let 手番: 先手後手型 = scanner.scan(["0": 先手後手型.先手, "1": 先手後手型.後手]) else { reportError(failedToDecode) ; return nil }
 		
 		// 盤面
 		var 全升 = [升型](count: 総升数, repeatedValue: 升型.空)
@@ -1711,11 +1722,11 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 					全升[Int(位置型(筋: 筋, 段: 段).rawValue)] = value
 				}
 				else if let 駒面 = scanner.scan(局面型.decodeTable) {
-					let 先後 = scanner.scan(["0": 先手後手型.先手, "1": 先手後手型.後手])!
+					guard let 先後 = scanner.scan(["0": 先手後手型.先手, "1": 先手後手型.後手]) else { reportError(failedToDecode) ; return nil }
 					升 = 升型(先後: 先後, 駒面: 駒面)
 					全升[Int(位置型(筋: 筋, 段: 段).rawValue)] = 升
 				}
-				else { fatalError("Unexpected: \(#file.lastPathComponent)[\(#line)]") }
+				else { reportError(failedToDecode); return nil }
 			}
 		}
 		assert(全升.count == 総升数)
@@ -1725,17 +1736,13 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 		for _ in 0 ..< 持駒型.bitLength {
 			if let ch = scanner.scan(["0": "0", "1": "1"]) {
 				先手持駒BitString += ch
-				print("\(先手持駒BitString)")
 			}
+			else { reportError(failedToDecode); return nil  }
 		}
 		先手持駒BitString = String(count: 32 - 持駒型.bitLength, repeatedValue: Character("0")) + 先手持駒BitString
-		print("\(先手持駒BitString)")
 		assert(先手持駒BitString.characters.count == 32)
-		print("\(#line)")
-		let 先手持駒BitValue = UInt32(binaryString: 先手持駒BitString)!
-		print("\(先手持駒BitValue)")
+		guard let 先手持駒BitValue = UInt32(binaryString: 先手持駒BitString) else { reportError(failedToDecode); return nil }
 		let 先手持駒 = 持駒型(integerValue: 先手持駒BitValue)
-		print("\(先手持駒)")
 
 		// 後手持駒
 		var 後手持駒BitString = ""
@@ -1743,20 +1750,22 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 			if let ch = scanner.scan(["0": "0", "1": "1"]) {
 				後手持駒BitString += ch
 			}
+			else { reportError(failedToDecode); return nil  }
 		}
 		後手持駒BitString = String(count: 32 - 持駒型.bitLength, repeatedValue: Character("0")) + 後手持駒BitString
-		print("\(後手持駒BitString)")
-//		assert(後手持駒BitString.characters.count == 32)
-		let 後手持駒BitValue = UInt32(binaryString: 後手持駒BitString)!
-		print("\(後手持駒BitValue)")
+		guard let 後手持駒BitValue = UInt32(binaryString: 後手持駒BitString) else { reportError(failedToDecode); return nil }
 		let 後手持駒 = 持駒型(integerValue: 後手持駒BitValue)
-		print("\(後手持駒)")
 		
 		let 持駒辞書: [先手後手型: 持駒型] = [.先手: 先手持駒, .後手: 後手持駒]
 		
 		self.init(手番: 手番, 全升: 全升, 持駒: 持駒辞書, 手合: 手合, 手数: nil)
 	}
 
+	public convenience init?(base64EncodedString: String) {
+		guard let data = NSData(base64EncodedString: base64EncodedString, options: [])
+					else { reportError("Failed to decode base64") ; return nil }
+		self.init(data: data)
+	}
 }
 
 public struct 局面Generator: GeneratorType {
@@ -1772,7 +1781,8 @@ public struct 局面Generator: GeneratorType {
 
 
 public func == (lhs: 局面型, rhs: 局面型) -> Bool {
-	return	lhs.全升 == rhs.全升 && lhs.手番 == rhs.手番 &&
+	return	lhs.全升 == rhs.全升 &&
+			lhs.手番 == rhs.手番 &&
 			lhs.持駒辞書[.先手]! == rhs.持駒辞書[.先手]! &&
 			lhs.持駒辞書[.後手]! == rhs.持駒辞書[.後手]!
 }
