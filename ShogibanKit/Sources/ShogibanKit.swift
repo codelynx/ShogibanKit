@@ -1159,7 +1159,7 @@ typealias 持駒辞書型 = [先手後手型: 持駒型]
 public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 
 	var score: Int = 0
-	weak var 前の局面: 局面型?
+	var 前の局面: 局面型?
 	var 直前の指手: 指手型?
 
 	public var 手合: 手合割型
