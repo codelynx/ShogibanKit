@@ -1853,41 +1853,6 @@ public func == (lhs: 局面型, rhs: 局面型) -> Bool {
 
 // MARK: -
 
-public class 対局型 {
-
-	public var date: NSDate?
-	public var 先手: String?
-	public var 後手: String?
-
-	public let 手合割: 手合割型
-	private var _指手列 = [指手型]()
-	private var _開始局面: 局面型
-	private var _局面: 局面型
-
-	public var 指手列: [指手型] { return _指手列 }
-	public var 局面: 局面型 { return _局面 }
-
-	public init(手合割: 手合割型) {
-		self.手合割 = 手合割
-		self._開始局面 = 手合割.初期局面
-		self._局面 = _開始局面
-	}
-	
-	public func 指手を実行(指手: 指手型) throws {
-		let 次局面 = try _局面.指手を実行(指手)
-		_指手列.append(指手)
-		_局面 = 次局面
-	}
-	
-	public func 一手前の局面に戻す() {
-		if let 一手前の局面 = _局面.前の局面 {
-			_局面 = 一手前の局面
-			_指手列.removeLast()
-		}
-	}
-	
-}
-
 
 // MARK: -
 
