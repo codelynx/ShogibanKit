@@ -94,5 +94,9 @@ extension String {
 		let subindex2 = subindex1.advancedBy(range.length)
 		return self.substringWithRange(subindex1 ..< subindex2)
 	}
+	
+	var data: NSData {
+		return self.dataUsingEncoding(NSUTF8StringEncoding)!
+	}
 
 }
