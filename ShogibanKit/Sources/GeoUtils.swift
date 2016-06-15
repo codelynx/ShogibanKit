@@ -29,38 +29,38 @@ import Foundation
 import CoreGraphics
 
 
-func DegreesToRadians(value: CGFloat) -> CGFloat {
+func DegreesToRadians(_ value: CGFloat) -> CGFloat {
 	return value * CGFloat(M_PI) / 180.0
 }
  
-func RadiansToDegrees (value: CGFloat) -> CGFloat {
+func RadiansToDegrees (_ value: CGFloat) -> CGFloat {
 	return value * 180.0 / CGFloat(M_PI)
 }
 
-func CGRectMakeAspectFill(imageSize: CGSize, _ bounds: CGRect) -> CGRect {
+func CGRectMakeAspectFill(_ imageSize: CGSize, _ bounds: CGRect) -> CGRect {
 	let result: CGRect
 	let margin: CGFloat
 	let horizontalRatioToFit = bounds.size.width / imageSize.width
 	let verticalRatioToFit = bounds.size.height / imageSize.height
 	let imageHeightWhenItFitsHorizontally = horizontalRatioToFit * imageSize.height
 	let imageWidthWhenItFitsVertically = verticalRatioToFit * imageSize.width
-	let minX = CGRectGetMinX(bounds)
-	let minY = CGRectGetMinY(bounds)
+	let minX = bounds.minX
+	let minY = bounds.minY
 
 	if (imageHeightWhenItFitsHorizontally > bounds.size.height) {
 		margin = (imageHeightWhenItFitsHorizontally - bounds.size.height) * 0.5
-		result = CGRectMake(minX, minY - margin, imageSize.width * horizontalRatioToFit, imageSize.height * horizontalRatioToFit)
+		result = CGRect(x: minX, y: minY - margin, width: imageSize.width * horizontalRatioToFit, height: imageSize.height * horizontalRatioToFit)
 	}
 	else {
 		margin = (imageWidthWhenItFitsVertically - bounds.size.width) * 0.5
-		result = CGRectMake(minX - margin, minY, imageSize.width * verticalRatioToFit, imageSize.height * verticalRatioToFit)
+		result = CGRect(x: minX - margin, y: minY, width: imageSize.width * verticalRatioToFit, height: imageSize.height * verticalRatioToFit)
 	}
 	return result;
 }
 
-func CGRectMakeAspectFit(imageSize: CGSize, _ bounds: CGRect) -> CGRect {
-	let minX = CGRectGetMinX(bounds)
-	let minY = CGRectGetMinY(bounds)
+func CGRectMakeAspectFit(_ imageSize: CGSize, _ bounds: CGRect) -> CGRect {
+	let minX = bounds.minX
+	let minY = bounds.minY
 	let widthRatio = bounds.size.width / imageSize.width
 	let heightRatio = bounds.size.height / imageSize.height
 	let ratio = min(widthRatio, heightRatio)
@@ -68,19 +68,19 @@ func CGRectMakeAspectFit(imageSize: CGSize, _ bounds: CGRect) -> CGRect {
 	let height = imageSize.height * ratio
 	let xmargin = (bounds.size.width - width) / 2.0
 	let ymargin = (bounds.size.height - height) / 2.0
-	return CGRectMake(minX + xmargin, minY + ymargin, width, height)
+	return CGRect(x: minX + xmargin, y: minY + ymargin, width: width, height: height)
 }
 
-func CGSizeMakeAspectFit(imageSize: CGSize, frameSize: CGSize) -> CGSize {
+func CGSizeMakeAspectFit(_ imageSize: CGSize, frameSize: CGSize) -> CGSize {
 	let widthRatio = frameSize.width / imageSize.width
 	let heightRatio = frameSize.height / imageSize.height
 	let ratio = (widthRatio < heightRatio) ? widthRatio : heightRatio
 	let width = imageSize.width * ratio
 	let height = imageSize.height * ratio
-	return CGSizeMake(width, height)
+	return CGSize(width: width, height: height)
 }
 
 public func * (lhs: CGSize, rhs: CGFloat) -> CGSize {
-	return CGSizeMake(lhs.width * rhs, lhs.height * rhs)
+	return CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
 }
 

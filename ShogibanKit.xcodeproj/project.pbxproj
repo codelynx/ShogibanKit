@@ -157,6 +157,7 @@
 				TargetAttributes = {
 					CC2ABF451CD9DBCC00296806 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -284,6 +285,7 @@
 				PRODUCT_NAME = ShogibanKit_OSX;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -327,6 +329,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.Kiban-OSX";
 				PRODUCT_NAME = ShogibanKit_OSX;
 				SDKROOT = macosx;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

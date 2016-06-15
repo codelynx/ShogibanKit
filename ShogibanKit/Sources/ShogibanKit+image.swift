@@ -21,22 +21,22 @@ typealias XImage = UIImage
 
 extension 局面型 {
 
-	func imageForSize(size: CGSize) -> CGImage {
+	func imageForSize(_ size: CGSize) -> CGImage {
 		let width = Int(size.width)
 		let height = Int(size.height)
 		let bitsPerComponent = 8
 		let colorSpace = CGColorSpaceCreateDeviceRGB()
-		let bitmapInfo =  CGImageAlphaInfo.PremultipliedLast
-		let context = CGBitmapContextCreate(nil, width, height, bitsPerComponent, width * bitsPerComponent, colorSpace, bitmapInfo.rawValue)!
+		let bitmapInfo =  CGImageAlphaInfo.premultipliedLast
+		let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: width * bitsPerComponent, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)!
 
-		let rect = CGRectMake(0, 0, CGFloat(width), CGFloat(height))
-		CGContextClearRect(context, rect)
-		CGContextTranslateCTM(context, 0, CGFloat(height))
-		CGContextScaleCTM(context, 1, -1)
+		let rect = CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height))
+		context.clear(rect)
+		context.translate(x: 0, y: CGFloat(height))
+		context.scale(x: 1, y: -1)
 
 		let size = rect.size
-		let cellWidth = size.width / 11
-		let cellHeight = size.height / 11
+		let cellWidth: CGFloat = size.width / 11.0
+		let cellHeight: CGFloat = size.height / 11.0
 
 		// (0, 0) is left bottom
 		let left = floor(cellWidth * 1)
@@ -45,21 +45,24 @@ extension 局面型 {
 		let top = floor(cellHeight * 10)
 		
 //		let context = UIGraphicsGetCurrentContext()!
-		CGContextSetStrokeColorWithColor(context, XColor.blackColor().CGColor)
+		context.setStrokeColor(XColor.black().cgColor)
 		for col in 0...9 {
 			let x = floor(left + cellWidth * CGFloat(col))
-			CGContextMoveToPoint(context, x, top)
-			CGContextAddLineToPoint(context, x, bottom)
-			CGContextStrokePath(context)
+			context.moveTo(x: x, y: top)
+			context.addLineTo(x: x, y: bottom)
+			context.strokePath()
 		}
 		for row in 0...9 {
 			let y = floor(bottom + cellHeight * CGFloat(row))
-			CGContextMoveToPoint(context, left, y)
-			CGContextAddLineToPoint(context, right, y)
-			CGContextStrokePath(context)
+			context.moveTo(x: left, y: y)
+			context.addLineTo(x: right, y: y)
+			context.strokePath()
 		}
-		
-		let fontSize = floor(min(cellHeight, cellWidth) * 0.85)
+
+		// following code won't work under Xcode 8 beta
+		// Apple Swift version 3.0 (swiftlang-800.0.30 clang-800.0.24)
+		// let fontSize = floor(min(cellWidth, cellHeight) * 0.85)
+		let fontSize = floor(((cellWidth < cellHeight) ? cellWidth : cellHeight) * 0.85)
 		let font1 = CTFontCreateWithName("HiraKakuProN-W3", fontSize, nil)
 		let font2 = CTFontCreateWithName("HiraKakuProN-W6", fontSize, nil)
 		let vectors: [先手後手型: CGFloat] = [.先手: 1, .後手: -1]
@@ -74,7 +77,7 @@ extension 局面型 {
 				if let 駒面 = 升.駒面, let 先後 = 升.先後 {
 					let string = 駒面.string
 					let characters = [UniChar](string.utf16)
-					var glyphs = [CGGlyph](count: characters.count, repeatedValue: 0)
+					var glyphs = [CGGlyph](repeating: 0, count: characters.count)
 					let font: CTFont
 					switch 直前の指手 {
 					case .動(_, _, let 移動後の位置, _)? where 移動後の位置 == 位置: font = font2
@@ -84,24 +87,24 @@ extension 局面型 {
 					let result = CTFontGetGlyphsForCharacters(font, characters, &glyphs, characters.count)
 					assert(result)
 					let descent = CTFontGetDescent(font)
-					let positions = [CGPoint](count: characters.count, repeatedValue: CGPointMake(0, descent))
-					var rects = [CGRect](count: characters.count, repeatedValue: CGRectZero)
-					CTFontGetBoundingRectsForGlyphs(font, .Horizontal, glyphs, &rects, glyphs.count)
+					let positions = [CGPoint](repeating: CGPoint(x: 0, y: descent), count: characters.count)
+					var rects = [CGRect](repeating: CGRect.zero, count: characters.count)
+					CTFontGetBoundingRectsForGlyphs(font, .horizontal, glyphs, &rects, glyphs.count)
 					let offsetX = ((cellWidth - rects[0].width) / 2) * vectors[先後]!
-					CGContextSaveGState(context)
-					CGContextTranslateCTM(context, x + offsetX, y)
-					CGContextScaleCTM(context, 1, -1)
+					context.saveGState()
+					context.translate(x: x + offsetX, y: y)
+					context.scale(x: 1, y: -1)
 					switch 先後 {
 					case .先手:
-						CGContextTranslateCTM(context, 0, descent)
+						context.translate(x: 0, y: descent)
 						break
 					case .後手:
-						CGContextTranslateCTM(context, cellWidth, cellHeight)
-						CGContextRotateCTM(context, DegreesToRadians(180))
-						CGContextTranslateCTM(context, 0, descent)
+						context.translate(x: cellWidth, y: cellHeight)
+						context.rotate(byAngle: DegreesToRadians(180))
+						context.translate(x: 0, y: descent)
 					}
 					CTFontDrawGlyphs(font, glyphs, positions, glyphs.count, context)
-					CGContextRestoreGState(context)
+					context.restoreGState()
 				}
 			}
 		}
@@ -109,7 +112,7 @@ extension 局面型 {
 		let descent = CTFontGetDescent(font1)
 
 		for 先後 in [先手後手型.先手, .後手] {
-			CGContextSaveGState(context)
+			context.saveGState()
 			let 持駒 = self.持駒(先後)
 			let 記号: String
 			switch 先後 {
@@ -118,25 +121,25 @@ extension 局面型 {
 			}
 
 			let attributes = [NSFontAttributeName: font1]
-			let attributedString = NSAttributedString(string: 記号 + 持駒.漢数字表記, attributes: attributes)
+			let attributedString = AttributedString(string: 記号 + 持駒.漢数字表記, attributes: attributes)
 			let line = CTLineCreateWithAttributedString(attributedString)
-			CGContextSetTextMatrix(context, CGAffineTransformMakeScale(1, -1))
-			CGContextTranslateCTM(context, cellWidth, cellHeight * 11)
+			context.textMatrix = CGAffineTransform(scaleX: 1, y: -1)
+			context.translate(x: cellWidth, y: cellHeight * 11)
 
 			switch 先後 {
 			case .先手:
-				CGContextTranslateCTM(context, 0, -descent)
+				context.translate(x: 0, y: -descent)
 			case .後手:
-				CGContextTranslateCTM(context, cellWidth * 9, -(cellHeight * 11))
-				CGContextRotateCTM(context, DegreesToRadians(180))
-				CGContextTranslateCTM(context, 0, -descent)
+				context.translate(x: cellWidth * 9, y: -(cellHeight * 11))
+				context.rotate(byAngle: DegreesToRadians(180))
+				context.translate(x: 0, y: -descent)
 			}
 
 			CTLineDraw(line, context)
-			CGContextRestoreGState(context)
+			context.restoreGState()
 		}
 
-		return CGBitmapContextCreateImage(context)!
+		return context.makeImage()!
 	}
 
 }

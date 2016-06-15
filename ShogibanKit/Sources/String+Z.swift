@@ -30,28 +30,28 @@ import Foundation
 
 extension String {
 
-	func stringByAppendingPathExtension(str: String) -> String? {
-		return (self as NSString).stringByAppendingPathExtension(str)
+	func stringByAppendingPathExtension(_ str: String) -> String? {
+		return (self as NSString).appendingPathExtension(str)
 	}
 	
-	func stringByAppendingPathComponent(str: String) -> String {
-		return (self as NSString).stringByAppendingPathComponent(str)
+	func stringByAppendingPathComponent(_ str: String) -> String {
+		return (self as NSString).appendingPathComponent(str)
 	}
 	
 	var stringByDeletingPathExtension: String {
-		return (self as NSString).stringByDeletingPathExtension
+		return (self as NSString).deletingPathExtension
 	}
 
 	var stringByDeletingLastPathComponent: String {
-		return (self as NSString).stringByDeletingLastPathComponent
+		return (self as NSString).deletingLastPathComponent
 	}
 
 	var stringByAbbreviatingWithTildeInPath: String {
-		return (self as NSString).stringByAbbreviatingWithTildeInPath;
+		return (self as NSString).abbreviatingWithTildeInPath;
 	}
 	
 	var stringByExpandingTildeInPath: String {
-		return (self as NSString).stringByExpandingTildeInPath;
+		return (self as NSString).expandingTildeInPath;
 	}
 	
 	var lastPathComponent: String {
@@ -66,8 +66,8 @@ extension String {
 		return (self as NSString).pathComponents
 	}
 
-	func pathsForResourcesOfType(type: String) -> [String] {
-		let enumerator = NSFileManager.defaultManager().enumeratorAtPath(self)
+	func pathsForResourcesOfType(_ type: String) -> [String] {
+		let enumerator = FileManager.default().enumerator(atPath: self)
 		var filePaths = [String]()
 		while let filePath = enumerator?.nextObject() as? String {
 			if filePath.pathExtension == type {
@@ -86,17 +86,17 @@ extension String {
 	}
 
 	func indent() -> String {
-		return self.lines.map{"  " + $0}.joinWithSeparator("\r")
+		return self.lines.map{"  " + $0}.joined(separator: "\r")
 	}
 
-	func substringWithRange(range: NSRange) -> String {
-		let subindex1 = self.startIndex.advancedBy(range.location)
-		let subindex2 = subindex1.advancedBy(range.length)
-		return self.substringWithRange(subindex1 ..< subindex2)
+	func substringWithRange(_ range: NSRange) -> String {
+		let subindex1 = self.characters.index(self.startIndex, offsetBy: range.location)
+        let subindex2 = self.characters.index(subindex1, offsetBy: range.length)
+		return self.substring(with: subindex1 ..< subindex2)
 	}
 	
-	var data: NSData {
-		return self.dataUsingEncoding(NSUTF8StringEncoding)!
+	var data: Data {
+		return self.data(using: String.Encoding.utf8)!
 	}
 
 }

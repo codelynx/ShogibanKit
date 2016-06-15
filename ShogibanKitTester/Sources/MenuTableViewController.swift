@@ -14,7 +14,7 @@ typealias MenuItem = (title: String, closure: (() -> String))
 
 
 protocol MenuTableViewControllerDelegate: class {
-	func menuTableViewController(menuTableViewController: MenuTableViewController, didSelectItem: MenuItem?)
+	func menuTableViewController(_ menuTableViewController: MenuTableViewController, didSelectItem: MenuItem?)
 }
 
 
@@ -47,7 +47,7 @@ class MenuTableViewController: NSViewController, NSTableViewDataSource, NSTableV
 			else {
 				let 全指手 = 局面.全可能指手列()
 
-				string += "全可能指手: " + 全指手.map { $0.description }.joinWithSeparator(", ") + "\r"
+				string += "全可能指手: " + 全指手.map { $0.description }.joined(separator: ", ") + "\r"
 				//print("全可能指手: " + 全指手.map { $0.description }.joinWithSeparator(", "))
 				let 指手 = 全指手[Int(arc4random_uniform(UInt32(全指手.count)))]
 				print("\(指手)")
@@ -89,17 +89,17 @@ class MenuTableViewController: NSViewController, NSTableViewDataSource, NSTableV
 		super.viewDidLoad()
 	}
 
-	func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+	func numberOfRows(in tableView: NSTableView) -> Int {
 		return menuItems.count
 	}
 
 	
-	func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
+	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
 		switch (tableColumn?.identifier ?? "") {
 		case "title":
 			let item = self.menuItems[row]
 			print("hellow world!!")
-			let view = tableView.makeViewWithIdentifier("cell", owner: nil) as! NSTableCellView
+			let view = tableView.make(withIdentifier: "cell", owner: nil) as! NSTableCellView
 			view.textField!.stringValue = item.0
 //			view.imageView?.image = NSImage(named: )
 			assert(view.textField != nil)
@@ -110,7 +110,7 @@ class MenuTableViewController: NSViewController, NSTableViewDataSource, NSTableV
 		return nil
 	}
 
-	func tableViewSelectionDidChange(notification: NSNotification) {
+	func tableViewSelectionDidChange(_ notification: Notification) {
 		if self.tableView.selectedRow >= 0 {
 			self.delegate?.menuTableViewController(self, didSelectItem: menuItems[self.tableView.selectedRow])
 		}

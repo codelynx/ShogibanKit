@@ -28,13 +28,13 @@
 import Foundation
 
 
-extension NSData {
+extension Data {
 
 	public var binaryString: String {
 		var bitString = ""
-		let bytes = Array(UnsafeBufferPointer(start: UnsafePointer<UInt8>(self.bytes), count: self.length))
-		for var byte in bytes {
+		self.forEach {
 			var string = ""
+			var byte  = $0
 			for _ in (0 ..< 8) {
 				string = ((byte % 2 == 0) ? "0" : "1") + string
 				byte = byte / 2
@@ -44,7 +44,7 @@ extension NSData {
 		return bitString
 	}
 
-	public convenience init(binaryString: String) {
+	public init(binaryString: String) {
 		var buffer = [UInt8]()
 		var bitIndex = UInt8(0)
 		var byte: UInt8 = 0
@@ -68,7 +68,7 @@ extension NSData {
 			byte = (byte << (8 - bitIndex))
 			buffer.append(byte)
 		}
-		self.init(bytes: buffer, length: buffer.count)
+		self.init(bytes: buffer)
 	}
 
 }
