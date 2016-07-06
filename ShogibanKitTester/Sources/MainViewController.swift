@@ -35,7 +35,7 @@ class MainViewController: NSSplitViewController, MenuTableViewControllerDelegate
 		}
 	}
 
-	func menuTableViewController(menuTableViewController: MenuTableViewController, didSelectItem menuItem: MenuItem?) {
+	func menuTableViewController(_ menuTableViewController: MenuTableViewController, didSelectItem menuItem: MenuItem?) {
 		self.experimentViewController.menuItem = menuItem
 	}
 

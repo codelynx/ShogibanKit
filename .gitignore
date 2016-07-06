@@ -14,3 +14,4 @@ DerivedData
 *.lock
 *.moved-aside
 .Trashes
+._*

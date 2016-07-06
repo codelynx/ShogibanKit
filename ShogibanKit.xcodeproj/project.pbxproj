@@ -11,12 +11,16 @@
 		CC2ABF511CD9DBCC00296806 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC2ABF4F1CD9DBCC00296806 /* Main.storyboard */; };
 		CC2E1DB61CDFBD5B006151CA /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = CC2E1DB51CDFBD5B006151CA /* Fonts */; };
 		CC2E1DBB1CE03ECE006151CA /* ShogibanKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DB91CE03ECE006151CA /* ShogibanKit.swift */; };
-		CC2E1DBC1CE03ECE006151CA /* String+lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DBA1CE03ECE006151CA /* String+lines.swift */; };
 		CC2E1DC21CE03F5C006151CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DBE1CE03F5C006151CA /* AppDelegate.swift */; };
 		CC2E1DC31CE03F5C006151CA /* ExperimentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DBF1CE03F5C006151CA /* ExperimentViewController.swift */; };
 		CC2E1DC41CE03F5C006151CA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DC01CE03F5C006151CA /* MainViewController.swift */; };
 		CC2E1DC51CE03F5C006151CA /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DC11CE03F5C006151CA /* MenuTableViewController.swift */; };
 		CC6A46EC1CF48ABC00849313 /* ShogibanKit+image.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC6A46EB1CF48ABC00849313 /* ShogibanKit+image.swift */; };
+		CCF4C0221D106E4B00729A3D /* String+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF4C0211D106E4B00729A3D /* String+Z.swift */; };
+		CCF4C0261D106E8300729A3D /* BinaryStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF4C0231D106E8300729A3D /* BinaryStringConvertible.swift */; };
+		CCF4C0271D106E8300729A3D /* NSData+binaryString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF4C0241D106E8300729A3D /* NSData+binaryString.swift */; };
+		CCF4C0281D106E8300729A3D /* NSScanner+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF4C0251D106E8300729A3D /* NSScanner+Z.swift */; };
+		CCF4C02A1D106ED700729A3D /* GeoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF4C0291D106ED700729A3D /* GeoUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,12 +31,16 @@
 		CC2ABF521CD9DBCC00296806 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC2E1DB51CDFBD5B006151CA /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		CC2E1DB91CE03ECE006151CA /* ShogibanKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShogibanKit.swift; sourceTree = "<group>"; };
-		CC2E1DBA1CE03ECE006151CA /* String+lines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+lines.swift"; sourceTree = "<group>"; };
 		CC2E1DBE1CE03F5C006151CA /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC2E1DBF1CE03F5C006151CA /* ExperimentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentViewController.swift; sourceTree = "<group>"; };
 		CC2E1DC01CE03F5C006151CA /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		CC2E1DC11CE03F5C006151CA /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		CC6A46EB1CF48ABC00849313 /* ShogibanKit+image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ShogibanKit+image.swift"; sourceTree = "<group>"; };
+		CCF4C0211D106E4B00729A3D /* String+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Z.swift"; sourceTree = "<group>"; };
+		CCF4C0231D106E8300729A3D /* BinaryStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryStringConvertible.swift; sourceTree = "<group>"; };
+		CCF4C0241D106E8300729A3D /* NSData+binaryString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+binaryString.swift"; sourceTree = "<group>"; };
+		CCF4C0251D106E8300729A3D /* NSScanner+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSScanner+Z.swift"; sourceTree = "<group>"; };
+		CCF4C0291D106ED700729A3D /* GeoUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,9 +103,13 @@
 		CC2E1DB81CE03ECE006151CA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				CCF4C0231D106E8300729A3D /* BinaryStringConvertible.swift */,
+				CCF4C0241D106E8300729A3D /* NSData+binaryString.swift */,
+				CCF4C0251D106E8300729A3D /* NSScanner+Z.swift */,
 				CC2E1DB91CE03ECE006151CA /* ShogibanKit.swift */,
 				CC6A46EB1CF48ABC00849313 /* ShogibanKit+image.swift */,
-				CC2E1DBA1CE03ECE006151CA /* String+lines.swift */,
+				CCF4C0211D106E4B00729A3D /* String+Z.swift */,
+				CCF4C0291D106ED700729A3D /* GeoUtils.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -145,6 +157,7 @@
 				TargetAttributes = {
 					CC2ABF451CD9DBCC00296806 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -184,11 +197,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCF4C0281D106E8300729A3D /* NSScanner+Z.swift in Sources */,
 				CC2E1DC31CE03F5C006151CA /* ExperimentViewController.swift in Sources */,
+				CCF4C02A1D106ED700729A3D /* GeoUtils.swift in Sources */,
+				CCF4C0261D106E8300729A3D /* BinaryStringConvertible.swift in Sources */,
+				CCF4C0271D106E8300729A3D /* NSData+binaryString.swift in Sources */,
 				CC2E1DC51CE03F5C006151CA /* MenuTableViewController.swift in Sources */,
-				CC2E1DBC1CE03ECE006151CA /* String+lines.swift in Sources */,
 				CC2E1DC21CE03F5C006151CA /* AppDelegate.swift in Sources */,
 				CC2E1DC41CE03F5C006151CA /* MainViewController.swift in Sources */,
+				CCF4C0221D106E4B00729A3D /* String+Z.swift in Sources */,
 				CC6A46EC1CF48ABC00849313 /* ShogibanKit+image.swift in Sources */,
 				CC2E1DBB1CE03ECE006151CA /* ShogibanKit.swift in Sources */,
 			);
@@ -268,6 +285,7 @@
 				PRODUCT_NAME = ShogibanKit_OSX;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -311,6 +329,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.Kiban-OSX";
 				PRODUCT_NAME = ShogibanKit_OSX;
 				SDKROOT = macosx;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

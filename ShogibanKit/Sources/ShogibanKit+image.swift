@@ -35,8 +35,8 @@ extension 局面型 {
 		context.scale(x: 1, y: -1)
 
 		let size = rect.size
-		let cellWidth = size.width / 11.0
-		let cellHeight = size.height / 11.0
+		let cellWidth: CGFloat = size.width / 11.0
+		let cellHeight: CGFloat = size.height / 11.0
 
 		// (0, 0) is left bottom
 		let left = floor(cellWidth * 1)
@@ -58,7 +58,7 @@ extension 局面型 {
 			context.addLineTo(x: right, y: y)
 			context.strokePath()
 		}
-		
+
 		let fontSize = floor(fmin(cellHeight, cellWidth) * 0.85)
 		let font1 = CTFontCreateWithName("HiraKakuProN-W3", fontSize, nil)
 		let font2 = CTFontCreateWithName("HiraKakuProN-W6", fontSize, nil)
