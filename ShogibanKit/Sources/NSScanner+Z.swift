@@ -28,43 +28,43 @@
 import Foundation
 
 
-extension NSScanner {
+extension Scanner {
 
-	func scanString(string: String) -> String? {
-		if self.scanString(string, intoString: nil) {
+	func scanString(_ string: String) -> String? {
+		if self.scanString(string, into: nil) {
 			return string
 		}
 		return nil
 	}
 
-	func scanEitherString(strings: [String]) -> String? {
+	func scanEitherString(_ strings: [String]) -> String? {
 		for string in strings {
-			if self.scanString(string, intoString: nil) {
+			if self.scanString(string, into: nil) {
 				return string
 			}
 		}
 		return nil
 	}
 
-	func scanUpToString(string: String) -> String? {
+	func scanUpToString(_ string: String) -> String? {
 		var outString: NSString? = nil
-		if self.scanUpToString(string, intoString: &outString) {
+		if self.scanUpTo(string, into: &outString) {
 			return outString as? String
 		}
 		return nil
 	}
 
-	func scanCharactersFromSet(set: NSCharacterSet) -> String? {
+	func scanCharactersFromSet(_ set: CharacterSet) -> String? {
 		var outString: NSString? = nil
-		if self.scanCharactersFromSet(set, intoString: &outString) {
+		if self.scanCharacters(from: set, into: &outString) {
 			return outString as? String
 		}
 		return nil
 	}
 
-	func scanUpToCharactersFromSet(set: NSCharacterSet) -> String? {
+	func scanUpToCharactersFromSet(_ set: CharacterSet) -> String? {
 		var outString: NSString? = nil
-		if self.scanUpToCharactersFromSet(set, intoString: &outString) {
+		if self.scanUpToCharacters(from: set, into: &outString) {
 			return outString as? String
 		}
 		return nil
@@ -72,7 +72,7 @@ extension NSScanner {
 
 	func scanInt() -> Int? {
 		var outValue: Int32 = 0
-		if self.scanInt(&outValue) {
+		if self.scanInt32(&outValue) {
 			return Int(outValue)
 		}
 		return nil
@@ -86,9 +86,9 @@ extension NSScanner {
 		return nil
 	}
 	
-	func scan<T>(pattern: [String: T]) -> T? {
+	func scan<T>(_ pattern: [String: T]) -> T? {
 		for (key, value) in pattern {
-			if self.scanString(key, intoString: nil) {
+			if self.scanString(key, into: nil) {
 				return value
 			}
 		}

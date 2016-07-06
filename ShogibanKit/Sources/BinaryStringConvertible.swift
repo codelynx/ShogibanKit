@@ -28,7 +28,7 @@
 import Foundation
 
 
-public protocol BinaryStringConvertible: UnsignedIntegerType {
+public protocol BinaryStringConvertible: UnsignedInteger {
 
 	var binaryString: String { get }
 	init?(binaryString: String)
