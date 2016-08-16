@@ -31,8 +31,8 @@ extension 局面型 {
 
 		let rect = CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height))
 		context.clear(rect)
-		context.translate(x: 0, y: CGFloat(height))
-		context.scale(x: 1, y: -1)
+		context.translateBy(x: 0, y: CGFloat(height))
+		context.scaleBy(x: 1, y: -1)
 
 		let size = rect.size
 		let cellWidth: CGFloat = size.width / 11.0
@@ -45,23 +45,23 @@ extension 局面型 {
 		let top = floor(cellHeight * 10)
 		
 //		let context = UIGraphicsGetCurrentContext()!
-		context.setStrokeColor(XColor.black().cgColor)
+		context.setStrokeColor(XColor.black.cgColor)
 		for col in 0...9 {
 			let x = floor(left + cellWidth * CGFloat(col))
-			context.moveTo(x: x, y: top)
-			context.addLineTo(x: x, y: bottom)
+			context.move(to: CGPoint(x: x, y: top))
+			context.addLine(to: CGPoint(x: x, y: bottom))
 			context.strokePath()
 		}
 		for row in 0...9 {
 			let y = floor(bottom + cellHeight * CGFloat(row))
-			context.moveTo(x: left, y: y)
-			context.addLineTo(x: right, y: y)
+			context.move(to: CGPoint(x: left, y: y))
+			context.addLine(to: CGPoint(x: right, y: y))
 			context.strokePath()
 		}
 
 		let fontSize = floor(fmin(cellHeight, cellWidth) * 0.85)
-		let font1 = CTFontCreateWithName("HiraKakuProN-W3", fontSize, nil)
-		let font2 = CTFontCreateWithName("HiraKakuProN-W6", fontSize, nil)
+		let font1 = CTFontCreateWithName("HiraKakuProN-W3" as CFString?, fontSize, nil)
+		let font2 = CTFontCreateWithName("HiraKakuProN-W6" as CFString?, fontSize, nil)
 		let vectors: [先手後手型: CGFloat] = [.先手: 1, .後手: -1]
 
 		for 段 in 段型.全段 {
@@ -89,16 +89,16 @@ extension 局面型 {
 					CTFontGetBoundingRectsForGlyphs(font, .horizontal, glyphs, &rects, glyphs.count)
 					let offsetX = ((cellWidth - rects[0].width) / 2) * vectors[先後]!
 					context.saveGState()
-					context.translate(x: x + offsetX, y: y)
-					context.scale(x: 1, y: -1)
+					context.translateBy(x: x + offsetX, y: y)
+					context.scaleBy(x: 1, y: -1)
 					switch 先後 {
 					case .先手:
-						context.translate(x: 0, y: descent)
+						context.translateBy(x: 0, y: descent)
 						break
 					case .後手:
-						context.translate(x: cellWidth, y: cellHeight)
-						context.rotate(byAngle: DegreesToRadians(180))
-						context.translate(x: 0, y: descent)
+						context.translateBy(x: cellWidth, y: cellHeight)
+						context.rotate(by: DegreesToRadians(180))
+						context.translateBy(x: 0, y: descent)
 					}
 					CTFontDrawGlyphs(font, glyphs, positions, glyphs.count, context)
 					context.restoreGState()
@@ -118,18 +118,18 @@ extension 局面型 {
 			}
 
 			let attributes = [NSFontAttributeName: font1]
-			let attributedString = AttributedString(string: 記号 + 持駒.漢数字表記, attributes: attributes)
+			let attributedString = NSAttributedString(string: 記号 + 持駒.漢数字表記, attributes: attributes)
 			let line = CTLineCreateWithAttributedString(attributedString)
 			context.textMatrix = CGAffineTransform(scaleX: 1, y: -1)
-			context.translate(x: cellWidth, y: cellHeight * 11)
+			context.translateBy(x: cellWidth, y: cellHeight * 11)
 
 			switch 先後 {
 			case .先手:
-				context.translate(x: 0, y: -descent)
+				context.translateBy(x: 0, y: -descent)
 			case .後手:
-				context.translate(x: cellWidth * 9, y: -(cellHeight * 11))
-				context.rotate(byAngle: DegreesToRadians(180))
-				context.translate(x: 0, y: -descent)
+				context.translateBy(x: cellWidth * 9, y: -(cellHeight * 11))
+				context.rotate(by: DegreesToRadians(180))
+				context.translateBy(x: 0, y: -descent)
 			}
 
 			CTLineDraw(line, context)

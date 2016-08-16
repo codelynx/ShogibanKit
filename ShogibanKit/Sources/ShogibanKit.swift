@@ -33,7 +33,7 @@ let 総筋数 = 9
 let 総段数 = 9
 
 
-enum ShogibanKitError: ErrorProtocol {
+enum ShogibanKitError: Error {
 	case 指手実行不可
 	case 指手反則手
 }
@@ -106,7 +106,7 @@ extension Scanner {
 public enum 段型 : Int8, CustomStringConvertible { // top -> bottom
 	case 一, 二, 三, 四, 五, 六, 七, 八, 九
 
-	private  static let 記号表: [String: 段型] = [
+	static let 記号表: [String: 段型] = [
 		"一": .一, "二": .二, "三": .三, "四": .四, "五": .五, "六": .六, "七": .七, "八": .八, "九": .九
 	]
 
@@ -295,7 +295,7 @@ extension Scanner {
 public enum 駒種型 : Int8, CustomStringConvertible {
 	case 歩, 香, 桂, 銀, 金, 角, 飛, 玉
 
-	private static let 記号表: [String: 駒種型] = [
+	static let 記号表: [String: 駒種型] = [
 		"玉": .玉, "飛": .飛, "角": .角, "金": .金, "銀": .銀, "桂": .桂, "香": .香, "歩": .歩,
 	]
 
@@ -321,60 +321,60 @@ public enum 駒種型 : Int8, CustomStringConvertible {
 	
 	public var 駒面: 駒面型 {
 		switch self {
-		case 歩: return .歩
-		case 香: return .香
-		case 桂: return .桂
-		case 銀: return .銀
-		case 金: return .金
-		case 角: return .角
-		case 飛: return .飛
-		case 玉: return .玉
+		case .歩: return .歩
+		case .香: return .香
+		case .桂: return .桂
+		case .銀: return .銀
+		case .金: return .金
+		case .角: return .角
+		case .飛: return .飛
+		case .玉: return .玉
 		}
 	}
 
 	public var 成駒面: 駒面型? {
 		switch self {
-		case 歩: return .と
-		case 香: return .杏
-		case 桂: return .圭
-		case 銀: return .全
-		case 金: return nil
-		case 角: return .馬
-		case 飛: return .竜
-		case 玉: return nil
+		case .歩: return .と
+		case .香: return .杏
+		case .桂: return .圭
+		case .銀: return .全
+		case .金: return nil
+		case .角: return .馬
+		case .飛: return .竜
+		case .玉: return nil
 		}
 	}
 
 	public var 駒面列: [駒面型] {
 		switch self {
-		case 歩: return [.歩, .と]
-		case 香: return [.香, .杏]
-		case 桂: return [.桂, .圭]
-		case 銀: return [.銀, .全]
-		case 金: return [.金]
-		case 角: return [.角, .馬]
-		case 飛: return [.飛, .竜]
-		case 玉: return [.玉]
+		case .歩: return [.歩, .と]
+		case .香: return [.香, .杏]
+		case .桂: return [.桂, .圭]
+		case .銀: return [.銀, .全]
+		case .金: return [.金]
+		case .角: return [.角, .馬]
+		case .飛: return [.飛, .竜]
+		case .玉: return [.玉]
 		}
 	}
 
 	public var 駒数: Int {
 		switch self {
-		case 歩: return 18
-		case 香, 桂, 銀, 金: return 4
-		case 角, 飛: return 2
-		case 玉: return 2
+		case .歩: return 18
+		case .香, .桂, .銀, .金: return 4
+		case .角, .飛: return 2
+		case .玉: return 2
 		}
 	}
 
 	public func 指定段に打つ事は可能か(先後: 先手後手型, 段: 段型) -> Bool {
 		switch (先後, self) {
-		case (.先手, 歩): return 段.index > 0 // 二歩は対象としない
-		case (.先手, 香): return 段.index > 0
-		case (.先手, 桂): return 段.index > 1
-		case (.後手, 歩): return 段.index < 8 // 二歩は対象としない
-		case (.後手, 香): return 段.index < 8
-		case (.後手, 桂): return 段.index < 7
+		case (.先手, .歩): return 段.index > 0 // 二歩は対象としない
+		case (.先手, .香): return 段.index > 0
+		case (.先手, .桂): return 段.index > 1
+		case (.後手, .歩): return 段.index < 8 // 二歩は対象としない
+		case (.後手, .香): return 段.index < 8
+		case (.後手, .桂): return 段.index < 7
 		default: return true
 		}
 	}
@@ -447,14 +447,14 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 	
 	public var 駒種: 駒種型 {
 		switch self {
-		case 歩, と: return .歩
-		case 香, 杏: return .香
-		case 桂, 圭: return .桂
-		case 銀, 全: return .銀
-		case 金: return .金
-		case 角, 馬: return .角
-		case 飛, 竜: return .飛
-		case 玉: return .玉
+		case .歩, .と: return .歩
+		case .香, .杏: return .香
+		case .桂, .圭: return .桂
+		case .銀, .全: return .銀
+		case .金: return .金
+		case .角, .馬: return .角
+		case .飛, .竜: return .飛
+		case .玉: return .玉
 		}
 	}
 
@@ -481,14 +481,14 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 		assert(abs(y) == 1)
 
 		switch 駒面 {
-		case 歩: return [(0, y)]
-		case 香: return []
-		case 桂: return [(-1, y * 2), (1, y * 2)]
-		case 銀: return [(-1, y), (0, y), (1, y),  (-1, -y), (1, -y)]
-		case 角: return []
-		case 飛: return []
-		case 玉, 馬, 竜: return [(-1, -1), (0, -1), (1, -1),  (-1, 0), (1, 0),  (-1, 1), (0, 1), (1, 1)]
-		case 金, と, 杏, 圭, 全: return [(-1, y), (0, y), (1, y),  (-1, 0), (1, 0),  (0, -y)]
+		case .歩: return [(0, y)]
+		case .香: return []
+		case .桂: return [(-1, y * 2), (1, y * 2)]
+		case .銀: return [(-1, y), (0, y), (1, y),  (-1, -y), (1, -y)]
+		case .角: return []
+		case .飛: return []
+		case .玉, .馬, .竜: return [(-1, -1), (0, -1), (1, -1),  (-1, 0), (1, 0),  (-1, 1), (0, 1), (1, 1)]
+		case .金, .と, .杏, .圭, .全: return [(-1, y), (0, y), (1, y),  (-1, 0), (1, 0),  (0, -y)]
 		}
 	}
 
@@ -497,36 +497,36 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 		assert(abs(y) == 1)
 
 		switch 駒面 {
-		case 香: return [(0, y)]
-		case 角, 馬: return [(y, y), (-y, y), (y, -y), (-y, -y)]
-		case 飛, 竜: return [(0, y), (0, -y), (y, 0), (-y, 0)]
+		case .香: return [(0, y)]
+		case .角, .馬: return [(y, y), (-y, y), (y, -y), (-y, -y)]
+		case .飛, .竜: return [(0, y), (0, -y), (y, 0), (-y, 0)]
 		default: return []
 		}
 	}
 
 	public var 成駒面: 駒面型 {
 		switch self {
-		case 歩: return と
-		case 香: return 杏
-		case 桂: return 圭
-		case 銀: return 全
-		case 角: return 馬
-		case 飛: return 竜
-		case 金, 玉: fatalError("should have checked")
-		case と, 杏, 圭, 全, 馬, 竜: return self
+		case .歩: return .と
+		case .香: return .杏
+		case .桂: return .圭
+		case .銀: return .全
+		case .角: return .馬
+		case .飛: return .竜
+		case .金, .玉: fatalError("should have checked")
+		case .と, .杏, .圭, .全, .馬, .竜: return self
 		}
 	}
 	
 	public var 成る事は可能か: Bool {
 		switch self {
-		case 歩, 香, 桂, 銀, 角, 飛: return true
-		case 金, 玉, と, 杏, 圭, 全, 馬, 竜: return false
+		case .歩, .香, .桂, .銀, .角, .飛: return true
+		case .金, .玉, .と, .杏, .圭, .全, .馬, .竜: return false
 		}
 	}
 
 	public var 成駒か: Bool {
 		switch self {
-		case と, 杏, 圭, 全, 馬, 竜: return true
+		case .と, .杏, .圭, .全, .馬, .竜: return true
 		default: return false
 		}
 	}
@@ -583,7 +583,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 
 		// "飛角金2桂歩4", "角,銀3,香,歩", "なし"
 		let scanner = Scanner(string: string)
-		scanner.scan先手後手()
+		let _ = scanner.scan先手後手()
 		let _ = scanner.scanString("持駒:")
 		while let 駒種 = scanner.scan(持駒型.記号表) {
 			let 駒数 = scanner.scanInt() ?? 1
@@ -751,7 +751,7 @@ extension Scanner {
 				let 駒種 = 駒種型(string: 駒種記号)!
 				持駒[駒種] = 駒数
 			}
-			self.scanString(",")
+			let _ = self.scanString(",")
 		}
 		return 持駒
 	}
@@ -770,7 +770,7 @@ public func == (lhs: 持駒型, rhs: 持駒型) -> Bool {
 public enum 先手後手型 : Int8, CustomStringConvertible {
 	case 先手, 後手
 
-	private static let 記号表: [String: 先手後手型] = [
+	static let 記号表: [String: 先手後手型] = [
 		"▲": .先手, "☗": .先手, "先手": .先手,
 		"▽": .後手, "☖": .後手, "後手": .後手
 	]
@@ -883,29 +883,29 @@ public enum 升型 : Int8, CustomStringConvertible {
 
 	public var 先後: 先手後手型? {
 		switch self {
-		case 空: return nil
-		case 先歩, 先香, 先桂, 先銀, 先金, 先角, 先飛, 先玉, 先と, 先杏, 先圭, 先全, 先馬, 先竜: return .先手
-		case 後歩, 後香, 後桂, 後銀, 後金, 後角, 後飛, 後玉, 後と, 後杏, 後圭, 後全, 後馬, 後竜: return .後手
+		case .空: return nil
+		case .先歩, .先香, .先桂, .先銀, .先金, .先角, .先飛, .先玉, .先と, .先杏, .先圭, .先全, .先馬, .先竜: return .先手
+		case .後歩, .後香, .後桂, .後銀, .後金, .後角, .後飛, .後玉, .後と, .後杏, .後圭, .後全, .後馬, .後竜: return .後手
 		}
 	}
 
 	public var 駒面: 駒面型? {
 		switch self {
-		case 先歩, 後歩: return .歩
-		case 先香, 後香: return .香
-		case 先桂, 後桂: return .桂
-		case 先銀, 後銀: return .銀
-		case 先金, 後金: return .金
-		case 先角, 後角: return .角
-		case 先飛, 後飛: return .飛
-		case 先玉, 後玉: return .玉
+		case .先歩, .後歩: return .歩
+		case .先香, .後香: return .香
+		case .先桂, .後桂: return .桂
+		case .先銀, .後銀: return .銀
+		case .先金, .後金: return .金
+		case .先角, .後角: return .角
+		case .先飛, .後飛: return .飛
+		case .先玉, .後玉: return .玉
 
-		case 先と, 後と: return .と
-		case 先杏, 後杏: return .杏
-		case 先圭, 後圭: return .圭
-		case 先全, 後全: return .全
-		case 先馬, 後馬: return .馬
-		case 先竜, 後竜: return .竜
+		case .先と, .後と: return .と
+		case .先杏, .後杏: return .杏
+		case .先圭, .後圭: return .圭
+		case .先全, .後全: return .全
+		case .先馬, .後馬: return .馬
+		case .先竜, .後竜: return .竜
 		default: return nil
 		}
 	}
@@ -913,7 +913,7 @@ public enum 升型 : Int8, CustomStringConvertible {
 //		"▲": .先手, "▲": .先手, "先手": .先手,
 //		"▽": .後手, "△": .後手, "後手": .後手
 
-	private static let 記号表 : [String: 升型] = [
+	static let 記号表 : [String: 升型] = [
 		"　　": .空,
 
 		"▲歩": .先歩, "▲香": .先香, "▲桂": .先桂, "▲銀": .先銀, "▲金": .先金, "▲角": .先角, "▲飛": .先飛, "▲玉": .先玉,
@@ -923,7 +923,7 @@ public enum 升型 : Int8, CustomStringConvertible {
 		"▽と": .後と, "▽杏": .後杏, "▽圭": .後圭, "▽全": .後全, "▽馬": .後馬, "▽竜": .後竜,
 	]
 
-	private static let 補助記号表 : [String: 升型] = [
+	static let 補助記号表 : [String: 升型] = [
 		"▲王": .先玉, "▽玉": .後玉, "▲龍": .先竜, "▽龍": .後竜,
 	]
 	
@@ -1006,14 +1006,14 @@ public enum 手合割型 {
 
 	private func 駒落位置列() -> [位置型] {
 		switch self {
-		case 平手: return []
-		case 香落ち: return [.９九]
-		case 角落ち: return [.８八]
-		case 飛車落ち: return [.２八]
-		case 飛香落ち: return [.２八, .９九]
-		case 二枚落ち: return [.２八, .８八]
-		case 四枚落ち: return [.２八, .８八, .９九, .１九]
-		case 六枚落ち: return [.２八, .８八, .９九, .１九, .２九, .８九]
+		case .平手: return []
+		case .香落ち: return [.９九]
+		case .角落ち: return [.８八]
+		case .飛車落ち: return [.２八]
+		case .飛香落ち: return [.２八, .９九]
+		case .二枚落ち: return [.２八, .８八]
+		case .四枚落ち: return [.２八, .８八, .９九, .１九]
+		case .六枚落ち: return [.２八, .８八, .９九, .１九, .２九, .８九]
 		}
 	}
 
@@ -1045,7 +1045,7 @@ public enum 終局理由型: CustomStringConvertible {
 	case 失玉
 	case その他
 
-	private static let 記号表 : [String: 終局理由型] = [
+	static let 記号表 : [String: 終局理由型] = [
 		"投了": .投了, "中断": .中断, "千日手": .千日手, "時間切れ": .時間切れ, "反則負け": .反則負け, "持将棋": .持将棋,
 		"入玉勝利": .入玉勝利, "入玉引分": .入玉引分, "待った": .待った, "詰み": .詰み, "引き分け": 引き分け,
 		"失玉": .失玉, "その他": .その他
@@ -1163,8 +1163,8 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 	var 直前の指手: 指手型?
 
 	public var 手合: 手合割型
-	private var 全升: [升型]
-	private var 持駒辞書: [先手後手型: 持駒型]
+	fileprivate var 全升: [升型]
+	fileprivate var 持駒辞書: [先手後手型: 持駒型]
 	public var 手番: 先手後手型
 
 	private var _終局理由: 終局理由型?
@@ -1319,7 +1319,7 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 		var 位置列 = [位置型]()
 		
 		let 升 = self[指定筋, 指定段]
-		if let 先後 = 升.先後, 駒面 = 升.駒面 {
+		if let 先後 = 升.先後, let 駒面 = 升.駒面 {
 			let 敵方 = 先後.敵方
 
 			// find movable positions for single step like 歩, 桂, 金, ...
@@ -1328,7 +1328,7 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 				if let 筋 = 指定筋 + dx, let 段 = 指定段 + dy {
 					let 位置 = 位置型(筋: 筋, 段: 段)
 					let 対象升 = self[位置]
-					if let どちらの駒 = 対象升.先後 where どちらの駒 == 先後 {
+					if let どちらの駒 = 対象升.先後, どちらの駒 == 先後 {
 					}
 					else if let 筋 = x, let 段 = y {
 						let 位置 = 位置型(筋: 筋, 段: 段)
@@ -1416,7 +1416,7 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 	public func 駒の位置列(_ 駒: 駒種型, 先後: 先手後手型) -> [位置型] {
 		var 位置列 = [位置型]()
 		for (index, 升) in 全升.enumerated() {
-			if let 升の駒 = 升.駒面?.駒種, let 升の駒の先後 = 升.先後, let 位置 = 位置型(rawValue: Int8(index)) where 駒 == 升の駒 && 升の駒の先後 == 先後 {
+			if let 升の駒 = 升.駒面?.駒種, let 升の駒の先後 = 升.先後, let 位置 = 位置型(rawValue: Int8(index)), 駒 == 升の駒 && 升の駒の先後 == 先後 {
 				位置列.append(位置)
 			}
 		}
@@ -1437,8 +1437,8 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 		case .動(let 先手後手, let 移動前の位置, let 移動後の位置, let 移動後の駒面):
 			let 移動前のマス = self[移動前の位置]
 			let 移動後のマス = self[移動後の位置]
-			if let 移動前の駒面 = 移動前のマス.駒面 where 移動前の駒面.駒種 == 移動後の駒面.駒種 {
-				if let 移動後の駒面 = 移動後のマス.駒面, 移動後のマスの駒の先手後手 = 移動後のマス.先後 {
+			if let 移動前の駒面 = 移動前のマス.駒面, 移動前の駒面.駒種 == 移動後の駒面.駒種 {
+				if let 移動後の駒面 = 移動後のマス.駒面, let 移動後のマスの駒の先手後手 = 移動後のマス.先後 {
 					// 相手の駒を取る
 					assert(移動後のマスの駒の先手後手 == 先手後手.敵方)
 					if 移動後の駒面.駒種 == .玉 { // 相手の玉を取る
@@ -1479,7 +1479,7 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 		var 指手列 = [指手型]()
 		for 位置 in self.全位置() {
 			let 升 = self[位置]
-			if let 先後 = 升.先後, 駒面 = 升.駒面 where 先後 == 手番 {
+			if let 先後 = 升.先後, let 駒面 = 升.駒面, 先後 == 手番 {
 				for 移動可能位置 in 指定位置の駒の移動可能位置列(位置) {
 					if 不成で移動可能か(先後: 先後, 移動前の位置: 位置, 移動後の位置: 移動可能位置, 移動前の駒面: 駒面) {
 						指手列.append(指手型.動(先後: 先後, 移動前の位置: 位置, 移動後の位置: 移動可能位置, 移動後の駒面: 駒面))
@@ -1592,7 +1592,7 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 			for 該当位置 in 移動可能位置列 {
 				if 該当位置 == 指定位置 { // && (先後 ?? 対象升.先後 == 対象升.先後) {
 					// 該当升を対象として含める
-					if let 指定先後 = 先後, let 升先後 = 升.先後 where 指定先後 == 升先後 {
+					if let 指定先後 = 先後, let 升先後 = 升.先後, 指定先後 == 升先後 {
 						位置列.append(位置)
 					}
 					else if 先後 == nil {
@@ -1608,7 +1608,7 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 		var 指手列 = [指手型]()
 		for 指定位置へ移動可能な駒の位置 in self.指定位置へ移動可能な全ての駒の位置列(指定位置, 先後) {
 			let 升 = self[指定位置へ移動可能な駒の位置]
-			if let 先後 = 升.先後, 駒面 = 升.駒面 {
+			if let 先後 = 升.先後, let 駒面 = 升.駒面 {
 				if 不成で移動可能か(先後: 先後, 移動前の位置: 指定位置へ移動可能な駒の位置, 移動後の位置: 指定位置, 移動前の駒面: 駒面) {
 					指手列.append(指手型.動(先後: 先後, 移動前の位置: 指定位置へ移動可能な駒の位置, 移動後の位置: 指定位置, 移動後の駒面: 駒面))
 				}
@@ -1747,8 +1747,9 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 		// 持駒
 		let 先手持駒Value = self.持駒(.先手).integerValue // 17 bit
 		let 後手持駒Value = self.持駒(.後手).integerValue // 17 bit
-		let integerLength = sizeof(先手持駒Value.dynamicType)
-		assert(sizeof(先手持駒Value.dynamicType) == 4)
+		let integerLength = MemoryLayout<UInt32>.size
+		assert(type(of: 先手持駒Value) == UInt32.self)
+		assert(type(of: 後手持駒Value) == UInt32.self)
 		let bitRange = NSMakeRange(integerLength * 8 - 持駒型.bitLength, 持駒型.bitLength)
 		bitString += 先手持駒Value.binaryString.substringWithRange(bitRange)
 		bitString += 後手持駒Value.binaryString.substringWithRange(bitRange)
@@ -1779,7 +1780,7 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 		var 全升 = [升型](repeating: 升型.空, count: 総升数)
 		for 段 in 段型.全段 {
 			for 筋 in 筋型.全筋 {
-				let 位置 = 位置型(筋: 筋, 段: 段)
+				_ = 位置型(筋: 筋, 段: 段)
 				let 升: 升型
 				if let value = scanner.scan(["0": 升型.空]) {
 					全升[Int(位置型(筋: 筋, 段: 段).rawValue)] = value
@@ -1802,7 +1803,7 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 			}
 			else { reportError(failedToDecode); return nil  }
 		}
-		先手持駒BitString = String(repeating: Character("0"), count: 32 - 持駒型.bitLength) + 先手持駒BitString
+		先手持駒BitString = String(repeating: "0", count: 32)
 		assert(先手持駒BitString.characters.count == 32)
 		guard let 先手持駒BitValue = UInt32(binaryString: 先手持駒BitString) else { reportError(failedToDecode); return nil }
 		let 先手持駒 = 持駒型(integerValue: 先手持駒BitValue)
@@ -1815,7 +1816,7 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 			}
 			else { reportError(failedToDecode); return nil  }
 		}
-		後手持駒BitString = String(repeating: Character("0"), count: 32 - 持駒型.bitLength) + 後手持駒BitString
+		後手持駒BitString = String(repeating: "0", count: 32 - 持駒型.bitLength) + 後手持駒BitString
 		guard let 後手持駒BitValue = UInt32(binaryString: 後手持駒BitString) else { reportError(failedToDecode); return nil }
 		let 後手持駒 = 持駒型(integerValue: 後手持駒BitValue)
 		

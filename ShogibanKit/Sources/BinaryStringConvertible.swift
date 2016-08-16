@@ -39,7 +39,7 @@ extension BinaryStringConvertible {
 
 	public var binaryString: String {
 		var value = self
-		let bitlength = sizeof(Self) * 8
+		let bitlength = MemoryLayout<Self>.size * 8
 		var string = ""
 		for _ in (0 ..< bitlength) {
 			string = ((value % 2 == 0) ? "0" : "1") + string
@@ -49,7 +49,7 @@ extension BinaryStringConvertible {
 	}
 
 	public init?(binaryString: String) {
-		let bitLength = sizeof(Self) * 8
+		let bitLength = MemoryLayout<Self>.size * 8
 		var bitCount = 0
 		var value: Self = 0
 		for ch in binaryString.characters {

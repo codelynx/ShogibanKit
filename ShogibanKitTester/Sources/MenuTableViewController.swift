@@ -103,7 +103,6 @@ class MenuTableViewController: NSViewController, NSTableViewDataSource, NSTableV
 			view.textField!.stringValue = item.0
 //			view.imageView?.image = NSImage(named: )
 			assert(view.textField != nil)
-			item.0
 			return view
 		default: break
 		}

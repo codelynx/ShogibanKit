@@ -30,7 +30,7 @@ class MainViewController: NSSplitViewController, MenuTableViewControllerDelegate
 		self.menuTableViewController.delegate = self
 	}
 
-	override var representedObject: AnyObject? {
+	override var representedObject: Any? {
 		didSet {
 		}
 	}
