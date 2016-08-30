@@ -16,11 +16,10 @@
 		CC2E1DC41CE03F5C006151CA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DC01CE03F5C006151CA /* MainViewController.swift */; };
 		CC2E1DC51CE03F5C006151CA /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DC11CE03F5C006151CA /* MenuTableViewController.swift */; };
 		CC6A46EC1CF48ABC00849313 /* ShogibanKit+image.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC6A46EB1CF48ABC00849313 /* ShogibanKit+image.swift */; };
-		CCF4C0221D106E4B00729A3D /* String+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF4C0211D106E4B00729A3D /* String+Z.swift */; };
-		CCF4C0261D106E8300729A3D /* BinaryStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF4C0231D106E8300729A3D /* BinaryStringConvertible.swift */; };
-		CCF4C0271D106E8300729A3D /* NSData+binaryString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF4C0241D106E8300729A3D /* NSData+binaryString.swift */; };
-		CCF4C0281D106E8300729A3D /* NSScanner+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF4C0251D106E8300729A3D /* NSScanner+Z.swift */; };
-		CCF4C02A1D106ED700729A3D /* GeoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF4C0291D106ED700729A3D /* GeoUtils.swift */; };
+		CCBEE19E1D75311900012A5C /* String+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBEE19D1D75311900012A5C /* String+Z.swift */; };
+		CCBEE1A01D7531C300012A5C /* NSScanner+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBEE19F1D7531C300012A5C /* NSScanner+Z.swift */; };
+		CCBEE1A31D7534E900012A5C /* BinaryStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBEE1A11D7534E900012A5C /* BinaryStringConvertible.swift */; };
+		CCBEE1A41D7534E900012A5C /* NSData+binaryString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBEE1A21D7534E900012A5C /* NSData+binaryString.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,11 +35,10 @@
 		CC2E1DC01CE03F5C006151CA /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		CC2E1DC11CE03F5C006151CA /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		CC6A46EB1CF48ABC00849313 /* ShogibanKit+image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ShogibanKit+image.swift"; sourceTree = "<group>"; };
-		CCF4C0211D106E4B00729A3D /* String+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Z.swift"; sourceTree = "<group>"; };
-		CCF4C0231D106E8300729A3D /* BinaryStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryStringConvertible.swift; sourceTree = "<group>"; };
-		CCF4C0241D106E8300729A3D /* NSData+binaryString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+binaryString.swift"; sourceTree = "<group>"; };
-		CCF4C0251D106E8300729A3D /* NSScanner+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSScanner+Z.swift"; sourceTree = "<group>"; };
-		CCF4C0291D106ED700729A3D /* GeoUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoUtils.swift; sourceTree = "<group>"; };
+		CCBEE19D1D75311900012A5C /* String+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Z.swift"; sourceTree = "<group>"; };
+		CCBEE19F1D7531C300012A5C /* NSScanner+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSScanner+Z.swift"; sourceTree = "<group>"; };
+		CCBEE1A11D7534E900012A5C /* BinaryStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryStringConvertible.swift; sourceTree = "<group>"; };
+		CCBEE1A21D7534E900012A5C /* NSData+binaryString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+binaryString.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,13 +101,12 @@
 		CC2E1DB81CE03ECE006151CA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				CCF4C0231D106E8300729A3D /* BinaryStringConvertible.swift */,
-				CCF4C0241D106E8300729A3D /* NSData+binaryString.swift */,
-				CCF4C0251D106E8300729A3D /* NSScanner+Z.swift */,
+				CCBEE1A11D7534E900012A5C /* BinaryStringConvertible.swift */,
+				CCBEE1A21D7534E900012A5C /* NSData+binaryString.swift */,
+				CCBEE19F1D7531C300012A5C /* NSScanner+Z.swift */,
 				CC2E1DB91CE03ECE006151CA /* ShogibanKit.swift */,
 				CC6A46EB1CF48ABC00849313 /* ShogibanKit+image.swift */,
-				CCF4C0211D106E4B00729A3D /* String+Z.swift */,
-				CCF4C0291D106ED700729A3D /* GeoUtils.swift */,
+				CCBEE19D1D75311900012A5C /* String+Z.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -196,15 +193,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCF4C0281D106E8300729A3D /* NSScanner+Z.swift in Sources */,
 				CC2E1DC31CE03F5C006151CA /* ExperimentViewController.swift in Sources */,
-				CCF4C02A1D106ED700729A3D /* GeoUtils.swift in Sources */,
-				CCF4C0261D106E8300729A3D /* BinaryStringConvertible.swift in Sources */,
-				CCF4C0271D106E8300729A3D /* NSData+binaryString.swift in Sources */,
 				CC2E1DC51CE03F5C006151CA /* MenuTableViewController.swift in Sources */,
+				CCBEE1A41D7534E900012A5C /* NSData+binaryString.swift in Sources */,
+				CCBEE1A31D7534E900012A5C /* BinaryStringConvertible.swift in Sources */,
 				CC2E1DC21CE03F5C006151CA /* AppDelegate.swift in Sources */,
 				CC2E1DC41CE03F5C006151CA /* MainViewController.swift in Sources */,
-				CCF4C0221D106E4B00729A3D /* String+Z.swift in Sources */,
+				CCBEE1A01D7531C300012A5C /* NSScanner+Z.swift in Sources */,
+				CCBEE19E1D75311900012A5C /* String+Z.swift in Sources */,
 				CC6A46EC1CF48ABC00849313 /* ShogibanKit+image.swift in Sources */,
 				CC2E1DBB1CE03ECE006151CA /* ShogibanKit.swift in Sources */,
 			);

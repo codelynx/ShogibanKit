@@ -31,18 +31,15 @@ class MenuTableViewController: NSViewController, NSTableViewDataSource, NSTableV
 	]
 
 	let ランダム対戦1: (() -> String) = {
+		var count = 0
 		var string = ""
 		var 局面: 局面型! = 手合割型.平手.初期局面
 		print("\(局面)")
-		var count = 1
-		while !局面.終局 && count < 100 {
+		while let 当該局面 = 局面 where count <= 200 {
 			defer { count += 1 }
-			let 王手列 = 局面.王手列(局面.手番.敵方)
+			let 王手列 = 当該局面.王手列(当該局面.手番.敵方)
 			if let 王手 = 王手列.first {
-				do {
-					局面 = try 局面.指手を実行(王手)
-				}
-				catch let error { print("\(error)") }
+				局面 = try? 当該局面.指手を実行(王手)
 			}
 			else {
 				let 全指手 = 局面.全可能指手列()
@@ -52,10 +49,7 @@ class MenuTableViewController: NSViewController, NSTableViewDataSource, NSTableV
 				let 指手 = 全指手[Int(arc4random_uniform(UInt32(全指手.count)))]
 				print("\(指手)")
 				string += "指手: \(指手)" + "\r"
-				do {
-					局面 = try 局面.指手を実行(指手)
-				}
-				catch let error { print("\(error)") }
+				局面 = try? 当該局面.指手を実行(指手)
 				string += (局面?.description ?? "") + "\r-----\r"
 				print("\(局面)")
 				print("----------")
