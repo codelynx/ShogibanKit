@@ -19,6 +19,14 @@ typealias XColor = UIColor
 typealias XImage = UIImage
 #endif
 
+private func DegreesToRadians(value: CGFloat) -> CGFloat {
+	return value * CGFloat(M_PI) / 180.0
+}
+ 
+private func RadiansToDegrees (value: CGFloat) -> CGFloat {
+	return value * 180.0 / CGFloat(M_PI)
+}
+
 extension 局面型 {
 
 	func imageForSize(size: CGSize) -> CGImage {
