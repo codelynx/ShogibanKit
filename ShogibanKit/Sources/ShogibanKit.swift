@@ -476,7 +476,7 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 		return self.string
 	}
 
-	public func 移動可能なオフセット(駒面 駒面: 駒面型, 先後: 先手後手型) -> [(Int, Int)] {
+	public func 移動可能なオフセット列(駒面 駒面: 駒面型, 先後: 先手後手型) -> [(Int, Int)] {
 		let y = 先後.direction
 		assert(abs(y) == 1)
 
@@ -492,7 +492,7 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 		}
 	}
 
-	public func 移動可能なベクトル(駒面 駒面: 駒面型, 先後: 先手後手型) -> [(Int, Int)] {
+	public func 移動可能なベクトル列(駒面 駒面: 駒面型, 先後: 先手後手型) -> [(Int, Int)] {
 		let y = 先後.direction
 		assert(abs(y) == 1)
 
@@ -1323,7 +1323,7 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 			let 敵方 = 先後.敵方
 
 			// find movable positions for single step like 歩, 桂, 金, ...
-			for (dx, dy) in 駒面.移動可能なオフセット(駒面: 駒面, 先後: 先後) {
+			for (dx, dy) in 駒面.移動可能なオフセット列(駒面: 駒面, 先後: 先後) {
 				let (x, y) = (指定筋 + dx, 指定段 + dy)
 				if let 筋 = 指定筋 + dx, let 段 = 指定段 + dy {
 					let 位置 = 位置型(筋: 筋, 段: 段)
@@ -1341,7 +1341,7 @@ public class 局面型: Equatable, CustomStringConvertible, SequenceType {
 			}
 
 			// find movable positions for distant move like 香, 飛, 角
-			for (vx, vy) in 駒面.移動可能なベクトル(駒面: 駒面, 先後: 先後) {
+			for (vx, vy) in 駒面.移動可能なベクトル列(駒面: 駒面, 先後: 先後) {
 
 				// 盤を外れるまで繰り返す
 				var (x, y) = (指定筋 + vx, 指定段 + vy)

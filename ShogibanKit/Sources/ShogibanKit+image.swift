@@ -19,11 +19,11 @@ typealias XColor = UIColor
 typealias XImage = UIImage
 #endif
 
-private func DegreesToRadians(value: CGFloat) -> CGFloat {
+private func degreesToRadians(value: CGFloat) -> CGFloat {
 	return value * CGFloat(M_PI) / 180.0
 }
  
-private func RadiansToDegrees (value: CGFloat) -> CGFloat {
+private func radiansToDegrees (value: CGFloat) -> CGFloat {
 	return value * 180.0 / CGFloat(M_PI)
 }
 
@@ -105,7 +105,7 @@ extension 局面型 {
 						break
 					case .後手:
 						CGContextTranslateCTM(context, cellWidth, cellHeight)
-						CGContextRotateCTM(context, DegreesToRadians(180))
+						CGContextRotateCTM(context, degreesToRadians(180))
 						CGContextTranslateCTM(context, 0, descent)
 					}
 					CTFontDrawGlyphs(font, glyphs, positions, glyphs.count, context)
@@ -136,7 +136,7 @@ extension 局面型 {
 				CGContextTranslateCTM(context, 0, -descent)
 			case .後手:
 				CGContextTranslateCTM(context, cellWidth * 9, -(cellHeight * 11))
-				CGContextRotateCTM(context, DegreesToRadians(180))
+				CGContextRotateCTM(context, degreesToRadians(180))
 				CGContextTranslateCTM(context, 0, -descent)
 			}
 
