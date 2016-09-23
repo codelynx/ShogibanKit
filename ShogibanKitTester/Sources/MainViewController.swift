@@ -30,12 +30,12 @@ class MainViewController: NSSplitViewController, MenuTableViewControllerDelegate
 		self.menuTableViewController.delegate = self
 	}
 
-	override var representedObject: AnyObject? {
+	override var representedObject: Any? {
 		didSet {
 		}
 	}
 
-	func menuTableViewController(menuTableViewController: MenuTableViewController, didSelectItem menuItem: MenuItem?) {
+	func menuTableViewController(_ menuTableViewController: MenuTableViewController, didSelectItem menuItem: MenuItem?) {
 		self.experimentViewController.menuItem = menuItem
 	}
 
