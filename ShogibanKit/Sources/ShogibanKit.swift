@@ -89,7 +89,8 @@ public func - (lhs: 筋型, rhs: Int) -> 筋型? {
 	return 筋型(rawValue: lhs.rawValue - rhs)
 }
 
-extension Scanner {
+class ShogibanScanner: Scanner {
+
 	public func scan筋() -> 筋型? {
 		for (記号, 筋) in 筋型.記号表 {
 			if let _ = self.scanString(記号) {
@@ -98,6 +99,130 @@ extension Scanner {
 		}
 		return nil
 	}
+
+	public func scan段() -> 段型? {
+		for (記号, 段) in 段型.記号表 {
+			if let _ = self.scanString(記号) {
+				return 段
+			}
+		}
+		return nil
+	}
+
+	public func scan位置() -> 位置型? {
+		if let 筋 = self.scan筋(), let 段 = self.scan段() {
+			return 位置型(筋: 筋, 段: 段)
+		}
+		return nil
+	}
+
+	public func scan駒種() -> 駒種型? {
+		for (記号, 駒種) in 駒種型.記号表 {
+			if let _ = self.scanString(記号) {
+				return 駒種
+			}
+		}
+		return nil
+	}
+
+	public func scan駒面() -> 駒面型? {
+		for (記号, 駒面) in 駒面型.記号表 {
+			if let _ = self.scanString(記号) {
+				return 駒面
+			}
+		}
+		return nil
+	}
+
+	public func scan持駒() -> 持駒型? {
+		var 持駒 = 持駒型()
+		for 駒種 in 駒種型.全駒種 {
+			if let 駒種記号 = self.scanString(駒種.string) {
+				var 駒数 = 1
+				if let number = self.scanInt() {
+					駒数 = number
+				}
+				let 駒種 = 駒種型(string: 駒種記号)!
+				持駒[駒種] = 駒数
+			}
+			let _ = self.scanString(",")
+		}
+		return 持駒
+	}
+
+	public func scan先手後手() -> 先手後手型? {
+		for (記号, 先後) in 先手後手型.記号表 {
+			if let _ = self.scanString(記号) {
+				return 先後
+			}
+		}
+		return nil
+	}
+
+	public func scan升() -> 升型? {
+		let location = self.scanLocation
+		if let 先後 = scan先手後手(), let 駒面 = scan駒面() {
+			return 升型(先後: 先後, 駒面: 駒面)
+		}
+		
+		self.scanLocation = location
+		for (記号, 升) in 升型.記号表 {
+			if let _ = self.scanString(記号) {
+				return 升
+			}
+		}
+
+		self.scanLocation = location
+		for (記号, 升) in 升型.補助記号表 {
+			if let _ = self.scanString(記号) {
+				return 升
+			}
+		}
+
+		self.scanLocation = location
+		return 升型.空
+	}
+
+	public func scan終局理由() -> 終局理由型? {
+		for (記号, 終局理由) in 終局理由型.記号表 {
+			if let _ = self.scanString(記号) {
+				return 終局理由
+			}
+		}
+		return nil
+	}
+
+	public func scan指手() -> 指手型? {
+		let location = self.scanLocation
+		if let 先後 = self.scan先手後手(), let 後位置 = self.scan位置(), let 駒面 = scan駒面(),
+		   let _ = scanString("("), let 前位置 = self.scan位置(), let _ = scanString(")") {
+			return 指手型.動(先後: 先後, 移動前の位置: 前位置, 移動後の位置: 後位置, 移動後の駒面: 駒面)
+		}
+
+		self.scanLocation = location
+		if let 先後 = self.scan先手後手(), let 後位置 = self.scan位置(), let 駒種 = scan駒種(), let _ = scanString("打") {
+			return 指手型.打(先後: 先後, 位置: 後位置, 駒種: 駒種)
+		}
+
+		self.scanLocation = location
+		if let _ = self.scanString("まで") {
+
+			let location = self.scanLocation // [2]
+			if let 先後 = scan先手後手(), let _ = scanString("の勝ち"),
+			   let _ = scanString("("), let 終局理由 = scan終局理由(), let _ = scanString(")") {
+				return 指手型.終(終局理由: 終局理由, 勝者: 先後)
+			}
+
+			self.scanLocation = location // [2]
+			if let _ = scanString("勝負つかず("), let 終局理由 = scan終局理由(), let _ = scanString(")") {
+				return 指手型.終(終局理由: 終局理由, 勝者: nil)
+			}
+		}
+
+		self.scanLocation = location
+		return nil
+	}
+
 }
 
 
@@ -153,17 +278,6 @@ public func + (lhs: 段型, rhs: Int) -> 段型? {
 
 public func - (lhs: 段型, rhs: Int) -> 段型? {
 	return 段型(rawValue: lhs.rawValue - rhs)
-}
-
-extension Scanner {
-	public func scan段() -> 段型? {
-		for (記号, 段) in 段型.記号表 {
-			if let _ = self.scanString(記号) {
-				return 段
-			}
-		}
-		return nil
-	}
 }
 
 
@@ -280,15 +394,6 @@ public func == (lhs: 位置型, rhs: 位置型) -> Bool {
 	return lhs.rawValue == rhs.rawValue
 }
 
-extension Scanner {
-	public func scan位置() -> 位置型? {
-		if let 筋 = self.scan筋(), let 段 = self.scan段() {
-			return 位置型(筋: 筋, 段: 段)
-		}
-		return nil
-	}
-}
-
 
 // MARK: - 駒種型
 
@@ -387,19 +492,6 @@ public enum 駒種型 : Int8, CustomStringConvertible {
 		}
 		fatalError()
 	}
-}
-
-extension Scanner {
-
-	public func scan駒種() -> 駒種型? {
-		for (記号, 駒種) in 駒種型.記号表 {
-			if let _ = self.scanString(記号) {
-				return 駒種
-			}
-		}
-		return nil
-	}
-
 }
 
 
@@ -533,19 +625,6 @@ public enum 駒面型 : Int8, CustomStringConvertible {
 
 }
 
-extension Scanner {
-	public func scan駒面() -> 駒面型? {
-		for (記号, 駒面) in 駒面型.記号表 {
-			if let _ = self.scanString(記号) {
-				return 駒面
-			}
-		}
-		return nil
-	}
-}
-
-
-
 
 // MARK: - 持駒型
 
@@ -582,7 +661,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		self.init()
 
 		// "飛角金2桂歩4", "角,銀3,香,歩", "なし"
-		let scanner = Scanner(string: string)
+		let scanner = ShogibanScanner(string: string)
 		let _ = scanner.scan先手後手()
 		let _ = scanner.scanString("持駒:")
 		while let 駒種 = scanner.scan(持駒型.記号表) {
@@ -738,26 +817,6 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 
 }
 
-extension Scanner {
-
-	public func scan持駒() -> 持駒型? {
-		var 持駒 = 持駒型()
-		for 駒種 in 駒種型.全駒種 {
-			if let 駒種記号 = self.scanString(駒種.string) {
-				var 駒数 = 1
-				if let number = self.scanInt() {
-					駒数 = number
-				}
-				let 駒種 = 駒種型(string: 駒種記号)!
-				持駒[駒種] = 駒数
-			}
-			let _ = self.scanString(",")
-		}
-		return 持駒
-	}
-
-}
-
 
 public func == (lhs: 持駒型, rhs: 持駒型) -> Bool {
 	return	lhs.歩 == rhs.歩 && lhs.香 == rhs.香 && lhs.桂 == rhs.桂 && lhs.銀 == rhs.銀 && lhs.金 == rhs.金 &&
@@ -816,17 +875,6 @@ public enum 先手後手型 : Int8, CustomStringConvertible {
 		return 升型(先後: self, 駒面: 駒面)
 	}
 	
-}
-
-extension Scanner {
-	public func scan先手後手() -> 先手後手型? {
-		for (記号, 先後) in 先手後手型.記号表 {
-			if let _ = self.scanString(記号) {
-				return 先後
-			}
-		}
-		return nil
-	}
 }
 
 
@@ -951,33 +999,6 @@ public enum 升型 : Int8, CustomStringConvertible {
 	}
 }
 
-extension Scanner {
-
-	public func scan升() -> 升型? {
-		let location = self.scanLocation
-		if let 先後 = scan先手後手(), let 駒面 = scan駒面() {
-			return 升型(先後: 先後, 駒面: 駒面)
-		}
-		
-		self.scanLocation = location
-		for (記号, 升) in 升型.記号表 {
-			if let _ = self.scanString(記号) {
-				return 升
-			}
-		}
-
-		self.scanLocation = location
-		for (記号, 升) in 升型.補助記号表 {
-			if let _ = self.scanString(記号) {
-				return 升
-			}
-		}
-
-		self.scanLocation = location
-		return 升型.空
-	}
-}
-
 
 // MARK: - 手合割型
 
@@ -1071,19 +1092,6 @@ public enum 終局理由型: CustomStringConvertible {
 	}
 }
 
-extension Scanner {
-
-	public func scan終局理由() -> 終局理由型? {
-		for (記号, 終局理由) in 終局理由型.記号表 {
-			if let _ = self.scanString(記号) {
-				return 終局理由
-			}
-		}
-		return nil
-	}
-
-}
-
 
 // MARK: - 指手型
 
@@ -1113,40 +1121,6 @@ public enum 指手型: CustomStringConvertible {
 		return self.string
 	}
 
-}
-
-extension Scanner {
-
-	public func scan指手() -> 指手型? {
-		let location = self.scanLocation
-		if let 先後 = self.scan先手後手(), let 後位置 = self.scan位置(), let 駒面 = scan駒面(),
-		   let _ = scanString("("), let 前位置 = self.scan位置(), let _ = scanString(")") {
-			return 指手型.動(先後: 先後, 移動前の位置: 前位置, 移動後の位置: 後位置, 移動後の駒面: 駒面)
-		}
-
-		self.scanLocation = location
-		if let 先後 = self.scan先手後手(), let 後位置 = self.scan位置(), let 駒種 = scan駒種(), let _ = scanString("打") {
-			return 指手型.打(先後: 先後, 位置: 後位置, 駒種: 駒種)
-		}
-
-		self.scanLocation = location
-		if let _ = self.scanString("まで") {
-
-			let location = self.scanLocation // [2]
-			if let 先後 = scan先手後手(), let _ = scanString("の勝ち"),
-			   let _ = scanString("("), let 終局理由 = scan終局理由(), let _ = scanString(")") {
-				return 指手型.終(終局理由: 終局理由, 勝者: 先後)
-			}
-
-			self.scanLocation = location // [2]
-			if let _ = scanString("勝負つかず("), let 終局理由 = scan終局理由(), let _ = scanString(")") {
-				return 指手型.終(終局理由: 終局理由, 勝者: nil)
-			}
-		}
-
-		self.scanLocation = location
-		return nil
-	}
 }
 
 
@@ -1205,7 +1179,7 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 			持駒辞書[.後手] = 持駒型(string: lines[0])
 			for rowIndex in 段型.全段 {
 				let line = lines[rowIndex.index + 1]
-				let scanner = Scanner(string: line)
+				let scanner = ShogibanScanner(string: line)
 				let _ = scanner.scanString("|")
 				for columnIndex in 筋型.全筋.reversed() {
 					if let square = scanner.scan升() {
