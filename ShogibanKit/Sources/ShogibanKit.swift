@@ -1276,7 +1276,7 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 	public var description: String {
 		var string = String()
 		if let captured = 持駒辞書[.後手] {
-			string += "後手" + captured.string + "\r"
+			string += "後手: " + captured.string + "\r"
 		}
 		for rowIndex in 段型.全段 {
 			string += "|"
@@ -1290,7 +1290,7 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 			string += "\r"
 		}
 		if let captured = 持駒辞書[.先手] {
-			string += "先手" + captured.string + "\r"
+			string += "先手: " + captured.string + "\r"
 		}
 		return string
 	}
@@ -1803,7 +1803,7 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 			}
 			else { reportError(failedToDecode); return nil  }
 		}
-		先手持駒BitString = String(repeating: "0", count: 32)
+		先手持駒BitString = String(repeating: "0", count: 32 - 持駒型.bitLength) + 先手持駒BitString
 		assert(先手持駒BitString.characters.count == 32)
 		guard let 先手持駒BitValue = UInt32(binaryString: 先手持駒BitString) else { reportError(failedToDecode); return nil }
 		let 先手持駒 = 持駒型(integerValue: 先手持駒BitValue)
