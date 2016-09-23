@@ -8,6 +8,8 @@ Shogi, or Japanese Chess, is beased on very complex rules, and it is hard to imp
 
 <font color="Silver">Status: Under Development</color>
 
+* Now, Swift 3 ready
+
 ## Coding Experiment
 It would be controversial for sure, I tried using Japanese for class names, variable names, and others.  It is part of my experiment to see if coding with non English name would work or not, or impact of maintaining the code.  For example, all type of pieces is expressed as follows using Japanese. It would be natual and easier to read code or Shogi player programmers.
 
@@ -365,6 +367,12 @@ https://github.com/adobe-fonts/source-han-code-jp
 ## Other consideration
 
 * String representation of `局面型` does not include `手番`.  If `手番` is included, it is simple to go back and forth between `局面型` and `String`.
+
+## Environment
+
+* Xcode Version 8.0 (8A218a)
+* Apple Swift version 3.0 (swiftlang-800.0.46.2 clang-800.0.38)
+
 
 ## Feedback
 
