@@ -89,7 +89,7 @@ public func - (lhs: 筋型, rhs: Int) -> 筋型? {
 	return 筋型(rawValue: lhs.rawValue - rhs)
 }
 
-class ShogibanScanner: Scanner {
+public extension Scanner {
 
 	public func scan筋() -> 筋型? {
 		for (記号, 筋) in 筋型.記号表 {
@@ -661,7 +661,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		self.init()
 
 		// "飛角金2桂歩4", "角,銀3,香,歩", "なし"
-		let scanner = ShogibanScanner(string: string)
+		let scanner = Scanner(string: string)
 		let _ = scanner.scan先手後手()
 		let _ = scanner.scanString("持駒:")
 		while let 駒種 = scanner.scan(持駒型.記号表) {
@@ -1179,7 +1179,7 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 			持駒辞書[.後手] = 持駒型(string: lines[0])
 			for rowIndex in 段型.全段 {
 				let line = lines[rowIndex.index + 1]
-				let scanner = ShogibanScanner(string: line)
+				let scanner = Scanner(string: line)
 				let _ = scanner.scanString("|")
 				for columnIndex in 筋型.全筋.reversed() {
 					if let square = scanner.scan升() {
