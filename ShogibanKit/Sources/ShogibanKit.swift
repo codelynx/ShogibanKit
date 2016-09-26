@@ -1063,7 +1063,7 @@ public enum 終局理由型: CustomStringConvertible {
 	case 待った
 	case 詰み
 	case 引き分け
-	case 失玉
+	case 失玉 // 造語
 	case その他
 
 	static let 記号表 : [String: 終局理由型] = [
@@ -1095,7 +1095,7 @@ public enum 終局理由型: CustomStringConvertible {
 
 // MARK: - 指手型
 
-public enum 指手型: CustomStringConvertible {
+public enum 指手型: Equatable, CustomStringConvertible {
 
 	case 動(先後: 先手後手型, 移動前の位置: 位置型, 移動後の位置: 位置型, 移動後の駒面: 駒面型)
 	case 打(先後: 先手後手型, 位置:位置型, 駒種:駒種型)
@@ -1123,6 +1123,22 @@ public enum 指手型: CustomStringConvertible {
 
 }
 
+public func == (lhs: 指手型, rhs: 指手型) -> Bool {
+	switch (lhs, rhs) {
+	case (.動(let l先後, let l移動前の位置, let l移動後の位置, let l移動後の駒面),
+		  .動(let r先後, let r移動前の位置, let r移動後の位置, let r移動後の駒面)):
+		return l先後 == r先後 && l移動前の位置 == r移動前の位置 && l移動後の位置 == r移動後の位置 && l移動後の駒面 == r移動後の駒面
+	case (.打(let l先後, let l位置, let l駒種),
+		  .打(let r先後, let r位置, let r駒種)):
+		return l先後 == r先後 && l位置 == r位置 && l駒種 == r駒種
+	case (.終(let l終局理由, let l勝者),
+		  .終(let r終局理由, let r勝者)):
+		return l終局理由 == r終局理由 && l勝者 == r勝者
+	default:
+		return false
+	}
+}
+
 
 // MARK: - 双方持駒型
 
@@ -1130,7 +1146,7 @@ typealias 持駒辞書型 = [先手後手型: 持駒型]
 
 // MARK: - 局面型
 
-public class 局面型: Equatable, CustomStringConvertible, Sequence {
+public class 局面型: Hashable, CustomStringConvertible, Sequence {
 
 	var score: Int = 0
 	var 前の局面: 局面型?
@@ -1397,7 +1413,7 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 		return 位置列
 	}
 
-	public func 指手を実行(_ 指手: 指手型) throws -> 局面型  {
+	public func 指手を実行(_ 指手: 指手型) -> 指手結果型  {
 		print(指手)
 	
 		let 次局面 = 局面型(局面: self)
@@ -1417,6 +1433,7 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 					assert(移動後のマスの駒の先手後手 == 先手後手.敵方)
 					if 移動後の駒面.駒種 == .玉 { // 相手の玉を取る
 						次局面._勝者 = self.手番
+						return 指手結果型.失玉(次局面)
 					}
 					else {
 						次局面.持駒に加える(先手後手, 移動後の駒面.駒種)
@@ -1425,18 +1442,22 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 				次局面[移動前の位置] = .空
 				次局面[移動後の位置] = 升型(先後: 先手後手, 駒面: 移動後の駒面)
 			}
-			else { throw ShogibanKitError.指手実行不可 }
-			break
+			else {
+				return 指手結果型.不可
+			}
 		case .打(let 先後, let 位置, let 駒種):
 			assert(self[位置] == .空)
 			assert(先後 == self.手番)
 			次局面[位置] = 升型(先後: 先後, 駒面: 駒種.駒面)
 			次局面.持駒を減らす(先後, 駒種)
-			break
-		default:
+		case .終(_ /*終局理由*/, _ /*勝者*/):
 			break
 		}
-		return 次局面
+
+		if 次局面.詰みか {
+			return 指手結果型.局面(次局面)
+		}
+		return 指手結果型.局面(次局面)
 	}
 
 
@@ -1547,10 +1568,11 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 
 		// 打ち歩詰め
 		let 指手 = 指手型.打(先後: 手番, 位置: 位置, 駒種: .歩)
-		if try self.指手を実行(指手).詰みか {
+		let 結果 = self.指手を実行(指手)
+		
+		if case .詰み(let 次局面) = self.指手を実行(指手) {
 			return false
 		}
-		
 		return true
 	}
 
@@ -1623,14 +1645,14 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 				
 				// 王手をかけている敵駒を取る事ができるか？
 				for 指手 in self.指定位置へ移動可能な全ての駒を移動させる指手(移動前の位置, 手番) {
-					if try! self.指手を実行(指手).王手列(手番).count == 0 {
+					if let 次局面 = self.指手を実行(指手).次局面, 次局面.王手列(手番).count == 0 {
 						return false // 一つでも回避できれば詰みではない
 					}
 				}
 
 				// 王の逃げ道はあるか
 				for 指手 in self.指定位置の駒の移動可能指手列(移動後の位置) {
-					if try! self.指手を実行(指手).王手列(手番).count == 0 {
+					if let 次局面 = self.指手を実行(指手).次局面, 次局面.王手列(手番).count == 0 {
 						return false // 一つでも回避できれば詰みではない
 					}
 				}
@@ -1735,6 +1757,10 @@ public class 局面型: Equatable, CustomStringConvertible, Sequence {
 		return self.data.base64EncodedString(options: [])
 	}
 
+	public var hashValue: Int {
+		return self.data.hashValue
+	}
+
 	public convenience init?(data: Data) {
 		let bitString = data.binaryString
 		let scanner = Scanner(string: bitString)
@@ -1827,6 +1853,22 @@ public func == (lhs: 局面型, rhs: 局面型) -> Bool {
 
 
 // MARK: -
+
+public enum 指手結果型 {
+	case 局面(局面型)
+	case 詰み(局面型)
+	case 失玉(局面型)
+	case 不可
+	
+	var 次局面: 局面型? {
+		switch self {
+		case .局面(let 次局面): return 次局面
+		case .詰み(let 次局面): return 次局面
+		case .失玉(let 次局面): return 次局面
+		case .不可: return nil
+		}
+	}
+}
 
 
 // MARK: -

@@ -30,6 +30,7 @@ import Foundation
 
 extension Scanner {
 
+	@discardableResult
 	func scanString(_ string: String) -> String? {
 		if self.scanString(string, into: nil) {
 			return string
@@ -46,6 +47,7 @@ extension Scanner {
 		return nil
 	}
 
+	@discardableResult
 	func scanUpToString(_ string: String) -> String? {
 		var outString: NSString? = nil
 		if self.scanUpTo(string, into: &outString) {
@@ -54,6 +56,7 @@ extension Scanner {
 		return nil
 	}
 
+	@discardableResult
 	func scanCharactersFromSet(_ set: CharacterSet) -> String? {
 		var outString: NSString? = nil
 		if self.scanCharacters(from: set, into: &outString) {
@@ -62,6 +65,7 @@ extension Scanner {
 		return nil
 	}
 
+	@discardableResult
 	func scanUpToCharactersFromSet(_ set: CharacterSet) -> String? {
 		var outString: NSString? = nil
 		if self.scanUpToCharacters(from: set, into: &outString) {
