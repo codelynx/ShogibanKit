@@ -797,7 +797,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		玉 = Int8(0)
 	}
 
-	public func 全持駒() -> [駒種型] {
+	public var 全持駒: [駒種型] {
 		let 持駒情報 = [(歩, 駒種型.歩), (香, 駒種型.香), (桂, 駒種型.桂), (銀, 駒種型.銀), (金, 駒種型.金), (角, 駒種型.角), (飛, 駒種型.飛), (玉, 駒種型.玉)]
 		var 持駒 = [駒種型]()
 		for (駒数, 駒) in 持駒情報 {
@@ -806,7 +806,7 @@ public struct 持駒型: Equatable, CustomStringConvertible {
 		return 持駒
 	}
 
-	public func 持駒種類列() -> [駒種型] {
+	public var 持駒種類列: [駒種型] {
 		let 持駒情報 = [(玉, 駒種型.玉), (飛, 駒種型.飛), (角, 駒種型.角), (金, 駒種型.金), (銀, 駒種型.銀), (桂, 駒種型.桂), (香, 駒種型.香), (歩, 駒種型.歩)]
 		var 駒列 = [駒種型]()
 		for (駒数, 駒) in 持駒情報 {
@@ -1025,7 +1025,7 @@ public enum 手合割型 {
 			"|▲香|▲桂|▲銀|▲金|▲玉|▲金|▲銀|▲桂|▲香|\r" +
 			"▲持駒:なし\r"
 
-	private func 駒落位置列() -> [位置型] {
+	private var 駒落位置列: [位置型] {
 		switch self {
 		case .平手: return []
 		case .香落ち: return [.９九]
@@ -1040,7 +1040,7 @@ public enum 手合割型 {
 
 	public var 初期局面: 局面型 {
 		let 局面 = 局面型(string: 手合割型.平手初期盤面, 手番: .先手)!
-		for 位置 in 駒落位置列() {
+		for 位置 in 駒落位置列 {
 			局面[位置] = .空
 		}
 		return 局面
@@ -1378,7 +1378,7 @@ public class 局面型: Hashable, CustomStringConvertible, Sequence {
 
 	public func 指定駒を打つことが可能な位置列(_ 先後: 先手後手型, _ 駒種: 駒種型) -> [位置型] {
 		var 位置列 = [位置型]()
-		for 位置 in self.全位置() {
+		for 位置 in self.全位置 {
 			if 指定位置へ打つ事は可能か(先後: 先後, 指定位置: 位置, 駒種: 駒種) {
 				位置列.append(位置)
 			}
@@ -1391,7 +1391,7 @@ public class 局面型: Hashable, CustomStringConvertible, Sequence {
 	}
 
 	// in order to avoid huge number of linear search, build a lookup dictionary from square to position
-	public func 駒から升への辞書() -> [升型: [位置型]] {
+	public var 駒升対応表: [升型: [位置型]] {
 		var 辞書 = [升型: [位置型]]()
 		for (index, 升) in 全升.enumerated() {
 			if let 位置 = 位置型(rawValue: Int8(index)) {
@@ -1454,9 +1454,9 @@ public class 局面型: Hashable, CustomStringConvertible, Sequence {
 			break
 		}
 
-		if 次局面.詰みか {
-			return 指手結果型.局面(次局面)
-		}
+//		if 次局面.詰みか {
+//			return 指手結果型.局面(次局面)
+//		}
 		return 指手結果型.局面(次局面)
 	}
 
@@ -1470,9 +1470,9 @@ public class 局面型: Hashable, CustomStringConvertible, Sequence {
 		}
 	}
 
-	public func 全可能指手列() -> [指手型] {
+	public var 全可能指手列: [指手型] {
 		var 指手列 = [指手型]()
-		for 位置 in self.全位置() {
+		for 位置 in self.全位置 {
 			let 升 = self[位置]
 			if let 先後 = 升.先後, let 駒面 = 升.駒面, 先後 == 手番 {
 				for 移動可能位置 in 指定位置の駒の移動可能位置列(位置) {
@@ -1486,7 +1486,7 @@ public class 局面型: Hashable, CustomStringConvertible, Sequence {
 			}
 			else if 升 == .空 {
 				let 持駒 = 持駒辞書[手番]!
-				for 駒種 in 持駒.持駒種類列() {
+				for 駒種 in 持駒.持駒種類列 {
 					if 指定位置へ打つ事は可能か(先後: 手番, 指定位置: 位置, 駒種: 駒種) {
 						指手列.append(指手型.打(先後: 手番, 位置: 位置, 駒種: 駒種))
 					}
@@ -1600,7 +1600,7 @@ public class 局面型: Hashable, CustomStringConvertible, Sequence {
 		return 位置列
 	}
 
-	public func 指定位置へ移動可能な全ての駒を移動させる指手(_ 指定位置: 位置型, _ 先後: 先手後手型?) -> [指手型] {
+	public func 指定位置へ移動可能な全ての駒を移動させる指手列(_ 指定位置: 位置型, _ 先後: 先手後手型?) -> [指手型] {
 		var 指手列 = [指手型]()
 		for 指定位置へ移動可能な駒の位置 in self.指定位置へ移動可能な全ての駒の位置列(指定位置, 先後) {
 			let 升 = self[指定位置へ移動可能な駒の位置]
@@ -1618,7 +1618,7 @@ public class 局面型: Hashable, CustomStringConvertible, Sequence {
 
 
 	public func 王手列(_ 手番: 先手後手型) -> [指手型] {
-		let 辞書 = 駒から升への辞書()
+		let 辞書 = 駒升対応表
 		let 玉 = 升型(先後: 手番, 駒面: .玉)
 		var 指手列 = [指手型]()
 		if let 王の位置 = 辞書[玉]?.first {
@@ -1644,7 +1644,7 @@ public class 局面型: Hashable, CustomStringConvertible, Sequence {
 				assert(self[移動後の位置].駒面 == .玉)
 				
 				// 王手をかけている敵駒を取る事ができるか？
-				for 指手 in self.指定位置へ移動可能な全ての駒を移動させる指手(移動前の位置, 手番) {
+				for 指手 in self.指定位置へ移動可能な全ての駒を移動させる指手列(移動前の位置, 手番) {
 					if let 次局面 = self.指手を実行(指手).次局面, 次局面.王手列(手番).count == 0 {
 						return false // 一つでも回避できれば詰みではない
 					}
@@ -1663,7 +1663,7 @@ public class 局面型: Hashable, CustomStringConvertible, Sequence {
 		return false
 	}()
 
-	public func 全位置() -> [位置型] {
+	public var 全位置: [位置型] {
 		// 玉の周りや、角、飛など優先順位に応じて、探索する順序を決めるベキ？
 		return 位置型.全位置
 	}
