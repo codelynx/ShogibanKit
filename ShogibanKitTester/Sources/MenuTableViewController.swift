@@ -34,7 +34,7 @@ class MenuTableViewController: NSViewController, NSTableViewDataSource, NSTableV
 		var count = 0
 		var string = ""
 		var 局面: 局面型? = 手合割型.平手.初期局面
-		print("\(局面)")
+		if let 局面 = 局面 { print("\(局面)") }
 		while let 当該局面 = 局面 , count <= 200 {
 			defer { count += 1 }
 			let 王手列 = 当該局面.王手列(当該局面.手番.敵方)
@@ -49,7 +49,7 @@ class MenuTableViewController: NSViewController, NSTableViewDataSource, NSTableV
 				string += "指手: \(指手)" + "\r"
 				局面 = 当該局面.指手を実行(指手).次局面
 				string += (局面?.description ?? "") + "\r-----\r"
-				print("\(局面)")
+				if let 局面 = 局面 { print("\(局面)") }
 				print("----------")
 			}
 		}

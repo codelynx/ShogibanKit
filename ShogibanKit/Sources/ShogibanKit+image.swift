@@ -21,11 +21,11 @@ typealias XImage = UIImage
 
 
 private func degreesToRadians(_ value: CGFloat) -> CGFloat {
-	return value * CGFloat(M_PI) / 180.0
+	return value * CGFloat.pi / 180.0
 }
  
 private func radiansToDegrees (_ value: CGFloat) -> CGFloat {
-	return value * 180.0 / CGFloat(M_PI)
+	return value * 180.0 / CGFloat.pi
 }
 
 extension 局面型 {

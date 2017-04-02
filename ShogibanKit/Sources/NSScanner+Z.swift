@@ -51,7 +51,7 @@ extension Scanner {
 	func scanUpToString(_ string: String) -> String? {
 		var outString: NSString? = nil
 		if self.scanUpTo(string, into: &outString) {
-			return outString as? String
+			return outString as String?
 		}
 		return nil
 	}
@@ -60,7 +60,7 @@ extension Scanner {
 	func scanCharactersFromSet(_ set: CharacterSet) -> String? {
 		var outString: NSString? = nil
 		if self.scanCharacters(from: set, into: &outString) {
-			return outString as? String
+			return outString as String?
 		}
 		return nil
 	}
@@ -69,7 +69,7 @@ extension Scanner {
 	func scanUpToCharactersFromSet(_ set: CharacterSet) -> String? {
 		var outString: NSString? = nil
 		if self.scanUpToCharacters(from: set, into: &outString) {
-			return outString as? String
+			return outString as String?
 		}
 		return nil
 	}

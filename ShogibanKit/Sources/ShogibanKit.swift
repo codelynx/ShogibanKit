@@ -82,11 +82,11 @@ public enum 筋型 : Int8, CustomStringConvertible { // right <- left
 }
 
 public func + (lhs: 筋型, rhs: Int) -> 筋型? {
-	return 筋型(rawValue: lhs.rawValue + rhs)
+	return 筋型(rawValue: lhs.rawValue + Int8(rhs))
 }
 
 public func - (lhs: 筋型, rhs: Int) -> 筋型? {
-	return 筋型(rawValue: lhs.rawValue - rhs)
+	return 筋型(rawValue: lhs.rawValue - Int8(rhs))
 }
 
 public extension Scanner {
@@ -273,11 +273,11 @@ public enum 段型 : Int8, CustomStringConvertible { // top -> bottom
 }
 
 public func + (lhs: 段型, rhs: Int) -> 段型? {
-	return 段型(rawValue: lhs.rawValue + rhs)
+	return 段型(rawValue: lhs.rawValue + Int8(rhs))
 }
 
 public func - (lhs: 段型, rhs: Int) -> 段型? {
-	return 段型(rawValue: lhs.rawValue - rhs)
+	return 段型(rawValue: lhs.rawValue - Int8(rhs))
 }
 
 
@@ -1568,9 +1568,7 @@ public class 局面型: Hashable, CustomStringConvertible, Sequence {
 
 		// 打ち歩詰め
 		let 指手 = 指手型.打(先後: 手番, 位置: 位置, 駒種: .歩)
-		let 結果 = self.指手を実行(指手)
-		
-		if case .詰み(let 次局面) = self.指手を実行(指手) {
+		if case .詰み(_ /*次局面*/) = self.指手を実行(指手) {
 			return false
 		}
 		return true
