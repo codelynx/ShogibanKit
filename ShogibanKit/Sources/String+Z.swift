@@ -89,10 +89,11 @@ extension String {
 		return self.lines.map{"  " + $0}.joined(separator: "\r")
 	}
 
-	func substringWithRange(_ range: NSRange) -> String {
-		let subindex1 = self.characters.index(self.startIndex, offsetBy: range.location)
-		let subindex2 = self.characters.index(subindex1, offsetBy: range.length)
-		return self.substring(with: subindex1 ..< subindex2)
+	func substringWithRange(_ range: NSRange) -> Substring {
+		let subindex1 = self.index(self.startIndex, offsetBy: range.location)
+		let subindex2 = self.index(subindex1, offsetBy: range.length)
+		return self[subindex1 ..< subindex2]
+//		return self.substring(with: subindex1 ..< subindex2)
 	}
 	
 	var data: Data {

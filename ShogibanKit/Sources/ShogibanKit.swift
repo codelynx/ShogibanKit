@@ -1414,8 +1414,6 @@ public class 局面型: Hashable, CustomStringConvertible, Sequence {
 	}
 
 	public func 指手を実行(_ 指手: 指手型) -> 指手結果型  {
-		print(指手)
-	
 		let 次局面 = 局面型(局面: self)
 		次局面.前の局面 = self
 		次局面.直前の指手 = 指手
@@ -1802,7 +1800,7 @@ public class 局面型: Hashable, CustomStringConvertible, Sequence {
 			else { reportError(failedToDecode); return nil  }
 		}
 		先手持駒BitString = String(repeating: "0", count: 32 - 持駒型.bitLength) + 先手持駒BitString
-		assert(先手持駒BitString.characters.count == 32)
+		assert(先手持駒BitString.count == 32)
 		guard let 先手持駒BitValue = UInt32(binaryString: 先手持駒BitString) else { reportError(failedToDecode); return nil }
 		let 先手持駒 = 持駒型(integerValue: 先手持駒BitValue)
 

@@ -7,45 +7,76 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CC2ABF4E1CD9DBCC00296806 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC2ABF4D1CD9DBCC00296806 /* Assets.xcassets */; };
-		CC2ABF511CD9DBCC00296806 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC2ABF4F1CD9DBCC00296806 /* Main.storyboard */; };
-		CC2E1DB61CDFBD5B006151CA /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = CC2E1DB51CDFBD5B006151CA /* Fonts */; };
-		CC2E1DBB1CE03ECE006151CA /* ShogibanKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DB91CE03ECE006151CA /* ShogibanKit.swift */; };
-		CC2E1DC21CE03F5C006151CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DBE1CE03F5C006151CA /* AppDelegate.swift */; };
-		CC2E1DC31CE03F5C006151CA /* ExperimentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DBF1CE03F5C006151CA /* ExperimentViewController.swift */; };
-		CC2E1DC41CE03F5C006151CA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DC01CE03F5C006151CA /* MainViewController.swift */; };
-		CC2E1DC51CE03F5C006151CA /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2E1DC11CE03F5C006151CA /* MenuTableViewController.swift */; };
-		CC6A46EC1CF48ABC00849313 /* ShogibanKit+image.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC6A46EB1CF48ABC00849313 /* ShogibanKit+image.swift */; };
-		CCBEE19E1D75311900012A5C /* String+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBEE19D1D75311900012A5C /* String+Z.swift */; };
-		CCBEE1A01D7531C300012A5C /* NSScanner+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBEE19F1D7531C300012A5C /* NSScanner+Z.swift */; };
-		CCBEE1A31D7534E900012A5C /* BinaryStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBEE1A11D7534E900012A5C /* BinaryStringConvertible.swift */; };
-		CCBEE1A41D7534E900012A5C /* NSData+binaryString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBEE1A21D7534E900012A5C /* NSData+binaryString.swift */; };
+		CCAB52C821011B57007D8D8C /* ShogibanKit_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = CCAB52C621011B57007D8D8C /* ShogibanKit_ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CCAB52CC21011B76007D8D8C /* ShogibanKit+image.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52B821011920007D8D8C /* ShogibanKit+image.swift */; };
+		CCAB52CD21011B76007D8D8C /* NSData+binaryString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52B921011920007D8D8C /* NSData+binaryString.swift */; };
+		CCAB52CE21011B76007D8D8C /* ShogibanKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52BA21011920007D8D8C /* ShogibanKit.swift */; };
+		CCAB52CF21011B76007D8D8C /* GeoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52BB21011920007D8D8C /* GeoUtils.swift */; };
+		CCAB52D021011B76007D8D8C /* String+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52BC21011920007D8D8C /* String+Z.swift */; };
+		CCAB52D121011B76007D8D8C /* BinaryStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52BD21011920007D8D8C /* BinaryStringConvertible.swift */; };
+		CCAB52D221011B76007D8D8C /* NSScanner+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52BE21011920007D8D8C /* NSScanner+Z.swift */; };
+		CCAB52DC21011B9D007D8D8C /* ShogibanKit_mac.h in Headers */ = {isa = PBXBuildFile; fileRef = CCAB52DA21011B9D007D8D8C /* ShogibanKit_mac.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CCAB52E021011BFA007D8D8C /* ShogibanKit+image.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52B821011920007D8D8C /* ShogibanKit+image.swift */; };
+		CCAB52E121011BFA007D8D8C /* NSData+binaryString.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52B921011920007D8D8C /* NSData+binaryString.swift */; };
+		CCAB52E221011BFA007D8D8C /* ShogibanKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52BA21011920007D8D8C /* ShogibanKit.swift */; };
+		CCAB52E321011BFA007D8D8C /* GeoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52BB21011920007D8D8C /* GeoUtils.swift */; };
+		CCAB52E421011BFA007D8D8C /* String+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52BC21011920007D8D8C /* String+Z.swift */; };
+		CCAB52E521011BFA007D8D8C /* BinaryStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52BD21011920007D8D8C /* BinaryStringConvertible.swift */; };
+		CCAB52E621011BFA007D8D8C /* NSScanner+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52BE21011920007D8D8C /* NSScanner+Z.swift */; };
+		CCAB52EE21012311007D8D8C /* ShogibanKit_ios_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52ED21012311007D8D8C /* ShogibanKit_ios_Tests.swift */; };
+		CCAB52F021012311007D8D8C /* ShogibanKit_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCAB52C421011B57007D8D8C /* ShogibanKit_ios.framework */; };
+		CCAB52F621012655007D8D8C /* ShogibanKit_ios_Tests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = CCAB52EB21012311007D8D8C /* ShogibanKit_ios_Tests.xctest */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		CCAB52F121012311007D8D8C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC2ABF3C1CD9DBAA00296806 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CCAB52C321011B57007D8D8C;
+			remoteInfo = ShogibanKit_ios;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		CC240ABE1CF368A3000CA82E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
-		CC2ABF461CD9DBCC00296806 /* ShogibanKit_OSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShogibanKit_OSX.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CC2ABF4D1CD9DBCC00296806 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		CC2ABF501CD9DBCC00296806 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		CC2ABF521CD9DBCC00296806 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CC2E1DB51CDFBD5B006151CA /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
-		CC2E1DB91CE03ECE006151CA /* ShogibanKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShogibanKit.swift; sourceTree = "<group>"; };
-		CC2E1DBE1CE03F5C006151CA /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CC2E1DBF1CE03F5C006151CA /* ExperimentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExperimentViewController.swift; sourceTree = "<group>"; };
-		CC2E1DC01CE03F5C006151CA /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		CC2E1DC11CE03F5C006151CA /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
-		CC6A46EB1CF48ABC00849313 /* ShogibanKit+image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ShogibanKit+image.swift"; sourceTree = "<group>"; };
-		CCBEE19D1D75311900012A5C /* String+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Z.swift"; sourceTree = "<group>"; };
-		CCBEE19F1D7531C300012A5C /* NSScanner+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSScanner+Z.swift"; sourceTree = "<group>"; };
-		CCBEE1A11D7534E900012A5C /* BinaryStringConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryStringConvertible.swift; sourceTree = "<group>"; };
-		CCBEE1A21D7534E900012A5C /* NSData+binaryString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+binaryString.swift"; sourceTree = "<group>"; };
+		CCAB52B821011920007D8D8C /* ShogibanKit+image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShogibanKit+image.swift"; sourceTree = "<group>"; };
+		CCAB52B921011920007D8D8C /* NSData+binaryString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSData+binaryString.swift"; sourceTree = "<group>"; };
+		CCAB52BA21011920007D8D8C /* ShogibanKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShogibanKit.swift; sourceTree = "<group>"; };
+		CCAB52BB21011920007D8D8C /* GeoUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoUtils.swift; sourceTree = "<group>"; };
+		CCAB52BC21011920007D8D8C /* String+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Z.swift"; sourceTree = "<group>"; };
+		CCAB52BD21011920007D8D8C /* BinaryStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryStringConvertible.swift; sourceTree = "<group>"; };
+		CCAB52BE21011920007D8D8C /* NSScanner+Z.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSScanner+Z.swift"; sourceTree = "<group>"; };
+		CCAB52C421011B57007D8D8C /* ShogibanKit_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShogibanKit_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCAB52C621011B57007D8D8C /* ShogibanKit_ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShogibanKit_ios.h; sourceTree = "<group>"; };
+		CCAB52C721011B57007D8D8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CCAB52D821011B9D007D8D8C /* ShogibanKit_mac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShogibanKit_mac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCAB52DA21011B9D007D8D8C /* ShogibanKit_mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShogibanKit_mac.h; sourceTree = "<group>"; };
+		CCAB52DB21011B9D007D8D8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CCAB52EB21012311007D8D8C /* ShogibanKit_ios_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShogibanKit_ios_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCAB52ED21012311007D8D8C /* ShogibanKit_ios_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShogibanKit_ios_Tests.swift; sourceTree = "<group>"; };
+		CCAB52EF21012311007D8D8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		CC2ABF431CD9DBCC00296806 /* Frameworks */ = {
+		CCAB52C021011B57007D8D8C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCAB52D421011B9D007D8D8C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCAB52E821012311007D8D8C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCAB52F021012311007D8D8C /* ShogibanKit_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,7 +86,10 @@
 		CC2ABF3B1CD9DBAA00296806 = {
 			isa = PBXGroup;
 			children = (
-				CC2ABF481CD9DBCC00296806 /* ShogibanKitTester */,
+				CCAB52B621011920007D8D8C /* ShogibanKit */,
+				CCAB52C521011B57007D8D8C /* ShogibanKit_ios */,
+				CCAB52D921011B9D007D8D8C /* ShogibanKit_mac */,
+				CCAB52EC21012311007D8D8C /* ShogibanKit_ios_Tests */,
 				CC2ABF471CD9DBCC00296806 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,84 +97,137 @@
 		CC2ABF471CD9DBCC00296806 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CC2ABF461CD9DBCC00296806 /* ShogibanKit_OSX.app */,
+				CCAB52C421011B57007D8D8C /* ShogibanKit_ios.framework */,
+				CCAB52D821011B9D007D8D8C /* ShogibanKit_mac.framework */,
+				CCAB52EB21012311007D8D8C /* ShogibanKit_ios_Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CC2ABF481CD9DBCC00296806 /* ShogibanKitTester */ = {
+		CCAB52B621011920007D8D8C /* ShogibanKit */ = {
 			isa = PBXGroup;
 			children = (
-				CC240ABE1CF368A3000CA82E /* README.md */,
-				CC2E1DB71CE03ECE006151CA /* ShogibanKit */,
-				CC2E1DB21CDFBC09006151CA /* Resources */,
-				CC2E1DBD1CE03F5C006151CA /* Sources */,
-				CC2ABF4D1CD9DBCC00296806 /* Assets.xcassets */,
-				CC2ABF4F1CD9DBCC00296806 /* Main.storyboard */,
-				CC2ABF521CD9DBCC00296806 /* Info.plist */,
-			);
-			path = ShogibanKitTester;
-			sourceTree = "<group>";
-		};
-		CC2E1DB21CDFBC09006151CA /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				CC2E1DB51CDFBD5B006151CA /* Fonts */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		CC2E1DB71CE03ECE006151CA /* ShogibanKit */ = {
-			isa = PBXGroup;
-			children = (
-				CC2E1DB81CE03ECE006151CA /* Sources */,
+				CCAB52B721011920007D8D8C /* Sources */,
 			);
 			path = ShogibanKit;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
-		CC2E1DB81CE03ECE006151CA /* Sources */ = {
+		CCAB52B721011920007D8D8C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				CCBEE1A11D7534E900012A5C /* BinaryStringConvertible.swift */,
-				CCBEE1A21D7534E900012A5C /* NSData+binaryString.swift */,
-				CCBEE19F1D7531C300012A5C /* NSScanner+Z.swift */,
-				CC2E1DB91CE03ECE006151CA /* ShogibanKit.swift */,
-				CC6A46EB1CF48ABC00849313 /* ShogibanKit+image.swift */,
-				CCBEE19D1D75311900012A5C /* String+Z.swift */,
+				CCAB52B821011920007D8D8C /* ShogibanKit+image.swift */,
+				CCAB52B921011920007D8D8C /* NSData+binaryString.swift */,
+				CCAB52BA21011920007D8D8C /* ShogibanKit.swift */,
+				CCAB52BB21011920007D8D8C /* GeoUtils.swift */,
+				CCAB52BC21011920007D8D8C /* String+Z.swift */,
+				CCAB52BD21011920007D8D8C /* BinaryStringConvertible.swift */,
+				CCAB52BE21011920007D8D8C /* NSScanner+Z.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		CC2E1DBD1CE03F5C006151CA /* Sources */ = {
+		CCAB52C521011B57007D8D8C /* ShogibanKit_ios */ = {
 			isa = PBXGroup;
 			children = (
-				CC2E1DBE1CE03F5C006151CA /* AppDelegate.swift */,
-				CC2E1DBF1CE03F5C006151CA /* ExperimentViewController.swift */,
-				CC2E1DC01CE03F5C006151CA /* MainViewController.swift */,
-				CC2E1DC11CE03F5C006151CA /* MenuTableViewController.swift */,
+				CCAB52C621011B57007D8D8C /* ShogibanKit_ios.h */,
+				CCAB52C721011B57007D8D8C /* Info.plist */,
 			);
-			path = Sources;
+			path = ShogibanKit_ios;
+			sourceTree = "<group>";
+		};
+		CCAB52D921011B9D007D8D8C /* ShogibanKit_mac */ = {
+			isa = PBXGroup;
+			children = (
+				CCAB52DA21011B9D007D8D8C /* ShogibanKit_mac.h */,
+				CCAB52DB21011B9D007D8D8C /* Info.plist */,
+			);
+			path = ShogibanKit_mac;
+			sourceTree = "<group>";
+		};
+		CCAB52EC21012311007D8D8C /* ShogibanKit_ios_Tests */ = {
+			isa = PBXGroup;
+			children = (
+				CCAB52ED21012311007D8D8C /* ShogibanKit_ios_Tests.swift */,
+				CCAB52EF21012311007D8D8C /* Info.plist */,
+			);
+			path = ShogibanKit_ios_Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		CCAB52C121011B57007D8D8C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCAB52C821011B57007D8D8C /* ShogibanKit_ios.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCAB52D521011B9D007D8D8C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCAB52DC21011B9D007D8D8C /* ShogibanKit_mac.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
-		CC2ABF451CD9DBCC00296806 /* ShogibanKitTester_OSX */ = {
+		CCAB52C321011B57007D8D8C /* ShogibanKit_ios */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CC2ABF531CD9DBCC00296806 /* Build configuration list for PBXNativeTarget "ShogibanKitTester_OSX" */;
+			buildConfigurationList = CCAB52C921011B57007D8D8C /* Build configuration list for PBXNativeTarget "ShogibanKit_ios" */;
 			buildPhases = (
-				CC2ABF421CD9DBCC00296806 /* Sources */,
-				CC2ABF431CD9DBCC00296806 /* Frameworks */,
-				CC2ABF441CD9DBCC00296806 /* Resources */,
+				CCAB52BF21011B57007D8D8C /* Sources */,
+				CCAB52C021011B57007D8D8C /* Frameworks */,
+				CCAB52C121011B57007D8D8C /* Headers */,
+				CCAB52C221011B57007D8D8C /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = ShogibanKitTester_OSX;
-			productName = Kiban_OSX;
-			productReference = CC2ABF461CD9DBCC00296806 /* ShogibanKit_OSX.app */;
-			productType = "com.apple.product-type.application";
+			name = ShogibanKit_ios;
+			productName = ShogibanKit_ios;
+			productReference = CCAB52C421011B57007D8D8C /* ShogibanKit_ios.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		CCAB52D721011B9D007D8D8C /* ShogibanKit_mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CCAB52DD21011B9D007D8D8C /* Build configuration list for PBXNativeTarget "ShogibanKit_mac" */;
+			buildPhases = (
+				CCAB52D321011B9D007D8D8C /* Sources */,
+				CCAB52D421011B9D007D8D8C /* Frameworks */,
+				CCAB52D521011B9D007D8D8C /* Headers */,
+				CCAB52D621011B9D007D8D8C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShogibanKit_mac;
+			productName = ShogibanKit_mac;
+			productReference = CCAB52D821011B9D007D8D8C /* ShogibanKit_mac.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		CCAB52EA21012311007D8D8C /* ShogibanKit_ios_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CCAB52F321012311007D8D8C /* Build configuration list for PBXNativeTarget "ShogibanKit_ios_Tests" */;
+			buildPhases = (
+				CCAB52E721012311007D8D8C /* Sources */,
+				CCAB52E821012311007D8D8C /* Frameworks */,
+				CCAB52E921012311007D8D8C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CCAB52F221012311007D8D8C /* PBXTargetDependency */,
+			);
+			name = ShogibanKit_ios_Tests;
+			productName = ShogibanKit_ios_Tests;
+			productReference = CCAB52EB21012311007D8D8C /* ShogibanKit_ios_Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -148,13 +235,24 @@
 		CC2ABF3C1CD9DBAA00296806 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0800;
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Kaz Yoshikawa";
 				TargetAttributes = {
-					CC2ABF451CD9DBCC00296806 = {
-						CreatedOnToolsVersion = 7.3;
-						LastSwiftMigration = 0800;
+					CCAB52C321011B57007D8D8C = {
+						CreatedOnToolsVersion = 9.4.1;
+						DevelopmentTeam = 2P97EM4L4N;
+						ProvisioningStyle = Automatic;
+					};
+					CCAB52D721011B9D007D8D8C = {
+						CreatedOnToolsVersion = 9.4.1;
+						DevelopmentTeam = 2P97EM4L4N;
+						ProvisioningStyle = Automatic;
+					};
+					CCAB52EA21012311007D8D8C = {
+						CreatedOnToolsVersion = 9.4.1;
+						DevelopmentTeam = 2P97EM4L4N;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -171,65 +269,103 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CC2ABF451CD9DBCC00296806 /* ShogibanKitTester_OSX */,
+				CCAB52C321011B57007D8D8C /* ShogibanKit_ios */,
+				CCAB52D721011B9D007D8D8C /* ShogibanKit_mac */,
+				CCAB52EA21012311007D8D8C /* ShogibanKit_ios_Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		CC2ABF441CD9DBCC00296806 /* Resources */ = {
+		CCAB52C221011B57007D8D8C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC2E1DB61CDFBD5B006151CA /* Fonts in Resources */,
-				CC2ABF4E1CD9DBCC00296806 /* Assets.xcassets in Resources */,
-				CC2ABF511CD9DBCC00296806 /* Main.storyboard in Resources */,
+				CCAB52F621012655007D8D8C /* ShogibanKit_ios_Tests.xctest in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCAB52D621011B9D007D8D8C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCAB52E921012311007D8D8C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		CC2ABF421CD9DBCC00296806 /* Sources */ = {
+		CCAB52BF21011B57007D8D8C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC2E1DC31CE03F5C006151CA /* ExperimentViewController.swift in Sources */,
-				CC2E1DC51CE03F5C006151CA /* MenuTableViewController.swift in Sources */,
-				CCBEE1A41D7534E900012A5C /* NSData+binaryString.swift in Sources */,
-				CCBEE1A31D7534E900012A5C /* BinaryStringConvertible.swift in Sources */,
-				CC2E1DC21CE03F5C006151CA /* AppDelegate.swift in Sources */,
-				CC2E1DC41CE03F5C006151CA /* MainViewController.swift in Sources */,
-				CCBEE1A01D7531C300012A5C /* NSScanner+Z.swift in Sources */,
-				CCBEE19E1D75311900012A5C /* String+Z.swift in Sources */,
-				CC6A46EC1CF48ABC00849313 /* ShogibanKit+image.swift in Sources */,
-				CC2E1DBB1CE03ECE006151CA /* ShogibanKit.swift in Sources */,
+				CCAB52D221011B76007D8D8C /* NSScanner+Z.swift in Sources */,
+				CCAB52D021011B76007D8D8C /* String+Z.swift in Sources */,
+				CCAB52CD21011B76007D8D8C /* NSData+binaryString.swift in Sources */,
+				CCAB52CF21011B76007D8D8C /* GeoUtils.swift in Sources */,
+				CCAB52CE21011B76007D8D8C /* ShogibanKit.swift in Sources */,
+				CCAB52CC21011B76007D8D8C /* ShogibanKit+image.swift in Sources */,
+				CCAB52D121011B76007D8D8C /* BinaryStringConvertible.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCAB52D321011B9D007D8D8C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCAB52E621011BFA007D8D8C /* NSScanner+Z.swift in Sources */,
+				CCAB52E421011BFA007D8D8C /* String+Z.swift in Sources */,
+				CCAB52E121011BFA007D8D8C /* NSData+binaryString.swift in Sources */,
+				CCAB52E321011BFA007D8D8C /* GeoUtils.swift in Sources */,
+				CCAB52E221011BFA007D8D8C /* ShogibanKit.swift in Sources */,
+				CCAB52E021011BFA007D8D8C /* ShogibanKit+image.swift in Sources */,
+				CCAB52E521011BFA007D8D8C /* BinaryStringConvertible.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCAB52E721012311007D8D8C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCAB52EE21012311007D8D8C /* ShogibanKit_ios_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXVariantGroup section */
-		CC2ABF4F1CD9DBCC00296806 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CC2ABF501CD9DBCC00296806 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
+/* Begin PBXTargetDependency section */
+		CCAB52F221012311007D8D8C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CCAB52C321011B57007D8D8C /* ShogibanKit_ios */;
+			targetProxy = CCAB52F121012311007D8D8C /* PBXContainerItemProxy */;
 		};
-/* End PBXVariantGroup section */
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		CC2ABF401CD9DBAA00296806 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -249,12 +385,20 @@
 		CC2ABF411CD9DBAA00296806 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -270,99 +414,280 @@
 			};
 			name = Release;
 		};
-		CC2ABF541CD9DBCC00296806 /* Debug */ = {
+		CCAB52CA21011B57007D8D8C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
-				COMBINE_HIDPI_IMAGES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 2P97EM4L4N;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/ShogibanKitTester/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				INFOPLIST_FILE = ShogibanKit_ios/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.Kiban-OSX";
-				PRODUCT_NAME = ShogibanKit_OSX;
-				SDKROOT = macosx;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.ShogibanKit-ios";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		CC2ABF551CD9DBCC00296806 /* Release */ = {
+		CCAB52CB21011B57007D8D8C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 2P97EM4L4N;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = ShogibanKit_ios/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.ShogibanKit-ios";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		CCAB52DE21011B9D007D8D8C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 2P97EM4L4N;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/ShogibanKitTester/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.Kiban-OSX";
-				PRODUCT_NAME = ShogibanKit_OSX;
+				INFOPLIST_FILE = ShogibanKit_mac/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.ShogibanKit-mac";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = macosx;
-				SWIFT_VERSION = 3.0;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		CCAB52DF21011B9D007D8D8C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 2P97EM4L4N;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = ShogibanKit_mac/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.ShogibanKit-mac";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		CCAB52F421012311007D8D8C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 2P97EM4L4N;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = ShogibanKit_ios_Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.ShogibanKit-ios-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CCAB52F521012311007D8D8C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 2P97EM4L4N;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = ShogibanKit_ios_Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.ShogibanKit-ios-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -378,11 +703,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CC2ABF531CD9DBCC00296806 /* Build configuration list for PBXNativeTarget "ShogibanKitTester_OSX" */ = {
+		CCAB52C921011B57007D8D8C /* Build configuration list for PBXNativeTarget "ShogibanKit_ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CC2ABF541CD9DBCC00296806 /* Debug */,
-				CC2ABF551CD9DBCC00296806 /* Release */,
+				CCAB52CA21011B57007D8D8C /* Debug */,
+				CCAB52CB21011B57007D8D8C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CCAB52DD21011B9D007D8D8C /* Build configuration list for PBXNativeTarget "ShogibanKit_mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CCAB52DE21011B9D007D8D8C /* Debug */,
+				CCAB52DF21011B9D007D8D8C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CCAB52F321012311007D8D8C /* Build configuration list for PBXNativeTarget "ShogibanKit_ios_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CCAB52F421012311007D8D8C /* Debug */,
+				CCAB52F521012311007D8D8C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

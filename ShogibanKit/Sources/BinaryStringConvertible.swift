@@ -52,7 +52,7 @@ extension BinaryStringConvertible {
 		let bitLength = MemoryLayout<Self>.size * 8
 		var bitCount = 0
 		var value: Self = 0
-		for ch in binaryString.characters {
+		for ch in binaryString {
 			switch ch {
 			case "0":
 				value = (value * 2) + 0

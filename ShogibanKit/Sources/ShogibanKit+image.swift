@@ -69,8 +69,8 @@ extension 局面型 {
 		}
 
 		let fontSize = floor(fmin(cellHeight, cellWidth) * 0.85)
-		let font1 = CTFontCreateWithName("HiraKakuProN-W3" as CFString?, fontSize, nil)
-		let font2 = CTFontCreateWithName("HiraKakuProN-W6" as CFString?, fontSize, nil)
+		let font1 = CTFontCreateWithName(("HiraKakuProN-W3" as CFString), fontSize, nil)
+		let font2 = CTFontCreateWithName(("HiraKakuProN-W6" as CFString), fontSize, nil)
 		let vectors: [先手後手型: CGFloat] = [.先手: 1, .後手: -1]
 
 		for 段 in 段型.全段 {
@@ -126,7 +126,7 @@ extension 局面型 {
 			case .後手: 記号 = "☖"
 			}
 
-			let attributes = [NSFontAttributeName: font1]
+			let attributes: [NSAttributedStringKey: Any] = [.font: font1]
 			let attributedString = NSAttributedString(string: 記号 + 持駒.漢数字表記, attributes: attributes)
 			let line = CTLineCreateWithAttributedString(attributedString)
 			context.textMatrix = CGAffineTransform(scaleX: 1, y: -1)

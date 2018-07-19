@@ -30,11 +30,11 @@ import CoreGraphics
 
 
 func DegreesToRadians(_ value: CGFloat) -> CGFloat {
-	return value * CGFloat(M_PI) / 180.0
+	return value * CGFloat.pi / 180.0
 }
  
 func RadiansToDegrees (_ value: CGFloat) -> CGFloat {
-	return value * 180.0 / CGFloat(M_PI)
+	return value * 180.0 / CGFloat.pi
 }
 
 func CGRectMakeAspectFill(_ imageSize: CGSize, _ bounds: CGRect) -> CGRect {
@@ -80,7 +80,8 @@ func CGSizeMakeAspectFit(_ imageSize: CGSize, frameSize: CGSize) -> CGSize {
 	return CGSize(width: width, height: height)
 }
 
-public func * (lhs: CGSize, rhs: CGFloat) -> CGSize {
-	return CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
+extension CGSize {
+	static func * (lhs: CGSize, rhs: CGFloat) -> CGSize {
+		return CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
+	}
 }
-

@@ -1,4 +1,4 @@
-![swift](https://img.shields.io/badge/swift-3.0-orange.svg) ![license](https://img.shields.io/badge/license-MIT-yellow.svg)
+![swift](https://img.shields.io/badge/swift-4.1-orange.svg) ![license](https://img.shields.io/badge/license-MIT-yellow.svg)
 
 # ShogibanKit Framework
 
@@ -278,51 +278,6 @@ for (vx, vy) in 駒面.角.移動可能なベクトル {
 }
 ```
 
-## Testing your code
-
-ShogibanKitTester_OSX is added for your combinience to try your code.  Please find `MenuTableViewController` class.   Here is the code example how to add your code into ShogibanKitTester_OSX.  This example provides a property of closure that returns String. 
-
-
-```.swift
-class MenuTableViewController: NSViewController {
-	...
-	let yourTestCode: (() -> String) = {
-		var string = ""
-		let 局面 = 局面型(string:
-			"後手持駒:桂\r" +
-			"|▽香|▲竜|　　|　　|　　|　　|　　|　　|▽香|\r" +
-			"|　　|　　|▲金|　　|▲竜|　　|　　|　　|　　|\r" +
-			"|▽歩|▲全|　　|　　|▽金|　　|▽歩|▽桂|▽歩|\r" +
-			"|　　|▽歩|　　|　　|▽王|　　|▽銀|　　|　　|\r" +
-			"|　　|　　|　　|▲金|▲角|　　|　　|　　|　　|\r" +
-			"|　　|　　|▽香|▲歩|▲歩|▲銀|▲桂|　　|　　|\r" +
-			"|▲歩|▲歩|　　|　　|　　|▲歩|▲銀|　　|▲歩|\r" +
-			"|　　|　　|　　|▲金|　　|　　|　　|▲歩|　　|\r" +
-			"|▲香|　　|　　|▲玉|　　|　　|　　|▽馬|　　|\r" +
-			"先手持駒:桂,歩7", 手番: .後手)!
-		print("\(局面)")
-		string += "\(局面)"
-		let 詰み = 局面.詰みか()
-		string += "詰み: \(詰み)"
-		return string
-	}
-	...
-}
-```
-
-And add the closure with title into `menuItems`.
-
-```
-class MenuTableViewController: NSViewController {
-	...
-	lazy var menuItems: [MenuItem] = [
-		...
-		(title: "YourTestCode", closure: self.yourTestCode) // <-- added
-	]
-	...
-}
-```
-
 ## Generating Image
 
 `局面型` provides extension to generate image.
@@ -372,8 +327,8 @@ https://github.com/adobe-fonts/source-han-code-jp
 
 ## Environment
 
-* Xcode Version 8.0 (8A218a)
-* Apple Swift version 3.0 (swiftlang-800.0.46.2 clang-800.0.38)
+* Xcode Version 9.4.1 (9F2000)
+* Apple Swift version 4.1.2 (swiftlang-902.0.54 clang-902.0.39.2)
 
 
 ## Feedback

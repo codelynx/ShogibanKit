@@ -47,7 +47,7 @@ extension Data {
 		var buffer = [UInt8]()
 		var bitIndex = UInt8(0)
 		var byte: UInt8 = 0
-		for ch in binaryString.characters {
+		for ch in binaryString {
 			switch ch {
 			case "0":
 				byte = (byte << 1) + 0
