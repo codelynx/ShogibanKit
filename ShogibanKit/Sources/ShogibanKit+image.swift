@@ -126,7 +126,7 @@ extension 局面型 {
 			case .後手: 記号 = "☖"
 			}
 
-			let attributes: [NSAttributedStringKey: Any] = [.font: font1]
+			let attributes: [NSAttributedString.Key: Any] = [.font: font1]
 			let attributedString = NSAttributedString(string: 記号 + 持駒.漢数字表記, attributes: attributes)
 			let line = CTLineCreateWithAttributedString(attributedString)
 			context.textMatrix = CGAffineTransform(scaleX: 1, y: -1)

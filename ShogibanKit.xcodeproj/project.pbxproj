@@ -23,20 +23,7 @@
 		CCAB52E421011BFA007D8D8C /* String+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52BC21011920007D8D8C /* String+Z.swift */; };
 		CCAB52E521011BFA007D8D8C /* BinaryStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52BD21011920007D8D8C /* BinaryStringConvertible.swift */; };
 		CCAB52E621011BFA007D8D8C /* NSScanner+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52BE21011920007D8D8C /* NSScanner+Z.swift */; };
-		CCAB52EE21012311007D8D8C /* ShogibanKit_ios_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAB52ED21012311007D8D8C /* ShogibanKit_ios_Tests.swift */; };
-		CCAB52F021012311007D8D8C /* ShogibanKit_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCAB52C421011B57007D8D8C /* ShogibanKit_ios.framework */; };
-		CCAB52F621012655007D8D8C /* ShogibanKit_ios_Tests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = CCAB52EB21012311007D8D8C /* ShogibanKit_ios_Tests.xctest */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		CCAB52F121012311007D8D8C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CC2ABF3C1CD9DBAA00296806 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CCAB52C321011B57007D8D8C;
-			remoteInfo = ShogibanKit_ios;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		CCAB52B821011920007D8D8C /* ShogibanKit+image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShogibanKit+image.swift"; sourceTree = "<group>"; };
@@ -52,9 +39,6 @@
 		CCAB52D821011B9D007D8D8C /* ShogibanKit_mac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShogibanKit_mac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCAB52DA21011B9D007D8D8C /* ShogibanKit_mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShogibanKit_mac.h; sourceTree = "<group>"; };
 		CCAB52DB21011B9D007D8D8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CCAB52EB21012311007D8D8C /* ShogibanKit_ios_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShogibanKit_ios_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CCAB52ED21012311007D8D8C /* ShogibanKit_ios_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShogibanKit_ios_Tests.swift; sourceTree = "<group>"; };
-		CCAB52EF21012311007D8D8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,14 +56,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CCAB52E821012311007D8D8C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CCAB52F021012311007D8D8C /* ShogibanKit_ios.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -89,7 +65,6 @@
 				CCAB52B621011920007D8D8C /* ShogibanKit */,
 				CCAB52C521011B57007D8D8C /* ShogibanKit_ios */,
 				CCAB52D921011B9D007D8D8C /* ShogibanKit_mac */,
-				CCAB52EC21012311007D8D8C /* ShogibanKit_ios_Tests */,
 				CC2ABF471CD9DBCC00296806 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -99,7 +74,6 @@
 			children = (
 				CCAB52C421011B57007D8D8C /* ShogibanKit_ios.framework */,
 				CCAB52D821011B9D007D8D8C /* ShogibanKit_mac.framework */,
-				CCAB52EB21012311007D8D8C /* ShogibanKit_ios_Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -142,15 +116,6 @@
 				CCAB52DB21011B9D007D8D8C /* Info.plist */,
 			);
 			path = ShogibanKit_mac;
-			sourceTree = "<group>";
-		};
-		CCAB52EC21012311007D8D8C /* ShogibanKit_ios_Tests */ = {
-			isa = PBXGroup;
-			children = (
-				CCAB52ED21012311007D8D8C /* ShogibanKit_ios_Tests.swift */,
-				CCAB52EF21012311007D8D8C /* Info.plist */,
-			);
-			path = ShogibanKit_ios_Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,24 +176,6 @@
 			productReference = CCAB52D821011B9D007D8D8C /* ShogibanKit_mac.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		CCAB52EA21012311007D8D8C /* ShogibanKit_ios_Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CCAB52F321012311007D8D8C /* Build configuration list for PBXNativeTarget "ShogibanKit_ios_Tests" */;
-			buildPhases = (
-				CCAB52E721012311007D8D8C /* Sources */,
-				CCAB52E821012311007D8D8C /* Frameworks */,
-				CCAB52E921012311007D8D8C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CCAB52F221012311007D8D8C /* PBXTargetDependency */,
-			);
-			name = ShogibanKit_ios_Tests;
-			productName = ShogibanKit_ios_Tests;
-			productReference = CCAB52EB21012311007D8D8C /* ShogibanKit_ios_Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -236,20 +183,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0940;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Kaz Yoshikawa";
 				TargetAttributes = {
 					CCAB52C321011B57007D8D8C = {
 						CreatedOnToolsVersion = 9.4.1;
 						DevelopmentTeam = 2P97EM4L4N;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					CCAB52D721011B9D007D8D8C = {
-						CreatedOnToolsVersion = 9.4.1;
-						DevelopmentTeam = 2P97EM4L4N;
-						ProvisioningStyle = Automatic;
-					};
-					CCAB52EA21012311007D8D8C = {
 						CreatedOnToolsVersion = 9.4.1;
 						DevelopmentTeam = 2P97EM4L4N;
 						ProvisioningStyle = Automatic;
@@ -258,7 +201,7 @@
 			};
 			buildConfigurationList = CC2ABF3F1CD9DBAA00296806 /* Build configuration list for PBXProject "ShogibanKit" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -271,7 +214,6 @@
 			targets = (
 				CCAB52C321011B57007D8D8C /* ShogibanKit_ios */,
 				CCAB52D721011B9D007D8D8C /* ShogibanKit_mac */,
-				CCAB52EA21012311007D8D8C /* ShogibanKit_ios_Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -281,18 +223,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCAB52F621012655007D8D8C /* ShogibanKit_ios_Tests.xctest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CCAB52D621011B9D007D8D8C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CCAB52E921012311007D8D8C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -330,28 +264,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CCAB52E721012311007D8D8C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CCAB52EE21012311007D8D8C /* ShogibanKit_ios_Tests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		CCAB52F221012311007D8D8C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CCAB52C321011B57007D8D8C /* ShogibanKit_ios */;
-			targetProxy = CCAB52F121012311007D8D8C /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		CC2ABF401CD9DBAA00296806 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -379,12 +298,14 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		CC2ABF411CD9DBAA00296806 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -411,6 +332,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -429,7 +351,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -459,7 +381,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -481,7 +403,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
@@ -504,7 +426,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -527,7 +449,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -559,7 +481,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -580,7 +502,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -605,89 +527,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		CCAB52F421012311007D8D8C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 2P97EM4L4N;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = ShogibanKit_ios_Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.ShogibanKit-ios-Tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		CCAB52F521012311007D8D8C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 2P97EM4L4N;
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = ShogibanKit_ios_Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.electricwoods.ShogibanKit-ios-Tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -717,15 +559,6 @@
 			buildConfigurations = (
 				CCAB52DE21011B9D007D8D8C /* Debug */,
 				CCAB52DF21011B9D007D8D8C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CCAB52F321012311007D8D8C /* Build configuration list for PBXNativeTarget "ShogibanKit_ios_Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CCAB52F421012311007D8D8C /* Debug */,
-				CCAB52F521012311007D8D8C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

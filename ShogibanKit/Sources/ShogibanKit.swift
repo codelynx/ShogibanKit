@@ -91,7 +91,7 @@ public func - (lhs: 筋型, rhs: Int) -> 筋型? {
 
 public extension Scanner {
 
-	public func scan筋() -> 筋型? {
+	func scan筋() -> 筋型? {
 		for (記号, 筋) in 筋型.記号表 {
 			if let _ = self.scanString(記号) {
 				return 筋
@@ -100,7 +100,7 @@ public extension Scanner {
 		return nil
 	}
 
-	public func scan段() -> 段型? {
+	func scan段() -> 段型? {
 		for (記号, 段) in 段型.記号表 {
 			if let _ = self.scanString(記号) {
 				return 段
@@ -109,14 +109,14 @@ public extension Scanner {
 		return nil
 	}
 
-	public func scan位置() -> 位置型? {
+	func scan位置() -> 位置型? {
 		if let 筋 = self.scan筋(), let 段 = self.scan段() {
 			return 位置型(筋: 筋, 段: 段)
 		}
 		return nil
 	}
 
-	public func scan駒種() -> 駒種型? {
+	func scan駒種() -> 駒種型? {
 		for (記号, 駒種) in 駒種型.記号表 {
 			if let _ = self.scanString(記号) {
 				return 駒種
@@ -125,7 +125,7 @@ public extension Scanner {
 		return nil
 	}
 
-	public func scan駒面() -> 駒面型? {
+	func scan駒面() -> 駒面型? {
 		for (記号, 駒面) in 駒面型.記号表 {
 			if let _ = self.scanString(記号) {
 				return 駒面
@@ -134,7 +134,7 @@ public extension Scanner {
 		return nil
 	}
 
-	public func scan持駒() -> 持駒型? {
+	func scan持駒() -> 持駒型? {
 		var 持駒 = 持駒型()
 		for 駒種 in 駒種型.全駒種 {
 			if let 駒種記号 = self.scanString(駒種.string) {
@@ -150,7 +150,7 @@ public extension Scanner {
 		return 持駒
 	}
 
-	public func scan先手後手() -> 先手後手型? {
+	func scan先手後手() -> 先手後手型? {
 		for (記号, 先後) in 先手後手型.記号表 {
 			if let _ = self.scanString(記号) {
 				return 先後
@@ -159,7 +159,7 @@ public extension Scanner {
 		return nil
 	}
 
-	public func scan升() -> 升型? {
+	func scan升() -> 升型? {
 		let location = self.scanLocation
 		if let 先後 = scan先手後手(), let 駒面 = scan駒面() {
 			return 升型(先後: 先後, 駒面: 駒面)
@@ -183,7 +183,7 @@ public extension Scanner {
 		return 升型.空
 	}
 
-	public func scan終局理由() -> 終局理由型? {
+	func scan終局理由() -> 終局理由型? {
 		for (記号, 終局理由) in 終局理由型.記号表 {
 			if let _ = self.scanString(記号) {
 				return 終局理由
@@ -192,7 +192,7 @@ public extension Scanner {
 		return nil
 	}
 
-	public func scan指手() -> 指手型? {
+	func scan指手() -> 指手型? {
 		let location = self.scanLocation
 		if let 先後 = self.scan先手後手(), let 後位置 = self.scan位置(), let 駒面 = scan駒面(),
 		   let _ = scanString("("), let 前位置 = self.scan位置(), let _ = scanString(")") {
@@ -1753,8 +1753,8 @@ public class 局面型: Hashable, CustomStringConvertible, Sequence {
 		return self.data.base64EncodedString(options: [])
 	}
 
-	public var hashValue: Int {
-		return self.data.hashValue
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(self.data)
 	}
 
 	public convenience init?(data: Data) {
