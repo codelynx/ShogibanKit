@@ -1190,7 +1190,7 @@ public class 局面型: Hashable, CustomStringConvertible, Sequence {
 		self.手数 = 手数
 		self.手合 = 手合
 
-		var lines = string.lines
+		let lines = string.lines
 		if lines.count >= (9 + 2) {
 			持駒辞書[.後手] = 持駒型(string: lines[0])
 			for rowIndex in 段型.全段 {
