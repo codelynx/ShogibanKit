@@ -4,18 +4,18 @@
 ![swift](https://img.shields.io/badge/Swift-5.1-orange.svg)
 ![license](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-Shogi, or Japanese Chess, is beased on very complex rules, and it is hard to implement all basic rules.  This ShogibanKit aims to implement such complex algorism to find valid move or action, or to find out whether it is checkmate or not.  I also would like to state that ShogibanKit does not provide:
+Shogi, or Japanese Chess, is based on very complex rules, and it is hard to implement all basic rules.  This ShogibanKit aims to implement such complex algorithm to find valid move or action, or to find out whether it is checkmate or not.  I also would like to state that ShogibanKit does not provide:
 
 - Any Graphical User Interface
-- Any Atificial Intelligence
+- Any Artificial Intelligence
 
 
 <font color="Silver">Status: Under Development</color>
 
-* Now, Swift 3 ready
+* Now, Swift 5.1 ready
 
 ## Coding Experiment
-It would be controversial for sure, I tried using Japanese for class names, variable names, and others.  It is part of my experiment to see if coding with non English name would work or not, or impact of maintaining the code.  For example, all type of pieces is expressed as follows using Japanese. It would be natual and easier to read code or Shogi player programmers.
+It would be controversial for sure, I tried using Japanese for class names, variable names, and others.  It is part of my experiment to see if coding with non English name would work or not, or impact of maintaining the code.  For example, all type of pieces is expressed as follows using Japanese. It would be natural and easier to read code or Shogi player programmers.
 
 ```.swift
 enum 駒型 : Int8 {
@@ -24,7 +24,7 @@ enum 駒型 : Int8 {
 }
 ```
 
-Since there are no Caplitalization in Japanese, Swift complatins using the same name for type and variables.
+Since there are no Capitalization in Japanese, Swift complains using the same name for type and variables.
 
 ```.swift
 enum Koma { ... }
@@ -34,7 +34,7 @@ enum 駒 { ... }
 var 駒 = 駒(...) // Error: variable name cannot be same as type name
 ```
 
-So sufix `型` were added for Japanese type names.
+So suffix `型` to be added for Japanese type names.
 
 ```
 enum 駒型 { ... }
@@ -45,7 +45,7 @@ var 駒 = 駒型(...) // OK: no problem!
 
 ## Common classes and types
 
-Here is the list of commom classes or types.
+Here is the list of common classes or types.
 
 |Name|Type|Description|
 |:--|:--|:--|
@@ -53,16 +53,16 @@ Here is the list of commom classes or types.
 |段型 |enum |Row |
 |位置型 |enum |Position (row and column) |
 |駒型 |enum |Type of piece (no front/back) |
-|駒面型 |enum |Type of piece (cares fornt/back) |
+|駒面型 |enum |Type of piece (cares front/back) |
 |持駒型 |struct |Captured pieces |
-|先手後手型 |enum |Which player |
+|先後型 |enum |Which player |
 |升型 |enum |State of board position (which players which piece, or empty?) |
 |指手型 |enum |Describe the one movement |
-|局面型 |class |Snapshot of the state of gameboard |
+|局面型 |class |Snapshot of the state of game-board |
 
 ## Describing position
 
-Here are some example of describe the location of the board.  The column order is from right to left, same as Shogi official. Althoght columns and rows is 1 based index, actual `rawValue` is 0 based index.
+Here are some example of describe the location of the board.  The column order is from right to left, same as Shogi official. Although columns and rows is 1 based index, actual `rawValue` is 0 based index.
 
 ```.swift
 let col = 筋.４  // Zenkaku (全角)
@@ -73,11 +73,11 @@ let position2 = 位置(筋: col, 段: row)
 
 ## Describing Player
 
-I am not sure how to describe 先手, 後手 in English.  Black and White may be OK for Go (碁), but not Shogi.  It does not describe the detail of indivisual, just describe which player.
+I am not sure how to describe 先手, 後手 in English.  Black and White may be OK for Go (碁), but not Shogi.  It does not describe the detail of individual, just describe which player.
 
 
 ```.swift
-enum 先手後手型 {
+enum 先後型 {
 	case 先手, 後手
 }
 ```
@@ -92,7 +92,7 @@ let fu = 駒型.歩
 let to = 駒面型.と
 ```
 
-For the formatting purpose, promoted picese of `香`, `桂`, `銀` are expressed as `杏`, `圭`, `全` rather than `成香`, `成桂`, `成銀`.  They are not official way to describe it, but commonly used for computer scene.
+For the formatting purpose, promoted pieces of `香`, `桂`, `銀` are expressed as `杏`, `圭`, `全` rather than `成香`, `成桂`, `成銀`.  They are not official way to describe it, but commonly used for computer scene.
 
 ```.swift
 enum 駒面型 {
@@ -103,7 +103,7 @@ enum 駒面型 {
 
 ## Describing Captured Pieces
 
-`持駒型` describe the state of captured pices. It knows which `駒型` is captured and it's number.  By the way, even though promoted pices are captured, they cannot be used as state of promoted so are managed as `駒型`.
+`持駒型` describe the state of captured pieces. It knows which `駒型` is captured and its number.  By the way, even though promoted pieces are captured, they cannot be used as state of promoted so are managed as `駒型`.
 
 You find number of captured `駒` as follows.
 
@@ -112,9 +112,9 @@ let 先手持駒: 持駒型 = ...
 let 銀の持ち駒数 = 先手持駒[.銀]
 ```
 
-## Describing the state of gameborad
+## Describing the state of game-borad
 
-`局面型` describes the snapshot of a gameboard.  And each cell is described as `升型`.  
+`局面型` describes the snapshot of a game-board.  And each cell is described as `升型`.  
 
 ```.swift
 let 局面 = 局面型(string:
@@ -133,7 +133,7 @@ let 局面 = 局面型(string:
 
 ```
 
-Or you may provide `指手型` to execute to create the next gameborad state.
+Or you may provide `指手型` to execute to create the next game-borad state.
 
 
 ```.swift
@@ -170,17 +170,17 @@ let 再現局面 = 局面(stringRepresentaion, 手番: 手番)
 
 ## Describing moves and actions
 
-A move can be described with `指手型`. `指手型` three cases. `動` describes a piece move from one place to the other.  `打` describes place captured piece on the gameboard at specific location. `投了` describes the checkmate or equivalent.  
+A move can be described with `指手型`. `指手型` three cases. `動` describes a piece move from one place to the other.  `打` describes place captured piece on the game-board at specific location. `投了` describes the checkmate or equivalent.  
 
 ```.swift
 enum 指手型 {
-	case 動(先後: 先手後手型, 移動前の位置: 位置型, 移動後の位置: 位置型, 移動後の駒面: 駒面型)
-	case 打(先後: 先手後手型, 位置:位置型, 駒:駒型)
-	case 終(終局理由: 終局理由型, 勝者: 先手後手型?)
+	case 動(先後: 先後型, 移動前の位置: 位置型, 移動後の位置: 位置型, 移動後の駒面: 駒面型)
+	case 打(先後: 先後型, 位置:位置型, 駒:駒型)
+	case 終(終局理由: 終局理由型, 勝者: 先後型?)
 }
 ```
 
-You may construct hand written `指手型`, but it has to be ligimate valid move.  Invalid `指手型`  will be rejected by `局面型`'s `指手を実行()` method.
+You may construct hand written `指手型`, but it has to be legitimate valid move.  Invalid `指手型`  will be rejected by `局面型`'s `指手を実行()` method.
 
 ```
 var 局面 = 局面(string: 手合割型.平手初期盤面, 手番: .先手)
@@ -188,10 +188,10 @@ var 局面 = 局面(string: 手合割型.平手初期盤面, 手番: .先手)
 局面 = 局面.指手を実行(指手型.動(先後: .後手, 移動前の位置: .３三, 移動後の位置: .３四, 移動後の駒面: .歩))
 ```
 
-For professional player, this `投了` state may be sufficeient, but for amature, `王` may be captured by careless mistake.  Therefore, extra end state should be added later on.
+For professional player, this `投了` state may be sufficient, but for amateur, `王` may be captured by careless mistake.  Therefore, extra end state should be added later on.
 
 
-`局面型` provides `全可能指手列()` method to find all possible ligimate moves. So you may iterate through each candidate to examine all moves.  You may also call `指手を実行()` for each moves, but it is not suitable for creating millions of instances recursivly.
+`局面型` provides `全可能指手列()` method to find all possible legitimate moves. So you may iterate through each candidate to examine all moves.  You may also call `指手を実行()` for each moves, but it is not suitable for creating millions of instances recursively.
 
 ```
 let 局面: 局面型 = ...
@@ -232,7 +232,7 @@ let 局面: 局面型 = ...
 let 先手の桂の位置 = 局面.駒の位置列(.桂, 先後: .先手)
 ```
 
-* Which pieces on gameboad can make move to specified location?
+* Which pieces on game-board can make move to specified location?
 
 ```
 let 局面: 局面型 = ...
@@ -305,7 +305,7 @@ In ShoogibanKit, textual expression for position can be used, and also, position
 
 <img width="370" src="https://qiita-image-store.s3.amazonaws.com/0/65634/67f9459e-ba78-ab25-e72d-f0a5f1507f08.png"></img>
 
-I recommend Source Han Code JP font from Adobe.  It is free to use.  By using this font, Shogi's textual expression will be look like in source code and in debugger log.
+I recommend `Source Han Code JP` font from Adobe.  It is free to use.  By using this font, Shogi's textual expression will be look like in source code and in debugger log.
 
 <img width="340" src="https://qiita-image-store.s3.amazonaws.com/0/65634/6e1a6e89-041a-b6cd-133a-90c0859fb1f5.png"></img>
 
@@ -329,8 +329,8 @@ https://github.com/adobe-fonts/source-han-code-jp
 
 ## Environment
 
-* Xcode Version 9.4.1 (9F2000)
-* Apple Swift version 4.1.2 (swiftlang-902.0.54 clang-902.0.39.2)
+* Xcode Version 11.1
+* Apple Swift version 5.1
 
 
 ## Feedback

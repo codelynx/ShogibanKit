@@ -1,6 +1,6 @@
 //
-//  NSScanner+Z.swift
-//  ZKit
+//	NSScanner+Z.swift
+//	ZKit
 //
 //	The MIT License (MIT)
 //

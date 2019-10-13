@@ -1,9 +1,9 @@
 //
-//  ShogibanKit_ios.h
-//  ShogibanKit_ios
+//	ShogibanKit_ios.h
+//	ShogibanKit_ios
 //
-//  Created by Kaz Yoshikawa on 7/19/18.
-//  Copyright © 2018 Kaz Yoshikawa. All rights reserved.
+//	Created by Kaz Yoshikawa on 7/19/18.
+//	Copyright © 2018 Kaz Yoshikawa. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

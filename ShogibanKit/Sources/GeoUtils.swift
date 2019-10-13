@@ -1,6 +1,6 @@
 //
-//  GeoUtils.swift
-//  ZKit
+//	GeoUtils.swift
+//	ZKit
 //
 //	The MIT License (MIT)
 //

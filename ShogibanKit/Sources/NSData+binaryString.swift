@@ -1,6 +1,6 @@
 //
 //	NSData+binaryString.swift
-//  ZKit
+//	ZKit
 //
 //	The MIT License (MIT)
 //

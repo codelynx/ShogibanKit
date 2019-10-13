@@ -1,6 +1,6 @@
 //
-//  BinaryStringConvertible.swift
-//  ZKit
+//	BinaryStringConvertible.swift
+//	ZKit
 //
 //	The MIT License (MIT)
 //

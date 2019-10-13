@@ -1,9 +1,9 @@
 //
-//  ShogibanKit+image.swift
-//  ShogibanKit
+//	ShogibanKit+image.swift
+//	ShogibanKit
 //
-//  Created by Kaz Yoshikawa on 5/24/16.
-//  Copyright © 2016 Kaz Yoshikawa. All rights reserved.
+//	Created by Kaz Yoshikawa on 5/24/16.
+//	Copyright © 2016 Kaz Yoshikawa. All rights reserved.
 //
 
 import Foundation
@@ -71,7 +71,7 @@ extension 局面型 {
 		let fontSize = floor(fmin(cellHeight, cellWidth) * 0.85)
 		let font1 = CTFontCreateWithName(("HiraKakuProN-W3" as CFString), fontSize, nil)
 		let font2 = CTFontCreateWithName(("HiraKakuProN-W6" as CFString), fontSize, nil)
-		let vectors: [先手後手型: CGFloat] = [.先手: 1, .後手: -1]
+		let vectors: [先後型: CGFloat] = [.先手: 1, .後手: -1]
 
 		for 段 in 段型.全段 {
 			for 筋 in 筋型.全筋 {
@@ -117,7 +117,7 @@ extension 局面型 {
 
 		let descent = CTFontGetDescent(font1)
 
-		for 先後 in [先手後手型.先手, .後手] {
+		for 先後 in [先後型.先手, .後手] {
 			context.saveGState()
 			let 持駒 = self.持駒(先後)
 			let 記号: String

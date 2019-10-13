@@ -1,9 +1,9 @@
 //
-//  ShogibanKit_mac.h
-//  ShogibanKit_mac
+//	ShogibanKit_mac.h
+//	ShogibanKit_mac
 //
-//  Created by Kaz Yoshikawa on 7/19/18.
-//  Copyright © 2018 Kaz Yoshikawa. All rights reserved.
+//	Created by Kaz Yoshikawa on 7/19/18.
+//	Copyright © 2018 Kaz Yoshikawa. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

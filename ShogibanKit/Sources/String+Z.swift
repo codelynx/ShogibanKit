@@ -1,6 +1,6 @@
 //
-//  String+Z.swift
-//  ZKit
+//	String+Z.swift
+//	ZKit
 //
 //	The MIT License (MIT)
 //
