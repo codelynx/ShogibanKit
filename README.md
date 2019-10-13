@@ -1,6 +1,8 @@
-![swift](https://img.shields.io/badge/swift-4.1-orange.svg) ![license](https://img.shields.io/badge/license-MIT-yellow.svg)
-
 # ShogibanKit Framework
+
+![xcode](https://img.shields.io/badge/Xcode-11.1-blue)
+![swift](https://img.shields.io/badge/Swift-5.1-orange.svg)
+![license](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 Shogi, or Japanese Chess, is beased on very complex rules, and it is hard to implement all basic rules.  This ShogibanKit aims to implement such complex algorism to find valid move or action, or to find out whether it is checkmate or not.  I also would like to state that ShogibanKit does not provide:
 
