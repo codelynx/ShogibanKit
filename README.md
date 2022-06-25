@@ -1,4 +1,4 @@
-# ShogibanKit Framework
+# ShogibanKit
 
 ![xcode](https://img.shields.io/badge/Xcode-11.1-blue)
 ![swift](https://img.shields.io/badge/Swift-5.1-orange.svg)
