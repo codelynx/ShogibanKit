@@ -1,7 +1,7 @@
 # ShogibanKit
 
-![xcode](https://img.shields.io/badge/Xcode-11.1-blue)
-![swift](https://img.shields.io/badge/Swift-5.1-orange.svg)
+![xcode](https://img.shields.io/badge/Xcode-13-blue)
+![swift](https://img.shields.io/badge/Swift-5-orange.svg)
 ![license](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 Shogi, or Japanese Chess, is based on very complex rules, and it is hard to implement all basic rules.  This ShogibanKit aims to implement such complex algorithm to find valid move or action, or to find out whether it is checkmate or not.  I also would like to state that ShogibanKit does not provide:
@@ -12,7 +12,7 @@ Shogi, or Japanese Chess, is based on very complex rules, and it is hard to impl
 
 <font color="Silver">Status: Under Development</color>
 
-* Now, Swift 5.1 ready
+* Now, Swift 5 ready
 
 ## Coding Experiment
 It would be controversial for sure, I tried using Japanese for class names, variable names, and others.  It is part of my experiment to see if coding with non English name would work or not, or impact of maintaining the code.  For example, all type of pieces is expressed as follows using Japanese. It would be natural and easier to read code or Shogi player programmers.
@@ -182,7 +182,7 @@ enum 指手型 {
 
 You may construct hand written `指手型`, but it has to be legitimate valid move.  Invalid `指手型`  will be rejected by `局面型`'s `指手を実行()` method.
 
-```
+```.swift
 var 局面 = 局面(string: 手合割型.平手初期盤面, 手番: .先手)
 局面 = 局面.指手を実行(指手型.動(先後: .先手, 移動前の位置: .７七, 移動後の位置: .７六, 移動後の駒面: .歩))
 局面 = 局面.指手を実行(指手型.動(先後: .後手, 移動前の位置: .３三, 移動後の位置: .３四, 移動後の駒面: .歩))
@@ -193,7 +193,7 @@ For professional player, this `投了` state may be sufficient, but for amateur,
 
 `局面型` provides `全可能指手列()` method to find all possible legitimate moves. So you may iterate through each candidate to examine all moves.  You may also call `指手を実行()` for each moves, but it is not suitable for creating millions of instances recursively.
 
-```
+```.swift
 let 局面: 局面型 = ...
 let 全可能指手 = 局面.全可能指手列()
 for 候補指手 in 全可能指手 {
@@ -209,7 +209,7 @@ for 候補指手 in 全可能指手 {
 
 * Iterate all positions in `局面型`
 
-```
+```.swift
 let 局面: 局面型 = ...
 for 位置 in 局面 {
 	let マス = 局面[位置]
@@ -219,7 +219,7 @@ for 位置 in 局面 {
 
 * All positions that a piece at location can make move
 
-```
+```.swift
 let 局面: 局面型 = ...
 let 位置列 = 局面.指定位置の駒の移動可能位置列(.５五) // only location
 let 指手列 = 局面.指定位置の駒の移動可能指手列(.５五)
@@ -227,14 +227,14 @@ let 指手列 = 局面.指定位置の駒の移動可能指手列(.５五)
 
 * Find all positions of where specified type of piece are located
 
-```
+```.swift
 let 局面: 局面型 = ...
 let 先手の桂の位置 = 局面.駒の位置列(.桂, 先後: .先手)
 ```
 
 * Which pieces on game-board can make move to specified location?
 
-```
+```.swift
 let 局面: 局面型 = ...
 let 味方の駒の位置列 = 局面.指定位置へ移動可能な全ての駒の位置列(.７六, 先後: .先手)
 let 敵味方双方の駒の位置列 = 局面.指定位置へ移動可能な全ての駒の位置列(.７六, 先後: nil)
@@ -243,14 +243,14 @@ let 後手の移動指手列 = 局面.指定位置へ移動可能な全ての駒
 
 * Find all movies that can capture 王 (King).
 
-```
+```.swift
 let 局面: 局面型 = ...
 let 王手列 = 局面.王手列(.先手)
 ```
 
 * Checkmate? (needs more test)
 
-```
+```.swift
 let 局面: 局面型 = ...
 if 局面.詰みか() {
 	// checkmate!
@@ -259,14 +259,14 @@ if 局面.詰みか() {
 
 * Find opponent player
 
-```
+```.swift
 let 局面: 局面型 = ...
 let 手番の敵方 = 局面.手番.敵方
 ```
 
 * Is 先手's 王 is on the same line of 後手's 角? (English!!)
 
-```
+```.swift
 let 局面: 局面型 = ...
 let 後手の角の位置 = ...
 for (vx, vy) in 駒面.角.移動可能なベクトル {
@@ -329,8 +329,8 @@ https://github.com/adobe-fonts/source-han-code-jp
 
 ## Environment
 
-* Xcode Version 11.1
-* Apple Swift version 5.1
+* Xcode Version 13.3.1
+* Apple Swift version 5.6
 
 
 ## Feedback
