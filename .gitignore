@@ -15,3 +15,6 @@ DerivedData
 *.moved-aside
 .Trashes
 ._*
+.swiftpm/config/registries.json
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.netrc
