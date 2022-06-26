@@ -23,13 +23,13 @@ typealias XImage = UIImage
 private func degreesToRadians(_ value: CGFloat) -> CGFloat {
 	return value * CGFloat.pi / 180.0
 }
- 
+
 private func radiansToDegrees (_ value: CGFloat) -> CGFloat {
 	return value * 180.0 / CGFloat.pi
 }
 
-extension 局面型 {
-
+public extension 局面型 {
+	
 	func imageForSize(_ size: CGSize) -> CGImage {
 		let width = Int(size.width)
 		let height = Int(size.height)
@@ -37,23 +37,22 @@ extension 局面型 {
 		let colorSpace = CGColorSpaceCreateDeviceRGB()
 		let bitmapInfo =  CGImageAlphaInfo.premultipliedLast
 		let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: width * bitsPerComponent, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)!
-
+		
 		let rect = CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height))
 		context.clear(rect)
 		context.translateBy(x: 0, y: CGFloat(height))
 		context.scaleBy(x: 1, y: -1)
-
+		
 		let size = rect.size
 		let cellWidth: CGFloat = size.width / 11.0
 		let cellHeight: CGFloat = size.height / 11.0
-
+		
 		// (0, 0) is left bottom
 		let left = floor(cellWidth * 1)
 		let right = floor(cellWidth * 10)
 		let bottom = floor(cellHeight * 1)
 		let top = floor(cellHeight * 10)
 		
-//		let context = UIGraphicsGetCurrentContext()!
 		context.setStrokeColor(XColor.black.cgColor)
 		for col in 0...9 {
 			let x = floor(left + cellWidth * CGFloat(col))
@@ -67,17 +66,17 @@ extension 局面型 {
 			context.addLine(to: CGPoint(x: right, y: y))
 			context.strokePath()
 		}
-
+		
 		let fontSize = floor(fmin(cellHeight, cellWidth) * 0.85)
 		let font1 = CTFontCreateWithName(("HiraKakuProN-W3" as CFString), fontSize, nil)
 		let font2 = CTFontCreateWithName(("HiraKakuProN-W6" as CFString), fontSize, nil)
 		let vectors: [先後型: CGFloat] = [.先手: 1, .後手: -1]
-
+		
 		for 段 in 段型.全段 {
 			for 筋 in 筋型.全筋 {
 				let x = floor(right - (cellWidth * CGFloat(筋.rawValue + 1)))
 				let y = floor(top - (cellHeight * CGFloat(8 - 段.rawValue)))
-//				let rect = CGRectMake(x, y, floor(cellWidth), floor(cellHeight))
+				//				let rect = CGRectMake(x, y, floor(cellWidth), floor(cellHeight))
 				let 位置 = 位置型(筋: 筋, 段: 段)
 				let 升 = self[位置]
 				if let 駒面 = 升.駒面, let 先後 = 升.先後 {
@@ -114,9 +113,9 @@ extension 局面型 {
 				}
 			}
 		}
-
+		
 		let descent = CTFontGetDescent(font1)
-
+		
 		for 先後 in [先後型.先手, .後手] {
 			context.saveGState()
 			let 持駒 = self.持駒(先後)
@@ -125,13 +124,13 @@ extension 局面型 {
 			case .先手: 記号 = "☗"
 			case .後手: 記号 = "☖"
 			}
-
+			
 			let attributes: [NSAttributedString.Key: Any] = [.font: font1]
 			let attributedString = NSAttributedString(string: 記号 + 持駒.漢数字表記, attributes: attributes)
 			let line = CTLineCreateWithAttributedString(attributedString)
 			context.textMatrix = CGAffineTransform(scaleX: 1, y: -1)
 			context.translateBy(x: cellWidth, y: cellHeight * 11)
-
+			
 			switch 先後 {
 			case .先手:
 				context.translateBy(x: 0, y: -descent)
@@ -140,12 +139,12 @@ extension 局面型 {
 				context.rotate(by: degreesToRadians(180))
 				context.translateBy(x: 0, y: -descent)
 			}
-
+			
 			CTLineDraw(line, context)
 			context.restoreGState()
 		}
-
+		
 		return context.makeImage()!
 	}
-
+	
 }
