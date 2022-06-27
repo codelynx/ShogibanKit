@@ -1040,6 +1040,7 @@ public enum 手合型: String, Codable {
 	
 	public var 初期局面: 局面型 {
 		let 局面 = 局面型(string: 手合型.平手初期盤面, 手番: .先手)!
+		局面.手数 = 1
 		for 位置 in 駒落位置列 {
 			局面[位置] = .空
 		}
@@ -1164,15 +1165,18 @@ public enum 指手型: Equatable, CustomStringConvertible, Codable {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		switch self {
 		case .動(let 先後, let 移動前の位置, let 移動後の位置, let 移動後の駒面):
+			try container.encode(PrimallyKey.動, forKey: .指手)
 			try container.encode(先後, forKey: .先後)
 			try container.encode(移動前の位置, forKey: .移動前の位置)
 			try container.encode(移動後の位置, forKey: .移動後の位置)
 			try container.encode(移動後の駒面, forKey: .移動後の駒面)
 		case .打(let 先後, let 打位置, let 打駒種):
+			try container.encode(PrimallyKey.打, forKey: .指手)
 			try container.encode(先後, forKey: .先後)
 			try container.encode(打位置, forKey: .打位置)
 			try container.encode(打駒種, forKey: .打駒種)
 		case .終(let 終局理由, let 勝者):
+			try container.encode(PrimallyKey.終, forKey: .指手)
 			try container.encode(終局理由, forKey: .終局理由)
 			try container.encode(勝者, forKey: .勝者)
 		}
