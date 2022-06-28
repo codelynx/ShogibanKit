@@ -1040,7 +1040,7 @@ public enum 手合型: String, Codable {
 	
 	public var 初期局面: 局面型 {
 		let 局面 = 局面型(string: 手合型.平手初期盤面, 手番: .先手)!
-		局面.手数 = 1
+		局面.手数 = 0
 		for 位置 in 駒落位置列 {
 			局面[位置] = .空
 		}
